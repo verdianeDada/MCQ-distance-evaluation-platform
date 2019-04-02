@@ -44260,9 +44260,10 @@ var render = function() {
                       directives: [
                         {
                           name: "model",
-                          rawName: "v-model",
+                          rawName: "v-model.number",
                           value: _vm.question_num,
-                          expression: "question_num"
+                          expression: "question_num",
+                          modifiers: { number: true }
                         }
                       ],
                       staticClass: "form-control ",
@@ -44273,7 +44274,10 @@ var render = function() {
                           if ($event.target.composing) {
                             return
                           }
-                          _vm.question_num = $event.target.value
+                          _vm.question_num = _vm._n($event.target.value)
+                        },
+                        blur: function($event) {
+                          _vm.$forceUpdate()
                         }
                       }
                     })

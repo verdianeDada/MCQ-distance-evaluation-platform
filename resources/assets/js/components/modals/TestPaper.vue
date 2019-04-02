@@ -48,7 +48,7 @@
                                 <label for="number" class="control-label col-md-1 col-lg-1 padding-0">N°of questions</label>
                                 <div class="col-md-1 col-lg-1">
                                     <input type="number" id="number" min="1"  class="form-control " 
-                                    v-model="question_num"
+                                    v-model.number="question_num"
                                     >
                                 </div>                            
                             </div>
