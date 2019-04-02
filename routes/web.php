@@ -1,0 +1,56 @@
+<?php
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
+|
+*/
+
+
+
+Route::get('/', 'WelcomeController@index');
+
+Route::prefix('api')->middleware(['auth'])->group(function() {
+    Route::resource('/teacherdashboard', 'TeacherDashboardController');
+    Route::resource('/course', 'CourseController');
+    Route::resource('/testpaper', 'TestPaperController');
+    //news
+    Route::get('/all-news', 'NewStaffController@all_news');
+    Route::post('/news', 'NewStaffController@store_news');
+    Route::patch('/news/{id}', 'NewStaffController@update_news');
+    Route::delete('/news/{id}', 'NewStaffController@delete_news');
+    //staff
+    Route::get('/all-staff', 'NewStaffController@all_staff');
+    Route::post('/staff', 'NewStaffController@store_staff');
+    Route::patch('/staff/{id}', 'NewStaffController@update_staff');
+    Route::delete('/staff/{id}', 'NewStaffController@delete_staff');
+    //forum
+    Route::get('/all-post', 'forumController@all_post');
+    Route::post('/post', 'forumController@store_post');
+    Route::delete('/post/{id}', 'forumController@delete_post');
+
+});
+
+
+Route::group(['middleware'=>'auth'], function(){
+    Route::get('/home', 'HomeController@index')->name('home');
+    Route::get('/sitemanagement', 'SiteManagementController@index');
+    Route::get('/pastquestion', 'PastQuestionController@index');
+    Route::get('/newstaff', 'NewStaffController@index');
+    Route::get('/forum-page', 'ForumController@index');
+    Route::get('/testreport', 'TestReportController@index');
+});
+
+Auth::routes();
+
+// Route::get('/login', ['as' => 'login', 'uses' => 'Auth\LoginController@showLoginForm']);
+
+
+Route::any('{query}',function(){
+    return view('pagenotfound');
+})->where('query','.*');
