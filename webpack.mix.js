@@ -17,3 +17,11 @@ mix
 
 // mix.copy("node_modules/font-awesome/css/font-awesome.min.css", "public/css");
 // mix.copy("node_modules/font-awesome/fonts/*", "public/fonts");
+module.exports = {
+  // ...
+  resolve: {
+    alias: {
+      vue$: "vue/dist/vue.esm.js" // 'vue/dist/vue.common.js' for webpack 1
+    }
+  }
+};

@@ -44,8 +44,8 @@
                                                 placeholder="Eg: 672778972"
                                                 name="email" 
                                                 required ="required"
-                                                data-parsley-required-message = "Your phone number is required"
-                                                data-parsley-length-message = "Your phone number should have 9 digits"
+                                                data-parsley-required-message = ""
+                                                data-parsley-length-message = ""
                                                 data-parsley-type="digits"
                                                 data-parsley-length= "[9,9]"
                                                 value="{{ old('email') }}"
@@ -67,7 +67,7 @@
                                                 class="form-control" 
                                                 name="password" 
                                                 required="required"
-                                                data-parsley-required-message = "Your password is required"
+                                                data-parsley-required-message = ""
                                                 placeholder="Password"
                                             >
                                         </div>
@@ -89,9 +89,9 @@
                    
                         <div id="app-navbar-collapse" class=" collapse navbar-collapse">
                             <ul class="nav navbar-nav">
-                                <li><a href="/"><i class="fa fa-home color-black"></i></a></li>
+                                <li><a href="/"><i class="fa fa-home color-black my-li"></i></a></li>
                                 <li><a href="/home">Dashboard</a></li>
-                            <li><a href="/home">{{Request::path()}}</a></li>
+                            <!-- <li><a href="/home">{{Request::path()}}</a></li> -->
                                 
                                 
                                 @if (Auth::check() && Auth::user()->isTeacher && Auth::user()->isAdmin)
@@ -108,11 +108,12 @@
                                 <li class="dropdown">
                                     <div class="my-li">
                                         @if (Auth::check() &&  Auth::user()->isTeacher)
-                                            <i class="dropdown-toggle btn name fa fa-user-tie color-black"
+                                            <i class="dropdown-toggle btn name glyphicon glyphicon-user color-black"
                                                 data-toggle="dropdown" role="button" aria-expanded="false"
+                                                style="font-size: 23px;"
                                             ><span class="caret"></span></i>
                                         @else
-                                            <i class="dropdown-toggle btn name fa fa-user-graduate color-black"
+                                            <i class="dropdown-toggle btn name fa fa-user color-black"
                                                 data-toggle="dropdown" role="button" aria-expanded="false"
                                             ><span class="caret"></span></i>
                                         @endif

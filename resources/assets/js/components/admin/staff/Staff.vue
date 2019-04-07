@@ -27,11 +27,11 @@
             <p><strong>Email: &nbsp;</strong>{{staff.email}} <strong>Phone: &nbsp;</strong>{{staff.phone}}</p>
           </div>
           <div class="col-lg-1">
-              <button>
-                <i class="fa fa-pen bold color" data-toggle= "modal" data-target = "#staffmodal" @click="setModal(staff)"></i>
+              <button data-toggle= "modal" data-target = "#staffmodal" @click="setModal(staff)">
+                <i class="fa fa-pen bold color"></i>
               </button>
-              <button>
-                <i class="fa fa-trash color-alarm " @click="deleteStaff(staff.id)"></i>
+              <button data-toggle= "modal" data-target = "#deletestaff" @click="setDelete(staff.id)">
+                <i class="fa fa-trash color-alarm "></i>
               </button>
           </div>
         </div>
@@ -51,11 +51,11 @@
             <p><strong>Email: &nbsp;</strong>{{staff.email}} <strong>Phone: &nbsp;</strong>{{staff.phone}}</p>
           </div>
           <div class="col-lg-1">
-            <button>
-              <i class="fa fa-pen bold color" data-toggle= "modal" data-target = "#staffmodal" @click="setModal(staff)"></i>
+            <button data-toggle= "modal" data-target = "#staffmodal" @click="setModal(staff)">
+              <i class="fa fa-pen bold color"></i>
             </button>
-            <button>
-              <i class="fa fa-trash color-alarm " @click="deleteStaff(staff.id)"></i>
+            <button data-toggle= "modal" data-target = "#deletestaff" @click="setDelete(staff.id)">
+              <i class="fa fa-trash color-alarm "></i>
             </button>
           </div>
         </div>
@@ -75,11 +75,11 @@
             <p><strong>Email: &nbsp;</strong>{{staff.email}} <strong>Phone: &nbsp;</strong>{{staff.phone}}</p>
           </div>
           <div class="col-lg-1">
-            <button>
-              <i class="fa fa-pen bold color" data-toggle= "modal" data-target = "#staffmodal" @click="setModal(staff)"></i>
+            <button data-toggle= "modal" data-target = "#staffmodal" @click="setModal(staff)">
+              <i class="fa fa-pen bold color"></i>
             </button>
-            <button>
-              <i class="fa fa-trash color-alarm " @click="deleteStaff(staff.id)"></i>
+            <button data-toggle= "modal" data-target = "#deletestaff" @click="setDelete(staff.id)">
+              <i class="fa fa-trash color-alarm "></i>
             </button>
           </div>
         </div>
@@ -101,11 +101,11 @@
             </div>
           </div>
           <div class="col-lg-1">
-            <button>
-              <i class="fa fa-pen bold color" data-toggle= "modal" data-target = "#staffmodal" @click="setModal(staff)"></i>
+            <button data-toggle= "modal" data-target = "#staffmodal" @click="setModal(staff)">
+              <i class="fa fa-pen bold color"></i>
             </button>
-            <button>
-              <i class="fa fa-trash color-alarm " @click="deleteStaff(staff.id)"></i>
+            <button data-toggle= "modal" data-target = "#deletestaff"  @click="setDelete(staff.id)">
+              <i class="fa fa-trash color-alarm "></i>
             </button>
           </div>
         </div>
@@ -126,11 +126,20 @@
         :editStaff = "editStaff"
       ></staffmodal>
     </div>
+
+    <!-- delete confirmation -->
+    <div class="fade modal" id = "deletestaff" role="dialog">
+      <deletestaff
+        @deleteStaff = "deleteStaff"
+        :id = "deleteid"
+      ></deletestaff>
+    </div>
   </div>
 </template>
 
 <script>
 import staffmodal from "../../modals/Staff.vue";
+import deletestaff from "../../modals/DeleteStaff.vue";
 
 export default {
   mounted: function() {
@@ -152,7 +161,8 @@ export default {
         phone: "",
         description: ""
       },
-      editStaff: false
+      editStaff: false,
+      deleteid: ""
     };
   },
   methods: {
@@ -160,25 +170,71 @@ export default {
       this.staff = {};
     },
     closeModal: function() {
-      //   $("#staffmodal").modal("toggle");
-      //   $("#newmodal").modal("hide");
+      $("#staffmodal").modal("hide");
     },
     createStaff: function(params) {
       axios
         .post("api/staff", params)
         .then(res => {
+          if ((res.data.type = "hod")) this.staffList.hod.unshift(res.data);
+          else if ((res.data.type = "hoo"))
+            this.staffList.hoo.unshift(res.data);
+          else if ((res.data.type = "teacher"))
+            this.staffList.teacher.unshift(res.data);
+          else this.staffList.delegate.unshift(res.data);
           this.closeModal();
-          this.findStaff();
+          this.cleanModal();
         })
         .catch(error => {
           console.log("got an error" + error);
         });
     },
     deleteStaff: function(id) {
+      console.log("in delee");
       axios
         .delete("api/staff/" + id)
         .then(res => {
-          this.findStaff();
+          console.log(res);
+          this.staffList.hod.forEach(staff => {
+            if (staff.id === id) {
+              var index = this.staffList.hod
+                .map(function(staff) {
+                  return staff;
+                })
+                .indexOf(staff);
+              this.staffList.hod.splice(index, 1);
+            }
+          });
+          this.staffList.hoo.forEach(staff => {
+            if (staff.id === id) {
+              var index = this.staffList.hoo
+                .map(function(staff) {
+                  return staff;
+                })
+                .indexOf(staff);
+              this.staffList.hoo.splice(index, 1);
+            }
+          });
+          this.staffList.teacher.forEach(staff => {
+            if (staff.id === id) {
+              var index = this.staffList.teacher
+                .map(function(staff) {
+                  return staff;
+                })
+                .indexOf(staff);
+              this.staffList.teacher.splice(index, 1);
+            }
+          });
+          this.staffList.delegate.forEach(staff => {
+            if (staff.id === id) {
+              var index = this.staffList.delegate
+                .map(function(staff) {
+                  return staff;
+                })
+                .indexOf(staff);
+              this.staffList.delegate.splice(index, 1);
+            }
+          });
         })
         .catch(error => {
           console.log("an error ocurred" + error);
@@ -201,13 +257,17 @@ export default {
       axios
         .patch("api/staff/" + id, params)
         .then(res => {
+          this.closeModal();
+          this.cleanModal();
           this.findStaff();
           this.editStaff = false;
-          this.staff = "";
         })
         .catch(error => {
           console.log("an error ocurred" + error);
         });
+    },
+    setDelete: function(id) {
+      this.deleteid = id;
     },
     setModal: function(staff) {
       this.staff = staff;
@@ -215,7 +275,8 @@ export default {
     }
   },
   components: {
-    staffmodal
+    staffmodal,
+    deletestaff
   }
 };
 </script>

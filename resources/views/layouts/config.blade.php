@@ -12,9 +12,7 @@
 
         <!-- Styles -->
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">        
-        <link href="{{ asset('css/font-awesome/css/all.css') }}" rel="stylesheet">
-        <link href="{{ asset('css/parsley.css') }}" rel="stylesheet">
-        <link href="{{ asset('css/mystyle.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/parsley.css') }}" rel="stylesheet">        
     </head>
     <body>
 
@@ -41,8 +39,8 @@
         </div>
     </footer>
     
-    <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('js/jquery.min.js') }}"></script>
+    <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('js/parsley.js') }}"></script>    
     <script src="{{ asset('js/myscript.js') }}"></script>
     </body>

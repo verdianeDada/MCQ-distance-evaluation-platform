@@ -1,0 +1,337 @@
+/*main color ;*/
+
+.color {
+  color: rgb(10, 101, 10);
+}
+.bg-color {
+  background-color: rgb(10, 101, 10);
+}
+.center {
+  text-align: center;
+}
+.color-alarm {
+  color: #800000;
+}
+.color-black {
+  color: black;
+}
+.bold {
+  font-weight: bold;
+}
+h1 {
+  font-size: 24px;
+}
+
+.capitalize {
+  text-transform: capitalize;
+}
+span,
+p {
+  color: black;
+}
+.underline {
+  text-decoration: underline;
+}
+/* navigation bar*/
+
+nav {
+  padding: 0;
+  background-color: #fff;
+  box-shadow: 0 2px 14px 0 black;
+}
+.navbar {
+  padding-left: 20px;
+  margin-bottom: 5px;
+}
+
+img.logo {
+  height: 77px;
+  margin: 0;
+  padding: 0;
+}
+
+.right {
+  float: right;
+  height: 50px;
+  padding: 14px 0;
+}
+nav * {
+  display: -webkit-box;
+}
+.form-group {
+  /* display: table-cell; */
+  padding: 0 4px;
+}
+[class*="form"][class*="col"] {
+  padding: 0;
+}
+nav .fa {
+  font-size: 23px;
+}
+nav .fa.login {
+  padding-top: 12px;
+}
+.btn-primary,
+.btn-primary:focus,
+.btn-primary.focus,
+.btn-primary:active:hover,
+.btn-primary:active:focus,
+.btn-primary:active.focus,
+.btn-primary.active:hover,
+.btn-primary.active:focus,
+.btn-primary.active.focus,
+.open > .btn-primary.dropdown-toggle:hover,
+.open > .btn-primary.dropdown-toggle:focus,
+.open > .btn-primary.dropdown-toggle.focus {
+  background-color: rgb(10, 101, 10);
+  font-weight: bold;
+}
+nav .btn-primary {
+  margin-top: 8px;
+}
+.btn-primary:hover,
+button:hover {
+  background-color: rgba(10, 101, 10, 0.5);
+}
+nav input {
+  margin-top: 7px;
+}
+
+/* body*/
+
+.index-bg {
+  background: url("../images/bg.jpg") center fixed;
+  margin: 12px 0;
+  padding: 60px 0 0 0;
+  box-shadow: 0 4px 14px 0 black;
+  height: 540px;
+}
+.panel {
+  border-radius: 8px;
+}
+.form-control:focus {
+  border-color: rgba(10, 101, 10, 0.44);
+}
+.radio + .radio,
+.checkbox + .checkbox {
+  margin-top: 10px;
+}
+#news .panel,
+#register-form .panel {
+  height: 465px;
+  overflow: scroll;
+}
+.form-group {
+  margin-bottom: 0;
+}
+a {
+  color: rgb(10, 101, 10);
+}
+a:hover {
+  color: rgba(10, 101, 10, 0.5);
+}
+.nav > li > a {
+  font-size: 16px;
+  font-weight: bolder;
+}
+.nav > li > a:hover,
+.nav > li > a:focus,
+.nav > li > a:active {
+  background-color: transparent;
+  font-size: 20px !important;
+  border-bottom: black 2px solid;
+}
+.nav .open > a,
+.nav .open > a:hover,
+.nav .open > a:focus {
+  border: none;
+}
+.my-li {
+  margin-top: -5px;
+}
+.my-li .fa {
+  margin-right: -15px;
+}
+.my-li .dropdown-menu {
+  position: relative;
+  margin: 31px -48px 2px;
+}
+.my-li .dropdown-menu li:nth-of-type(1) {
+  text-transform: capitalize;
+  font-size: 16px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  max-width: 161px;
+}
+.dropdown-menu > li > a {
+  width: 100%;
+}
+.dropdown-menu > li > a:hover {
+  background-color: rgba(10, 101, 10, 0.12);
+}
+.sidebar {
+  min-height: 575px;
+  padding: 34px 5px 24px 36px;
+  box-shadow: 0 2px 14px 0 black;
+}
+.panel-heading {
+  padding: 0;
+}
+.sidebar > .panel-heading {
+  border-color: rgb(10, 101, 10);
+}
+p {
+  color: black;
+}
+.courses p.title {
+  text-transform: capitalize;
+}
+.courses p.code {
+  text-transform: uppercase;
+  font-weight: bold;
+  color: rgb(10, 101, 10);
+}
+.courses .inside {
+  padding-left: 25px;
+  border-left: solid 1px rgb(10, 101, 10);
+}
+h4 {
+  font-weight: bold;
+}
+.w3-example {
+  background-color: #f1f1f1;
+  padding: 0.01em 16px;
+  margin: 20px 0;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12) !important;
+}
+.w3-padding {
+  padding: 10px 3px !important;
+}
+.w3-white {
+  color: #000 !important;
+  background-color: #fff !important;
+}
+.container-fluid {
+  padding: 0 !important;
+}
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 2s;
+}
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
+.table-hover > tbody > tr:hover {
+  background-color: rgb(235, 249, 235);
+}
+.btn-danger {
+  background-color: #800000;
+}
+.modal .close {
+  opacity: 1;
+}
+.row.margin-0 {
+  margin-left: 0;
+  margin-right: 0;
+}
+[class*="col"].padding-0 {
+  padding-left: 0;
+  padding-right: 0;
+}
+.question {
+  margin-top: 10px;
+}
+#test-paper-form .form-group,
+.modal .form-group {
+  margin-bottom: 12px;
+}
+footer {
+  background: url(../images/footer.jpg) center fixed;
+  margin-top: 83px;
+  font-size: 15px;
+  border-top: 7px #037703 solid;
+  line-height: 40px;
+  padding: 12px 20px 2px;
+}
+footer a,
+footer a:hover {
+  color: white;
+  font-weight: bold;
+}
+#newsmgt,
+#staffmgt {
+  padding-top: 20px;
+  border-color: #858687;
+  height: 560px;
+  overflow: scroll;
+}
+
+.news-mgt {
+  border-top: solid rgba(10, 101, 10, 0.32) 1px;
+  padding: 15px 0;
+}
+.news-mgt:nth-of-type(1) {
+  border: none;
+}
+.news-text {
+  padding: 4px 0 0 20px;
+}
+p::first-letter {
+  text-transform: uppercase !important;
+}
+
+.staff-mgt .fa-staff {
+  font-size: 26px;
+  padding-right: 9px;
+}
+.welcome-staff .dropdown-menu {
+  position: relative;
+  background-color: transparent;
+  border: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  width: 100%;
+}
+
+/* forum */
+#forum {
+  padding: 30px 12px;
+  background-color: #032503;
+  color: black;
+}
+#forum .fa.big {
+  color: rgb(10, 101, 10);
+  font-size: 24px;
+  font-weight: bold;
+  padding-top: 12px;
+}
+i.fa-plus.big:hover {
+  color: black !important;
+}
+button.fake-button {
+  background-color: transparent;
+  border: none;
+}
+.post {
+  background-color: #fff;
+  border-top: 18px #032503 solid;
+  padding-top: 11px;
+}
+.post-comment {
+  background-color: #fff;
+  border-top: 4px double #032503;
+}
+.post .post-text {
+  border-bottom: 2px #032503 solid;
+}
+.post-text {
+  border-top: 1px #d3e6d3 solid;
+  padding: 12px;
+}
+.post-bg {
+  background-color: #032503;
+}

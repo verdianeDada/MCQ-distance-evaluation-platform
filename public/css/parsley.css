@@ -10,8 +10,8 @@ input.parsley-error,
 select.parsley-error,
 textarea.parsley-error {
   /* color: #b94a48; */
-  /* background-color: #f2dede; */
-  border: 1px solid #eed3d7;
+  /* background-color: rgba(242, 222, 222, 0.3); */
+  border: 1px solid #b7727c;
 }
 #login input.parsley-error,
 #login select.parsley-error,

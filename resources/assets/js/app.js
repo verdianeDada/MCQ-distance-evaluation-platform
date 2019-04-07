@@ -7,6 +7,12 @@
 require("./bootstrap");
 
 window.Vue = require("vue");
+
+import BoostrapVue from "bootstrap-vue";
+Vue.use(BoostrapVue);
+
+// import 'bootstrap/dist/css/bootstrap.css';
+// import 'bootstrap-vue/dist/bootstrap-vue.css';
 let axios = require("axios");
 
 /**
@@ -17,7 +23,7 @@ let axios = require("axios");
 
 Vue.component(
   "teacher-dashboard",
-  require("./components/teacher/Dashboard.vue")
+  require("./components/teacher/Dashboard.vue").default
 );
 
 const app1 = new Vue({
@@ -25,13 +31,13 @@ const app1 = new Vue({
 });
 
 // for page Staff and News management
-Vue.component("newstaff", require("./components/admin/NewStaff.vue"));
+Vue.component("newstaff", require("./components/admin/NewStaff.vue").default);
 
 const app2 = new Vue({
   el: "#newstaff"
 });
 // for forum
-Vue.component("forum", require("./components//Forum.vue"));
+Vue.component("forum", require("./components//Forum.vue").default);
 
 const app3 = new Vue({
   el: "#forum"
