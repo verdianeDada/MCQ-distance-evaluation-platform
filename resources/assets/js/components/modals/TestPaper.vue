@@ -3,9 +3,13 @@
         <form 
             method="post" 
             @submit.prevent
-            data-parsley-validate 
             id="test-paper-form"
+            data-parsley-validate
         >
+        <div class="test" v-for="n in 2" :key="n">
+            <button @click="test">herre</button>
+
+        </div>
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close color-alarm" data-dismiss="modal">&times;</button>
@@ -45,11 +49,11 @@
                         </div>
                         <div class="row margin-0">
                             <div class="form-group">
-                                <label for="number" class="control-label col-md-1 col-lg-1 padding-0">N°of questions</label>
-                                <div class="col-md-1 col-lg-1">
-                                    <input type="number" id="number" min="1"  class="form-control " 
-                                    v-model.number="question_num"
-                                    >
+                                <label for="number" class="control-label col-md-1 col-lg-1 padding-0">Add question</label>
+                                <div class="col-md-1 col-lg-1" style="padding: 0 8px;">
+                                    <button @click="addQuestion" >
+                                        <i class="fa fa-plus bold color"></i>
+                                    </button>
                                 </div>                            
                             </div>
                         </div> 
@@ -57,9 +61,11 @@
                     <!-- a question  -->
                     <div>
                         <newquestion 
-                        v-for="n in question_num"
-                        :key="n"
-                        :numberQ = "n"
+                        v-for="(question, index) in testpaper.questions"
+                        :key="index"
+                        :numberQ = "index"
+                        :question="question"
+                        :remove="deleteQuestionForm"
                         >
                         </newquestion>    
                     </div>
@@ -87,24 +93,13 @@ export default {
   data: function() {
     return {
       question_num: 2,
+
       testpaper: {
         course_id: "",
         title: "",
         start_time: "2019-07-31T08:00",
         duration: "01:30",
-        questions: [
-          {
-            number: "",
-            text: "",
-            over_mark: "",
-            distractors: [
-              {
-                text: "",
-                is_correct: ""
-              }
-            ]
-          }
-        ]
+        questions: [this.generateQuestion()]
       }
     };
   },
@@ -112,6 +107,31 @@ export default {
     createTestPaper: function() {
       console.log(this.testpaper.duration);
       //   $("#testpapermodal").modal("hide");
+    },
+    deleteQuestionForm: function(index) {
+      this.testpaper.questions.splice(index, 1);
+    },
+    generateQuestion() {
+      return {
+        number: "",
+        is_correct: "0",
+        text: "",
+        over_mark: 2,
+        distractors: [
+          {
+            text: ""
+          },
+          {
+            text: ""
+          }
+        ]
+      };
+    },
+    addQuestion: function() {
+      this.testpaper.questions.push(this.generateQuestion());
+    },
+    test: function() {
+      console.log({ ...this.testpaper });
     }
   },
   components: {
