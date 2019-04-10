@@ -12667,6 +12667,7 @@ exports.default = _default;
 //
 //
 //
+//
 
 
 
@@ -12684,6 +12685,10 @@ exports.default = _default;
     };
   },
   methods: {
+    createTestPaper: function createTestPaper(testpaper) {
+      console.log(this.testpaper.duration);
+      //   $("#testpapermodal").modal("hide");
+    },
     loadpage: function loadpage() {
       var _this = this;
 
@@ -12830,12 +12835,6 @@ exports.default = _default;
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__others_NewQuestion_vue__ = __webpack_require__(273);
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-//
-//
-//
-//
 //
 //
 //
@@ -12926,24 +12925,27 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 /* harmony default export */ __webpack_exports__["a"] = ({
   data: function data() {
     return {
-      question_num: 2,
-
       testpaper: {
         course_id: "",
         title: "",
         start_time: "2019-07-31T08:00",
-        duration: "01:30",
-        questions: [this.generateQuestion()]
+        duration: "01:30:00",
+        questions: [this.generateQuestion(), this.generateQuestion()]
       }
     };
   },
   methods: {
-    createTestPaper: function createTestPaper() {
-      console.log(this.testpaper.duration);
-      //   $("#testpapermodal").modal("hide");
+    addDistractor: function addDistractor(indexQ) {
+      this.testpaper.questions[indexQ].distractors.push({ text: "" });
+    },
+    addQuestion: function addQuestion() {
+      this.testpaper.questions.push(this.generateQuestion());
     },
     deleteQuestionForm: function deleteQuestionForm(index) {
       this.testpaper.questions.splice(index, 1);
+    },
+    deleteDistractor: function deleteDistractor(indexQ, indexD) {
+      console.log(this.testpaper.questions[indexQ].distractors.splice(indexD, 1));
     },
     generateQuestion: function generateQuestion() {
       return {
@@ -12955,21 +12957,23 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
           text: ""
         }, {
           text: ""
+        }, {
+          text: ""
+        }, {
+          text: ""
         }]
       };
     },
-
-    addQuestion: function addQuestion() {
-      this.testpaper.questions.push(this.generateQuestion());
-    },
-    test: function test() {
-      console.log(_extends({}, this.testpaper));
+    generateDistractor: function generateDistractor() {
+      return {
+        text: ""
+      };
     }
   },
   components: {
     newquestion: __WEBPACK_IMPORTED_MODULE_0__others_NewQuestion_vue__["a" /* default */]
   },
-  props: ["courses"]
+  props: ["courses", "createTestPaper"]
 });
 
 /***/ }),
@@ -13013,9 +13017,20 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["a"] = ({
-  props: ["numberQ", "question", "remove"]
+  methods: {},
+  props: ["numberQ", "question", "remove", "removeD", "addD"]
 });
 
 /***/ }),
@@ -13501,6 +13516,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
   methods: {
     cleanModal: function cleanModal() {
       this.staff = {};
+      this.staff.type = "hod";
     },
     closeModal: function closeModal() {
       $("#staffmodal").modal("hide");
@@ -13690,14 +13706,10 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["a"] = ({
   mounted: function mounted() {},
+
   data: function data() {
     return {};
   },
@@ -70474,7 +70486,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "row margin-0 question" }, [
-    _c("div", { staticClass: "col-lg-1 col-md-1 padding-0" }, [
+    _c("div", {}, [
       _c(
         "label",
         { staticClass: "control-label bold color", attrs: { for: "question" } },
@@ -70482,7 +70494,7 @@ var render = function() {
       )
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "col-lg-9 col-lg-offset-1 col-md-9 padding-0" }, [
+    _c("div", { staticClass: "col-lg-10" }, [
       _c("div", { staticClass: "form-group" }, [
         _c("textarea", {
           directives: [
@@ -70516,14 +70528,31 @@ var render = function() {
         "div",
         {},
         [
-          _vm._m(0),
+          _c("div", { staticClass: "row" }, [
+            _vm._m(0),
+            _vm._v(" "),
+            _vm._m(1),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-2 col-lg-offset-5" }, [
+              _c(
+                "i",
+                {
+                  staticClass: "fa fa-plus bold color btn",
+                  on: {
+                    click: function($event) {
+                      return _vm.addD(_vm.numberQ)
+                    }
+                  }
+                },
+                [_vm._v("Add distractor")]
+              )
+            ])
+          ]),
           _vm._v(" "),
-          _c("span", [_vm._v(_vm._s(_vm.question.distractors.length))]),
-          _vm._v(" "),
-          _vm._l(_vm.question.distractors, function(distractor, index) {
+          _vm._l(_vm.question.distractors, function(distractor, indexD) {
             return _c(
               "div",
-              { key: index, staticClass: "form-group row margin-0" },
+              { key: indexD, staticClass: "form-group row margin-0 padding-0" },
               [
                 _c("div", { staticClass: "col-lg-1" }, [
                   _c("input", {
@@ -70537,39 +70566,66 @@ var render = function() {
                     ],
                     attrs: { type: "radio" },
                     domProps: {
-                      value: "" + index,
-                      checked: _vm._q(_vm.question.is_correct, "" + index)
+                      value: "" + indexD,
+                      checked: _vm._q(_vm.question.is_correct, "" + indexD)
                     },
                     on: {
                       change: function($event) {
-                        return _vm.$set(_vm.question, "is_correct", "" + index)
+                        return _vm.$set(_vm.question, "is_correct", "" + indexD)
                       }
                     }
                   })
                 ]),
                 _vm._v(" "),
-                _c("div", { staticClass: "col-lg-11" }, [
-                  _c("textarea", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: distractor.text,
-                        expression: "distractor.text"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: { rows: "2", placeholder: "Distractor" },
-                    domProps: { value: distractor.text },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
+                _c(
+                  "div",
+                  {
+                    staticClass: "col-lg-10",
+                    staticStyle: { "padding-right": "0" }
+                  },
+                  [
+                    _c("textarea", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: distractor.text,
+                          expression: "distractor.text"
                         }
-                        _vm.$set(distractor, "text", $event.target.value)
+                      ],
+                      staticClass: "form-control",
+                      attrs: { rows: "2", placeholder: "Distractor" },
+                      domProps: { value: distractor.text },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(distractor, "text", $event.target.value)
+                        }
                       }
-                    }
-                  })
+                    })
+                  ]
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-lg-1" }, [
+                  _c(
+                    "div",
+                    {
+                      staticClass: "col-lg-1",
+                      staticStyle: { "padding-left": "0" }
+                    },
+                    [
+                      _c("i", {
+                        staticClass: "fa fa-trash bold color-alarm btn",
+                        on: {
+                          click: function($event) {
+                            return _vm.removeD(_vm.numberQ, indexD)
+                          }
+                        }
+                      })
+                    ]
+                  )
                 ])
               ]
             )
@@ -70579,7 +70635,22 @@ var render = function() {
       )
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "col-lg-1 col-md-1 padding-0" }, [
+    _c(
+      "div",
+      { staticClass: "col-lg-1", staticStyle: { "padding-left": "0" } },
+      [
+        _c("i", {
+          staticClass: "fa fa-trash bold color-alarm btn",
+          on: {
+            click: function($event) {
+              return _vm.remove(_vm.numberQ)
+            }
+          }
+        })
+      ]
+    ),
+    _vm._v(" "),
+    _c("div", { staticClass: "col-lg-1 padding-0" }, [
       _c(
         "label",
         {
@@ -70590,7 +70661,7 @@ var render = function() {
         [_vm._v("Mark")]
       ),
       _vm._v(" "),
-      _c("div", { staticClass: "col-lg-6 md-6 padding-0" }, [
+      _c("div", { staticClass: "col-lg-6 md-4 padding-0" }, [
         _c("input", {
           directives: [
             {
@@ -70617,19 +70688,7 @@ var render = function() {
             }
           }
         })
-      ]),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          on: {
-            click: function($event) {
-              return _vm.remove(_vm.numberQ)
-            }
-          }
-        },
-        [_c("i", { staticClass: "fa fa-trash color-alarm" })]
-      )
+      ])
     ])
   ])
 }
@@ -70638,14 +70697,16 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-lg-1" }, [
-        _c("span", { staticClass: "color bold" }, [_vm._v("Answer")])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-lg-11" }, [
-        _c("span", { staticClass: "color bold" }, [_vm._v("Distractors")])
-      ])
+    return _c("div", { staticClass: "col-lg-1" }, [
+      _c("span", { staticClass: "color-gray bold" }, [_vm._v("Answer")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-lg-3 col-lg-offset-1" }, [
+      _c("span", { staticClass: "color-gray bold" }, [_vm._v("Distractors")])
     ])
   }
 ]
@@ -70685,12 +70746,6 @@ var render = function() {
         }
       },
       [
-        _vm._l(2, function(n) {
-          return _c("div", { key: n, staticClass: "test" }, [
-            _c("button", { on: { click: _vm.test } }, [_vm._v("herre")])
-          ])
-        }),
-        _vm._v(" "),
         _c("div", { staticClass: "modal-content" }, [
           _vm._m(0),
           _vm._v(" "),
@@ -70853,9 +70908,11 @@ var render = function() {
                       staticStyle: { padding: "0 8px" }
                     },
                     [
-                      _c("button", { on: { click: _vm.addQuestion } }, [
-                        _c("i", { staticClass: "fa fa-plus bold color" })
-                      ])
+                      _c("i", {
+                        staticClass: "fa fa-plus bold color btn",
+                        staticStyle: { "font-size": "20px" },
+                        on: { click: _vm.addQuestion }
+                      })
                     ]
                   )
                 ])
@@ -70870,7 +70927,9 @@ var render = function() {
                   attrs: {
                     numberQ: index,
                     question: question,
-                    remove: _vm.deleteQuestionForm
+                    remove: _vm.deleteQuestionForm,
+                    removeD: _vm.deleteDistractor,
+                    addD: _vm.addDistractor
                   }
                 })
               }),
@@ -70899,8 +70958,7 @@ var render = function() {
             )
           ])
         ])
-      ],
-      2
+      ]
     )
   ])
 }
@@ -70998,7 +71056,14 @@ var render = function() {
           staticClass: "modal fade",
           attrs: { id: "testpapermodal", role: "dialog" }
         },
-        [_c("testpapermodal", { attrs: { courses: _vm.courses } })],
+        [
+          _c("testpapermodal", {
+            attrs: {
+              courses: _vm.courses,
+              createTestPaper: _vm.createTestPaper
+            }
+          })
+        ],
         1
       )
     ],
@@ -71997,15 +72062,6 @@ var render = function() {
                     }
                   },
                   [
-                    _c(
-                      "option",
-                      {
-                        attrs: { disabled: "", value: "" },
-                        domProps: { selected: true }
-                      },
-                      [_vm._v("Choose the type")]
-                    ),
-                    _vm._v(" "),
                     _c("option", { attrs: { value: "hod" } }, [
                       _vm._v("Head Of Department")
                     ]),

@@ -3,6 +3,9 @@
 .color {
   color: rgb(10, 101, 10);
 }
+.color-gray {
+  color: #919691;
+}
 .bg-color {
   background-color: rgb(10, 101, 10);
 }
@@ -316,6 +319,7 @@ button.fake-button {
   background-color: transparent;
   border: none;
 }
+
 .post {
   background-color: #fff;
   border-top: 18px #032503 solid;

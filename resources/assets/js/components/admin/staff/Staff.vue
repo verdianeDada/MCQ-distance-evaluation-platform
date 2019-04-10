@@ -168,6 +168,7 @@ export default {
   methods: {
     cleanModal: function() {
       this.staff = {};
+      this.staff.type = "hod";
     },
     closeModal: function() {
       $("#staffmodal").modal("hide");

@@ -56,12 +56,7 @@
                     <div class="row form-group">
                         <label for="type" class="control-label col-lg-2">Type:</label>
                         <div class="col-lg-10">
-                           <select id="type" v-model = "staff.type" class="form-control" required>
-                                <option 
-                                    disabled 
-                                    :selected="true" 
-                                    value=""
-                                >Choose the type</option>                                    
+                           <select id="type" v-model = "staff.type" class="form-control" required>                               
                                 <option value="hod">Head Of Department</option>
                                 <option value="hoo">Head Of Option</option>
                                 <option value="teacher">Teacher</option>
@@ -95,6 +90,7 @@
 <script>
 export default {
   mounted: function() {},
+
   data: function() {
     return {};
   },

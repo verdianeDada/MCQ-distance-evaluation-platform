@@ -6,10 +6,6 @@
             id="test-paper-form"
             data-parsley-validate
         >
-        <div class="test" v-for="n in 2" :key="n">
-            <button @click="test">herre</button>
-
-        </div>
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close color-alarm" data-dismiss="modal">&times;</button>
@@ -51,9 +47,7 @@
                             <div class="form-group">
                                 <label for="number" class="control-label col-md-1 col-lg-1 padding-0">Add question</label>
                                 <div class="col-md-1 col-lg-1" style="padding: 0 8px;">
-                                    <button @click="addQuestion" >
-                                        <i class="fa fa-plus bold color"></i>
-                                    </button>
+                                    <i class="fa fa-plus bold color btn" style="font-size: 20px" @click="addQuestion"></i>
                                 </div>                            
                             </div>
                         </div> 
@@ -66,6 +60,8 @@
                         :numberQ = "index"
                         :question="question"
                         :remove="deleteQuestionForm"
+                        :removeD="deleteDistractor"
+                        :addD = "addDistractor"
                         >
                         </newquestion>    
                     </div>
@@ -92,24 +88,29 @@ import newquestion from "../others/NewQuestion.vue";
 export default {
   data: function() {
     return {
-      question_num: 2,
-
       testpaper: {
         course_id: "",
         title: "",
         start_time: "2019-07-31T08:00",
-        duration: "01:30",
-        questions: [this.generateQuestion()]
+        duration: "01:30:00",
+        questions: [this.generateQuestion(), this.generateQuestion()]
       }
     };
   },
   methods: {
-    createTestPaper: function() {
-      console.log(this.testpaper.duration);
-      //   $("#testpapermodal").modal("hide");
+    addDistractor: function(indexQ) {
+      this.testpaper.questions[indexQ].distractors.push({ text: "" });
+    },
+    addQuestion: function() {
+      this.testpaper.questions.push(this.generateQuestion());
     },
     deleteQuestionForm: function(index) {
       this.testpaper.questions.splice(index, 1);
+    },
+    deleteDistractor: function(indexQ, indexD) {
+      console.log(
+        this.testpaper.questions[indexQ].distractors.splice(indexD, 1)
+      );
     },
     generateQuestion() {
       return {
@@ -123,20 +124,25 @@ export default {
           },
           {
             text: ""
+          },
+          {
+            text: ""
+          },
+          {
+            text: ""
           }
         ]
       };
     },
-    addQuestion: function() {
-      this.testpaper.questions.push(this.generateQuestion());
-    },
-    test: function() {
-      console.log({ ...this.testpaper });
+    generateDistractor() {
+      return {
+        text: ""
+      };
     }
   },
   components: {
     newquestion
   },
-  props: ["courses"]
+  props: ["courses", "createTestPaper"]
 };
 </script>
