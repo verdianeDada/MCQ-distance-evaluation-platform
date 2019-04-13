@@ -12667,7 +12667,6 @@ exports.default = _default;
 //
 //
 //
-//
 
 
 
@@ -12685,10 +12684,6 @@ exports.default = _default;
     };
   },
   methods: {
-    createTestPaper: function createTestPaper(testpaper) {
-      console.log(this.testpaper.duration);
-      //   $("#testpapermodal").modal("hide");
-    },
     loadpage: function loadpage() {
       var _this = this;
 
@@ -12919,10 +12914,23 @@ exports.default = _default;
 //
 //
 //
+//
+//
+//
+//
 
 
 
 /* harmony default export */ __webpack_exports__["a"] = ({
+  computed: {
+    totalMark: function totalMark() {
+      var total = 0;
+      this.testpaper.questions.forEach(function (question) {
+        total = total + question.over_mark;
+      });
+      return total;
+    }
+  },
   data: function data() {
     return {
       testpaper: {
@@ -12930,16 +12938,30 @@ exports.default = _default;
         title: "",
         start_time: "2019-07-31T08:00",
         duration: "01:30:00",
+        over_mark: "",
         questions: [this.generateQuestion(), this.generateQuestion()]
       }
     };
   },
   methods: {
     addDistractor: function addDistractor(indexQ) {
-      this.testpaper.questions[indexQ].distractors.push({ text: "" });
+      this.testpaper.questions[indexQ].distractors.push({
+        index: "",
+        text: ""
+      });
     },
     addQuestion: function addQuestion() {
       this.testpaper.questions.push(this.generateQuestion());
+    },
+    createTestPaper: function createTestPaper(testpaper) {
+      this.testpaper.over_mark = this.totalMark;
+      var params = Object.assign({}, this.testpaper);
+      axios.post("api/testpaper", params).then(function (res) {
+        console.log(res.data);
+      }).catch(function (error) {
+        return console.log(error);
+      });
+      //   $("#testpapermodal").modal("hide");
     },
     deleteQuestionForm: function deleteQuestionForm(index) {
       this.testpaper.questions.splice(index, 1);
@@ -12949,7 +12971,7 @@ exports.default = _default;
     },
     generateQuestion: function generateQuestion() {
       return {
-        number: "",
+        index: "",
         is_correct: "0",
         text: "",
         over_mark: 2,
@@ -12957,23 +12979,14 @@ exports.default = _default;
           text: ""
         }, {
           text: ""
-        }, {
-          text: ""
-        }, {
-          text: ""
         }]
-      };
-    },
-    generateDistractor: function generateDistractor() {
-      return {
-        text: ""
       };
     }
   },
   components: {
     newquestion: __WEBPACK_IMPORTED_MODULE_0__others_NewQuestion_vue__["a" /* default */]
   },
-  props: ["courses", "createTestPaper"]
+  props: ["courses"]
 });
 
 /***/ }),
@@ -13029,7 +13042,14 @@ exports.default = _default;
 //
 
 /* harmony default export */ __webpack_exports__["a"] = ({
-  methods: {},
+  methods: {
+    setIndexQ: function setIndexQ(indexQ) {
+      this.question.index = indexQ;
+    },
+    setIndexD: function setIndexD(indexQ, indexD) {
+      this.question.distractors[indexD].index = indexD;
+    }
+  },
   props: ["numberQ", "question", "remove", "removeD", "addD"]
 });
 
@@ -70514,6 +70534,9 @@ var render = function() {
           },
           domProps: { value: _vm.question.text },
           on: {
+            change: function($event) {
+              return _vm.setIndexQ(_vm.numberQ)
+            },
             input: function($event) {
               if ($event.target.composing) {
                 return
@@ -70597,6 +70620,9 @@ var render = function() {
                       attrs: { rows: "2", placeholder: "Distractor" },
                       domProps: { value: distractor.text },
                       on: {
+                        change: function($event) {
+                          return _vm.setIndexD(_vm.numberQ, indexD)
+                        },
                         input: function($event) {
                           if ($event.target.composing) {
                             return
@@ -70608,25 +70634,27 @@ var render = function() {
                   ]
                 ),
                 _vm._v(" "),
-                _c("div", { staticClass: "col-lg-1" }, [
-                  _c(
-                    "div",
-                    {
-                      staticClass: "col-lg-1",
-                      staticStyle: { "padding-left": "0" }
-                    },
-                    [
-                      _c("i", {
-                        staticClass: "fa fa-trash bold color-alarm btn",
-                        on: {
-                          click: function($event) {
-                            return _vm.removeD(_vm.numberQ, indexD)
-                          }
-                        }
-                      })
-                    ]
-                  )
-                ])
+                indexD > 1
+                  ? _c("div", { staticClass: "col-lg-1" }, [
+                      _c(
+                        "div",
+                        {
+                          staticClass: "col-lg-1",
+                          staticStyle: { "padding-left": "0" }
+                        },
+                        [
+                          _c("i", {
+                            staticClass: "fa fa-trash bold color-alarm btn",
+                            on: {
+                              click: function($event) {
+                                return _vm.removeD(_vm.numberQ, indexD)
+                              }
+                            }
+                          })
+                        ]
+                      )
+                    ])
+                  : _vm._e()
               ]
             )
           })
@@ -70734,11 +70762,7 @@ var render = function() {
     _c(
       "form",
       {
-        attrs: {
-          method: "post",
-          id: "test-paper-form",
-          "data-parsley-validate": ""
-        },
+        attrs: { method: "post", id: "test-paper-form" },
         on: {
           submit: function($event) {
             $event.preventDefault()
@@ -70771,7 +70795,7 @@ var render = function() {
                         }
                       ],
                       staticClass: "form-control",
-                      attrs: { id: "course", required: "" },
+                      attrs: { id: "course", autofocus: "", required: "" },
                       on: {
                         change: function($event) {
                           var $$selectedVal = Array.prototype.filter
@@ -70818,7 +70842,40 @@ var render = function() {
                   )
                 ]),
                 _vm._v(" "),
-                _vm._m(1),
+                _c("div", { staticClass: "form-group col-lg-3 col-md-3" }, [
+                  _c(
+                    "label",
+                    { staticClass: "control-label", attrs: { for: "title" } },
+                    [_vm._v("Title: ")]
+                  ),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.testpaper.title,
+                        expression: "testpaper.title"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: {
+                      type: "text",
+                      id: "title",
+                      placeholder: "Test title",
+                      required: ""
+                    },
+                    domProps: { value: _vm.testpaper.title },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.testpaper, "title", $event.target.value)
+                      }
+                    }
+                  })
+                ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "form-group col-lg-3 col-md-3" }, [
                   _c(
@@ -70871,12 +70928,7 @@ var render = function() {
                       }
                     ],
                     staticClass: "form-control",
-                    attrs: {
-                      type: "time",
-                      id: "end",
-                      min: "01:00:00",
-                      max: "01:30:00"
-                    },
+                    attrs: { type: "time", id: "end" },
                     domProps: { value: _vm.testpaper.duration },
                     on: {
                       input: function($event) {
@@ -70934,7 +70986,19 @@ var render = function() {
                 })
               }),
               1
-            )
+            ),
+            _vm._v(" "),
+            _c("div", { staticStyle: { "text-align": "right" } }, [
+              _c(
+                "label",
+                { staticClass: "control-label", attrs: { for: "" } },
+                [_vm._v("Total marks:  ")]
+              ),
+              _vm._v(" "),
+              _c("span", { staticClass: "bold color" }, [
+                _vm._v(_vm._s(_vm.totalMark))
+              ])
+            ])
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "modal-footer" }, [
@@ -70978,27 +71042,6 @@ var staticRenderFns = [
       ),
       _vm._v(" "),
       _c("h3", { staticClass: "bold color" }, [_vm._v("New Test Paper")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group col-lg-3 col-md-3" }, [
-      _c("label", { staticClass: "control-label", attrs: { for: "title" } }, [
-        _vm._v("Title: ")
-      ]),
-      _vm._v(" "),
-      _c("input", {
-        staticClass: "form-control",
-        attrs: {
-          type: "text",
-          id: "title",
-          placeholder: "Test title",
-          autofocus: "",
-          required: ""
-        }
-      })
     ])
   }
 ]
@@ -71056,14 +71099,7 @@ var render = function() {
           staticClass: "modal fade",
           attrs: { id: "testpapermodal", role: "dialog" }
         },
-        [
-          _c("testpapermodal", {
-            attrs: {
-              courses: _vm.courses,
-              createTestPaper: _vm.createTestPaper
-            }
-          })
-        ],
+        [_c("testpapermodal", { attrs: { courses: _vm.courses } })],
         1
       )
     ],

@@ -4,7 +4,6 @@
             method="post" 
             @submit.prevent
             id="test-paper-form"
-            data-parsley-validate
         >
             <div class="modal-content">
                 <div class="modal-header">
@@ -16,11 +15,12 @@
                         <div class="row margin-0">
                             <div class="form-group col-lg-3 col-md-3">
                                 <label for="course" class="control-label">Course : </label>
-                                <select id="course" v-model = "testpaper.course_id" class="form-control" required>
+                                <select id="course" v-model = "testpaper.course_id" class="form-control" autofocus required>
                                     <option 
                                         disabled 
                                         :selected="true" 
                                         value=""
+                                        
                                     >Choose the course</option>                                    
                                     <option 
                                     v-for="course in courses"
@@ -31,7 +31,7 @@
                             </div>
                             <div class="form-group col-lg-3 col-md-3">
                                 <label for="title" class="control-label">Title: </label>
-                                <input type="text" id="title" class="form-control" placeholder="Test title" autofocus required>
+                                <input type="text" id="title" class="form-control" placeholder="Test title" v-model = "testpaper.title" required>
                             </div>
                             <div class="form-group col-lg-3 col-md-3">
                                 <label for="date" class="control-label">Starting Date & Time</label>
@@ -40,7 +40,7 @@
                         
                             <div class="form-group col-lg-3 col-md-3">
                                 <label for="end" class="control-label">Duration</label>
-                                <input type="time" id="end" class="form-control" min="01:00:00" max="01:30:00" v-model="testpaper.duration">
+                                <input type="time" id="end" class="form-control" v-model="testpaper.duration">
                             </div>                        
                         </div>
                         <div class="row margin-0">
@@ -65,6 +65,10 @@
                         >
                         </newquestion>    
                     </div>
+                    <div style="text-align: right">
+                        <label for="" class="control-label">Total marks: &nbsp;</label>
+                        <span  class="bold color">{{totalMark}}</span>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button
@@ -86,6 +90,15 @@
 import newquestion from "../others/NewQuestion.vue";
 
 export default {
+  computed: {
+    totalMark: function() {
+      var total = 0;
+      this.testpaper.questions.forEach(question => {
+        total = total + question.over_mark;
+      });
+      return total;
+    }
+  },
   data: function() {
     return {
       testpaper: {
@@ -93,16 +106,31 @@ export default {
         title: "",
         start_time: "2019-07-31T08:00",
         duration: "01:30:00",
+        over_mark: "",
         questions: [this.generateQuestion(), this.generateQuestion()]
       }
     };
   },
   methods: {
     addDistractor: function(indexQ) {
-      this.testpaper.questions[indexQ].distractors.push({ text: "" });
+      this.testpaper.questions[indexQ].distractors.push({
+        index: "",
+        text: ""
+      });
     },
     addQuestion: function() {
       this.testpaper.questions.push(this.generateQuestion());
+    },
+    createTestPaper: function(testpaper) {
+      this.testpaper.over_mark = this.totalMark;
+      var params = Object.assign({}, this.testpaper);
+      axios
+        .post("api/testpaper", params)
+        .then(res => {
+          console.log(res.data);
+        })
+        .catch(error => console.log(error));
+      //   $("#testpapermodal").modal("hide");
     },
     deleteQuestionForm: function(index) {
       this.testpaper.questions.splice(index, 1);
@@ -114,7 +142,7 @@ export default {
     },
     generateQuestion() {
       return {
-        number: "",
+        index: "",
         is_correct: "0",
         text: "",
         over_mark: 2,
@@ -124,25 +152,14 @@ export default {
           },
           {
             text: ""
-          },
-          {
-            text: ""
-          },
-          {
-            text: ""
           }
         ]
-      };
-    },
-    generateDistractor() {
-      return {
-        text: ""
       };
     }
   },
   components: {
     newquestion
   },
-  props: ["courses", "createTestPaper"]
+  props: ["courses"]
 };
 </script>

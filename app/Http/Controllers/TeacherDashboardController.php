@@ -51,9 +51,9 @@ class TeacherDashboardController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create_testpaper(Request $request)
     {
-        //
+        return 'makkk'.$request;
     }
 
     /**

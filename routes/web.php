@@ -16,7 +16,7 @@
 Route::get('/', 'WelcomeController@index');
 
 Route::prefix('api')->middleware(['auth'])->group(function() {
-    Route::resource('/teacherdashboard', 'TeacherDashboardController');
+    
     Route::resource('/course', 'CourseController');
     Route::resource('/testpaper', 'TestPaperController');
     //news
@@ -33,6 +33,11 @@ Route::prefix('api')->middleware(['auth'])->group(function() {
     Route::get('/all-post', 'forumController@all_post');
     Route::post('/post', 'forumController@store_post');
     Route::delete('/post/{id}', 'forumController@delete_post');
+
+    //test paper
+    Route::get('/teacherdashboard', 'TeacherDashboardController@index');
+    Route::post('/testpaper', 'TeacherDashboardController@create_testpaper');
+
 
 });
 

@@ -36,7 +36,6 @@
     >
       <testpapermodal
         :courses = "courses"
-        :createTestPaper = "createTestPaper"
       ></testpapermodal>
     </div>
   </div>
@@ -58,10 +57,6 @@ export default {
     };
   },
   methods: {
-    createTestPaper: function(testpaper) {
-      console.log(this.testpaper.duration);
-      //   $("#testpapermodal").modal("hide");
-    },
     loadpage: function() {
       axios
         .get("api/teacherdashboard/")
