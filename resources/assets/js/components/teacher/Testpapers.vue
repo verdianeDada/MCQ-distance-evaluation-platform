@@ -10,7 +10,7 @@
               <th>Course Code</th>
               <th>Starting date & time</th>
               <th>Duration</th>
-              <th>Total Mark</th>
+              <th>Total Marks</th>
               <th></th>  
             </tr>
           </thead>
