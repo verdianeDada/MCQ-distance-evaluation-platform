@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Question extends Model
 {
     protected $fillable = [
-        'text', 'over_mark', 'test_paper_id'
+        'text', 'over_mark', 'test_paper_id',
     ];
 
     public function test_paper()

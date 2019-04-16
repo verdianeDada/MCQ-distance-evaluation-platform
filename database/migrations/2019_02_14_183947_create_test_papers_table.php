@@ -17,7 +17,7 @@ class CreateTestPapersTable extends Migration
             $table->increments('id');
             $table->string('title');
             $table->dateTime('start_time');
-            $table->time('end_time');
+            $table->time('duration');
             $table->integer('over_mark');
             
             $table->unsignedInteger('course_id');

@@ -36,6 +36,7 @@
     >
       <testpapermodal
         :courses = "courses"
+        :mytestpapers="mytestpapers"
       ></testpapermodal>
     </div>
   </div>

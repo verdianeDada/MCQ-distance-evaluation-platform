@@ -17,7 +17,6 @@ class CreateQuestionsTable extends Migration
             $table->increments('id');            
             $table->text('text');
             $table->integer('over_mark');
-            $table->integer('number');
             
             $table->unsignedInteger('test_paper_id');
             $table->timestamps();

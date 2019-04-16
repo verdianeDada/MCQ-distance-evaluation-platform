@@ -4,13 +4,14 @@
             method="post" 
             @submit.prevent
             id="test-paper-form"
+            data-parsley-validate
         >
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close color-alarm" data-dismiss="modal">&times;</button>
                     <h3 class="bold color">New Test Paper</h3>
                 </div>
-                <div class="modal-body">                
+                <div class="modal-body">               
                     <div style="margin-bottom: 30px">
                         <div class="row margin-0">
                             <div class="form-group col-lg-3 col-md-3">
@@ -23,10 +24,11 @@
                                         
                                     >Choose the course</option>                                    
                                     <option 
-                                    v-for="course in courses"
-                                    :key = "course.id"
-                                    :value= "course.id"
-                                    >{{course.code}}: {{course.title}}</option>
+                                      v-for="course in courses"
+                                      :key = "course.id"
+                                      :value= "course.id"
+                                      class="capitalize"
+                                    >{{course.code}}: &nbsp; {{course.title}}</option>
                                 </select>
                             </div>
                             <div class="form-group col-lg-3 col-md-3">
@@ -35,12 +37,24 @@
                             </div>
                             <div class="form-group col-lg-3 col-md-3">
                                 <label for="date" class="control-label">Starting Date & Time</label>
-                                <input type="datetime-local" class="form-control" id="date" v-model="testpaper.start_time">
+                                <flatpickr
+                                  v-model="testpaper.start_time"
+                                  :config = "config.start_time"
+                                  class="form-control"
+                                  placeholder="Starting date & time"
+                                  required
+                                ></flatpickr>
                             </div>
                         
                             <div class="form-group col-lg-3 col-md-3">
                                 <label for="end" class="control-label">Duration</label>
-                                <input type="time" id="end" class="form-control" v-model="testpaper.duration">
+                                <flatpickr
+                                  v-model="testpaper.duration"
+                                  :config = "config.duration"
+                                  class="form-control"
+                                  placeholder="Test duration"
+                                  required
+                                ></flatpickr>
                             </div>                        
                         </div>
                         <div class="row margin-0">
@@ -88,14 +102,18 @@
 
 <script>
 import newquestion from "../others/NewQuestion.vue";
+import flatpickr from "vue-flatpickr-component";
+import "vue-flatpickr-component/dist/flatpickr.css";
 
 export default {
   computed: {
     totalMark: function() {
       var total = 0;
-      this.testpaper.questions.forEach(question => {
-        total = total + question.over_mark;
-      });
+      if (this.testpaper.questions) {
+        this.testpaper.questions.forEach(question => {
+          total = total + question.over_mark;
+        });
+      }
       return total;
     }
   },
@@ -104,13 +122,32 @@ export default {
       testpaper: {
         course_id: "",
         title: "",
-        start_time: "2019-07-31T08:00",
-        duration: "01:30:00",
+        start_time: "",
+        duration: "01:00",
         over_mark: "",
         questions: [this.generateQuestion(), this.generateQuestion()]
+      },
+      config: {
+        start_time: {
+          altFormat: "j F Y, H:i",
+          enableTime: true,
+          altInput: true,
+          minTime: "07:00",
+          maxTime: "18:00",
+          minDate: "today"
+        },
+        duration: {
+          dateFormat: "H:i",
+          noCalendar: true,
+          enableTime: true,
+          time_24hr: true,
+          minTime: "01:00",
+          maxTime: "01:30"
+        }
       }
     };
   },
+
   methods: {
     addDistractor: function(indexQ) {
       this.testpaper.questions[indexQ].distractors.push({
@@ -121,24 +158,47 @@ export default {
     addQuestion: function() {
       this.testpaper.questions.push(this.generateQuestion());
     },
-    createTestPaper: function(testpaper) {
-      this.testpaper.over_mark = this.totalMark;
-      var params = Object.assign({}, this.testpaper);
-      axios
-        .post("api/testpaper", params)
-        .then(res => {
-          console.log(res.data);
-        })
-        .catch(error => console.log(error));
-      //   $("#testpapermodal").modal("hide");
+    createTestPaper: function() {
+      if (
+        $("#test-paper-form")
+          .parsley()
+          .isValid()
+      ) {
+        console.log(this.testpaper);
+        var iQ = -1;
+
+        this.testpaper.questions.forEach(question => {
+          iQ++;
+          question.index = iQ;
+          var iD = -1;
+          question.distractors.forEach(dis => {
+            iD++;
+            dis.index = iD;
+          });
+        });
+        this.testpaper.over_mark = this.totalMark;
+        var params = Object.assign({}, this.testpaper);
+        axios
+          .post("api/testpaper", params)
+          .then(res => {
+            $("#testpapermodal").modal("hide");
+            this.testpaper.title = "";
+            this.testpaper.course_id = "";
+            console.log("dattaaa");
+            console.log(res.data);
+            this.mytestpapers.unshift(res.data[0]);
+          })
+          .catch(error => console.log(error));
+      }
     },
     deleteQuestionForm: function(index) {
+      console.log(this.testpaper);
+      this.testpaper.questions[index].index = index;
       this.testpaper.questions.splice(index, 1);
     },
     deleteDistractor: function(indexQ, indexD) {
-      console.log(
-        this.testpaper.questions[indexQ].distractors.splice(indexD, 1)
-      );
+      this.testpaper.questions[indexQ].distractors[indexD].index = indexD;
+      this.testpaper.questions[indexQ].distractors.splice(indexD, 1);
     },
     generateQuestion() {
       return {
@@ -158,8 +218,9 @@ export default {
     }
   },
   components: {
-    newquestion
+    newquestion,
+    flatpickr
   },
-  props: ["courses"]
+  props: ["courses", "mytestpapers"]
 };
 </script>

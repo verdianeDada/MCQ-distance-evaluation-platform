@@ -18,7 +18,7 @@ class CreateQuestionDistractorsTable extends Migration
             $table->text('text');
             $table->boolean('isCorrect')->default(false);
             
-            $table->unsignedInteger('test_paper_id');
+            $table->unsignedInteger('question_id');
             $table->timestamps();
         });
     }

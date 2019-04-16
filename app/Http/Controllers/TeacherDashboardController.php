@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Auth;
 
 use App\TestPaper;
 use App\User;
+use App\Question;
+use App\QuestionDistractor;
 
 class TeacherDashboardController extends Controller
 {
@@ -46,69 +48,44 @@ class TeacherDashboardController extends Controller
         return ['courses'=>$courses,'testpapers'=>$testpapers];
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    // test papers
+
     public function create_testpaper(Request $request)
     {
-        return 'makkk'.$request;
+        try{
+            $testpaper = Testpaper::create([
+                "title"=> $request->title,
+                "start_time"=> $request->start_time,
+                "over_mark"=> $request->over_mark,
+                "course_id"=> $request->course_id,
+                "duration"=> $request->duration
+            ]);
+            if (!empty($request->questions)){
+            foreach($request->questions as $question){
+                $actualQuestion = Question::create([
+                    "text" => $question['text'],
+                    "over_mark" => $question['over_mark'],
+                    "test_paper_id"=> $testpaper->id,
+                ]);
+                foreach ($question['distractors'] as $distractor){
+                    $is_correct = false;
+                    if ($question['is_correct'] == $distractor['index']){
+                        $is_correct = true;
+                    }
+                    QuestionDistractor::create([
+                        'text' => $distractor['text'],
+                        'question_id' => $actualQuestion->id,
+                        'isCorrect' => $is_correct
+                    ]);
+                }
+            }}
+            $testpaperid = $testpaper->id;
+            
+            return TestPaper::where('id','=', $testpaper->id)->with(['course'])->get();
+        }
+
+        catch(\Exception $e){  return $e->getMessage();}
+       
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
-}
+} ;

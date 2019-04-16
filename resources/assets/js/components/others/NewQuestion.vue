@@ -5,7 +5,7 @@
         </div>
         <div class="col-lg-10">
             <div class="form-group">
-                <textarea rows="2" id="question" class="form-control" @change="setIndexQ(numberQ)" placeholder="Question" v-model="question.text" required></textarea>
+                <textarea rows="2" id="question" class="form-control" placeholder="Question" v-model="question.text" required></textarea>
             </div>
             <div class="">
                 <div class="row">
@@ -22,7 +22,7 @@
                         <input type="radio" :value="''+ indexD" v-model="question.is_correct">
                     </div>
                     <div class="col-lg-10" style="padding-right: 0">
-                        <textarea class="form-control" rows="2" @change="setIndexD(numberQ,indexD)" placeholder="Distractor" v-model="distractor.text"></textarea>
+                        <textarea class="form-control" rows="2" placeholder="Distractor" v-model="distractor.text" required></textarea>
                     </div>
                     <div class="col-lg-1" v-if="indexD > 1">
                         <div class="col-lg-1" style="padding-left: 0">
@@ -46,14 +46,7 @@
 </template>
 <script>
 export default {
-  methods: {
-    setIndexQ: function(indexQ) {
-      this.question.index = indexQ;
-    },
-    setIndexD: function(indexQ, indexD) {
-      this.question.distractors[indexD].index = indexD;
-    }
-  },
+  methods: {},
   props: ["numberQ", "question", "remove", "removeD", "addD"]
 };
 </script>

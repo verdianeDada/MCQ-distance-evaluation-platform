@@ -27,7 +27,7 @@
               <td>{{testpaper.over_mark}}</td>
               <td>
                 <button>
-                  <i class="fa fa-pencil bold color"></i>
+                  <i class="fa fa-pen bold color"></i>
                 </button>
                 <button>
                   <i class="fa fa-trash color-alarm"></i>
