@@ -16,8 +16,9 @@ class CreateTestPapersTable extends Migration
         Schema::create('test_papers', function (Blueprint $table) {
             $table->increments('id');
             $table->string('title');
-            $table->dateTime('start_time');
-            $table->time('duration');
+            $table->date('date');
+            $table->time('start_time');
+            $table->time('end_time');
             $table->integer('over_mark');
             
             $table->unsignedInteger('course_id');

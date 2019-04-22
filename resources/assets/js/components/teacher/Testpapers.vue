@@ -8,26 +8,28 @@
               <th>#</th>
               <th>Title</th>
               <th>Course Code</th>
-              <th>Starting date & time</th>
-              <th>Duration</th>
+              <th>Date</th>
+              <th>Start time</th>
+              <th>End time</th>
               <th>Total Marks</th>
               <th></th>  
             </tr>
           </thead>
           <tbody>
             <tr 
-              v-for="(testpaper, index) in mytestpapers"
+              v-for="(testpaper,index) in mytestpapers"
               :key ="testpaper.id"
             >
-              <td>{{index + 1}}</td>
+              <td>{{index}}</td>
               <td>{{testpaper.title}}</td>
               <td>{{testpaper.course.code}}</td>
+              <td>{{testpaper.date}}</td>
               <td>{{testpaper.start_time}}</td>
-              <td>{{testpaper.duration}}</td>
+              <td>{{testpaper.end_time}}</td>
               <td>{{testpaper.over_mark}}</td>
               <td>
-                <button>
-                  <i class="fa fa-pen bold color"></i>
+                <button >
+                  <i class="fa fa-pen bold color" ></i>
                 </button>
                 <button>
                   <i class="fa fa-trash color-alarm"></i>
@@ -43,13 +45,10 @@
 
 <script>
 export default {
-  mounted() {},
   data: function() {
     return {};
   },
   methods: {},
-  components: {},
-
   props: ["mytestpapers"]
 };
 </script>

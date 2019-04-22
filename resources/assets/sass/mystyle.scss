@@ -28,7 +28,7 @@ h1 {
 .capitalize {
   text-transform: capitalize;
 }
-.uppercase{
+.uppercase {
   text-transform: uppercase;
 }
 span,
@@ -341,4 +341,10 @@ button.fake-button {
 }
 .post-bg {
   background-color: #032503;
+}
+
+.form-control[disabled],
+.form-control[readonly],
+fieldset[disabled] .form-control {
+  background-color: #fff;
 }

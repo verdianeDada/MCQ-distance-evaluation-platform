@@ -13059,3 +13059,9 @@ button.fake-button {
   background-color: #032503;
 }
 
+.form-control[disabled],
+.form-control[readonly],
+fieldset[disabled] .form-control {
+  background-color: #fff;
+}
+

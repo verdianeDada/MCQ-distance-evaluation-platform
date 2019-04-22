@@ -12690,17 +12690,7 @@ exports.default = _default;
 
       axios.get("api/teacherdashboard/").then(function (res) {
         _this.courses = res.data.courses;
-        var mytestpapers = res.data.testpapers;
-
-        mytestpapers.forEach(function (testpaper) {
-          if (!testpaper.course) {
-            var index = mytestpapers.map(function (testpaper) {
-              return testpaper.id;
-            }).indexOf(testpaper.id);
-            mytestpapers.splice(index, 1);
-          }
-        });
-        _this.mytestpapers = mytestpapers;
+        _this.mytestpapers = res.data.testpapers;
       }).catch(function (error) {
         console.log(error);
       });
@@ -12812,16 +12802,14 @@ exports.default = _default;
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["a"] = ({
-  mounted: function mounted() {},
-
   data: function data() {
     return {};
   },
   methods: {},
-  components: {},
-
   props: ["mytestpapers"]
 });
 
@@ -12957,29 +12945,28 @@ exports.default = _default;
   data: function data() {
     return {
       testpaper: {
-        course_id: "",
-        title: "",
-        start_time: "",
+        course_id: 6,
+        title: "sdf",
+        date: "2019-04-24",
         duration: "01:00",
         over_mark: "",
         questions: [this.generateQuestion(), this.generateQuestion()]
       },
       config: {
-        start_time: {
-          altFormat: "j F Y, H:i",
-          enableTime: true,
+        date: {
+          altFormat: "j F Y",
+          enableTime: false,
           altInput: true,
-          minTime: "07:00",
-          maxTime: "18:00",
-          minDate: "today"
+          minDate: "today",
+          weekNumbers: true
         },
         duration: {
-          dateFormat: "H:i",
-          noCalendar: true,
+          altFormat: "H:i",
           enableTime: true,
-          time_24hr: true,
+          noCalendar: true,
           minTime: "01:00",
-          maxTime: "01:30"
+          maxTime: "01:30",
+          time_24hr: true
         }
       }
     };
@@ -12996,12 +12983,8 @@ exports.default = _default;
       this.testpaper.questions.push(this.generateQuestion());
     },
     createTestPaper: function createTestPaper() {
-      var _this = this;
-
       if ($("#test-paper-form").parsley().isValid()) {
-        console.log(this.testpaper);
         var iQ = -1;
-
         this.testpaper.questions.forEach(function (question) {
           iQ++;
           question.index = iQ;
@@ -13014,19 +12997,17 @@ exports.default = _default;
         this.testpaper.over_mark = this.totalMark;
         var params = Object.assign({}, this.testpaper);
         axios.post("api/testpaper", params).then(function (res) {
-          $("#testpapermodal").modal("hide");
-          _this.testpaper.title = "";
-          _this.testpaper.course_id = "";
-          console.log("dattaaa");
+          // $("#testpapermodal").modal("hide");
+          // this.testpaper.title = "";
+          // this.testpaper.course_id = "";
+          // this.mytestpapers.unshift(res.data[0]);
           console.log(res.data);
-          _this.mytestpapers.unshift(res.data[0]);
         }).catch(function (error) {
           return console.log(error);
         });
       }
     },
     deleteQuestionForm: function deleteQuestionForm(index) {
-      console.log(this.testpaper);
       this.testpaper.questions[index].index = index;
       this.testpaper.questions.splice(index, 1);
     },
@@ -70381,15 +70362,17 @@ var render = function() {
           "tbody",
           _vm._l(_vm.mytestpapers, function(testpaper, index) {
             return _c("tr", { key: testpaper.id }, [
-              _c("td", [_vm._v(_vm._s(index + 1))]),
+              _c("td", [_vm._v(_vm._s(index))]),
               _vm._v(" "),
               _c("td", [_vm._v(_vm._s(testpaper.title))]),
               _vm._v(" "),
               _c("td", [_vm._v(_vm._s(testpaper.course.code))]),
               _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(testpaper.date))]),
+              _vm._v(" "),
               _c("td", [_vm._v(_vm._s(testpaper.start_time))]),
               _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(testpaper.duration))]),
+              _c("td", [_vm._v(_vm._s(testpaper.end_time))]),
               _vm._v(" "),
               _c("td", [_vm._v(_vm._s(testpaper.over_mark))]),
               _vm._v(" "),
@@ -70415,11 +70398,13 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("Course Code")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Starting date & time")]),
+        _c("th", [_vm._v("Date")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Duration")]),
+        _c("th", [_vm._v("Start time")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Total Mark")]),
+        _c("th", [_vm._v("End time")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Total Marks")]),
         _vm._v(" "),
         _c("th")
       ])
@@ -73929,136 +73914,156 @@ var render = function() {
           _c("div", { staticClass: "modal-body" }, [
             _c("div", { staticStyle: { "margin-bottom": "30px" } }, [
               _c("div", { staticClass: "row margin-0" }, [
-                _c("div", { staticClass: "form-group col-lg-3 col-md-3" }, [
-                  _c(
-                    "label",
-                    { staticClass: "control-label", attrs: { for: "course" } },
-                    [_vm._v("Course : ")]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "select",
-                    {
+                _c(
+                  "div",
+                  {
+                    staticClass: "form-group col-lg-3",
+                    staticStyle: { padding: "0 3px" }
+                  },
+                  [
+                    _c(
+                      "label",
+                      {
+                        staticClass: "control-label",
+                        attrs: { for: "course" }
+                      },
+                      [_vm._v("Course : ")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "select",
+                      {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.testpaper.course_id,
+                            expression: "testpaper.course_id"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: { id: "course", autofocus: "", required: "" },
+                        on: {
+                          change: function($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function(o) {
+                                return o.selected
+                              })
+                              .map(function(o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.$set(
+                              _vm.testpaper,
+                              "course_id",
+                              $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            )
+                          }
+                        }
+                      },
+                      [
+                        _c(
+                          "option",
+                          {
+                            attrs: { disabled: "", value: "" },
+                            domProps: { selected: true }
+                          },
+                          [_vm._v("Choose the course")]
+                        ),
+                        _vm._v(" "),
+                        _vm._l(_vm.courses, function(course) {
+                          return _c(
+                            "option",
+                            {
+                              key: course.id,
+                              staticClass: "capitalize",
+                              domProps: { value: course.id }
+                            },
+                            [
+                              _vm._v(
+                                _vm._s(course.code) +
+                                  ":   " +
+                                  _vm._s(course.title)
+                              )
+                            ]
+                          )
+                        })
+                      ],
+                      2
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "form-group col-lg-3",
+                    staticStyle: { padding: "0 3px" }
+                  },
+                  [
+                    _c(
+                      "label",
+                      { staticClass: "control-label", attrs: { for: "title" } },
+                      [_vm._v("Title: ")]
+                    ),
+                    _vm._v(" "),
+                    _c("input", {
                       directives: [
                         {
                           name: "model",
                           rawName: "v-model",
-                          value: _vm.testpaper.course_id,
-                          expression: "testpaper.course_id"
+                          value: _vm.testpaper.title,
+                          expression: "testpaper.title"
                         }
                       ],
                       staticClass: "form-control",
-                      attrs: { id: "course", autofocus: "", required: "" },
+                      attrs: {
+                        type: "text",
+                        id: "title",
+                        placeholder: "Test title",
+                        required: ""
+                      },
+                      domProps: { value: _vm.testpaper.title },
                       on: {
-                        change: function($event) {
-                          var $$selectedVal = Array.prototype.filter
-                            .call($event.target.options, function(o) {
-                              return o.selected
-                            })
-                            .map(function(o) {
-                              var val = "_value" in o ? o._value : o.value
-                              return val
-                            })
-                          _vm.$set(
-                            _vm.testpaper,
-                            "course_id",
-                            $event.target.multiple
-                              ? $$selectedVal
-                              : $$selectedVal[0]
-                          )
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.testpaper, "title", $event.target.value)
                         }
                       }
-                    },
-                    [
-                      _c(
-                        "option",
-                        {
-                          attrs: { disabled: "", value: "" },
-                          domProps: { selected: true }
-                        },
-                        [_vm._v("Choose the course")]
-                      ),
-                      _vm._v(" "),
-                      _vm._l(_vm.courses, function(course) {
-                        return _c(
-                          "option",
-                          {
-                            key: course.id,
-                            staticClass: "capitalize",
-                            domProps: { value: course.id }
-                          },
-                          [
-                            _vm._v(
-                              _vm._s(course.code) +
-                                ":   " +
-                                _vm._s(course.title)
-                            )
-                          ]
-                        )
-                      })
-                    ],
-                    2
-                  )
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "form-group col-lg-3 col-md-3" }, [
-                  _c(
-                    "label",
-                    { staticClass: "control-label", attrs: { for: "title" } },
-                    [_vm._v("Title: ")]
-                  ),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.testpaper.title,
-                        expression: "testpaper.title"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: {
-                      type: "text",
-                      id: "title",
-                      placeholder: "Test title",
-                      required: ""
-                    },
-                    domProps: { value: _vm.testpaper.title },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(_vm.testpaper, "title", $event.target.value)
-                      }
-                    }
-                  })
-                ]),
+                    })
+                  ]
+                ),
                 _vm._v(" "),
                 _c(
                   "div",
-                  { staticClass: "form-group col-lg-3 col-md-3" },
+                  {
+                    staticClass: "form-group col-lg-3",
+                    staticStyle: { padding: "0 3px" }
+                  },
                   [
                     _c(
                       "label",
                       { staticClass: "control-label", attrs: { for: "date" } },
-                      [_vm._v("Starting Date & Time")]
+                      [_vm._v("Date of the exam")]
                     ),
                     _vm._v(" "),
                     _c("flatpickr", {
                       staticClass: "form-control",
                       attrs: {
-                        config: _vm.config.start_time,
-                        placeholder: "Starting date & time",
+                        config: _vm.config.date,
+                        placeholder: "Exam Date",
                         required: ""
                       },
                       model: {
-                        value: _vm.testpaper.start_time,
+                        value: _vm.testpaper.date,
                         callback: function($$v) {
-                          _vm.$set(_vm.testpaper, "start_time", $$v)
+                          _vm.$set(_vm.testpaper, "date", $$v)
                         },
-                        expression: "testpaper.start_time"
+                        expression: "testpaper.date"
                       }
                     })
                   ],
@@ -74067,7 +74072,10 @@ var render = function() {
                 _vm._v(" "),
                 _c(
                   "div",
-                  { staticClass: "form-group col-lg-3 col-md-3" },
+                  {
+                    staticClass: "form-group col-lg-3",
+                    staticStyle: { padding: "0 3px" }
+                  },
                   [
                     _c(
                       "label",

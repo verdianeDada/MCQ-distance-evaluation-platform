@@ -63,19 +63,7 @@ export default {
         .get("api/teacherdashboard/")
         .then(res => {
           this.courses = res.data.courses;
-          var mytestpapers = res.data.testpapers;
-
-          mytestpapers.forEach(testpaper => {
-            if (!testpaper.course) {
-              var index = mytestpapers
-                .map(function(testpaper) {
-                  return testpaper.id;
-                })
-                .indexOf(testpaper.id);
-              mytestpapers.splice(index, 1);
-            }
-          });
-          this.mytestpapers = mytestpapers;
+          this.mytestpapers = res.data.testpapers;
         })
         .catch(error => {
           console.log(error);

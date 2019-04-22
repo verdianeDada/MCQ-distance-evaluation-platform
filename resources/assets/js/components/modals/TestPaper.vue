@@ -14,7 +14,7 @@
                 <div class="modal-body">               
                     <div style="margin-bottom: 30px">
                         <div class="row margin-0">
-                            <div class="form-group col-lg-3 col-md-3">
+                            <div class="form-group col-lg-3" style="padding: 0 3px">
                                 <label for="course" class="control-label">Course : </label>
                                 <select id="course" v-model = "testpaper.course_id" class="form-control" autofocus required>
                                     <option 
@@ -31,22 +31,22 @@
                                     >{{course.code}}: &nbsp; {{course.title}}</option>
                                 </select>
                             </div>
-                            <div class="form-group col-lg-3 col-md-3">
+                            <div class="form-group col-lg-3" style="padding: 0 3px">
                                 <label for="title" class="control-label">Title: </label>
                                 <input type="text" id="title" class="form-control" placeholder="Test title" v-model = "testpaper.title" required>
                             </div>
-                            <div class="form-group col-lg-3 col-md-3">
-                                <label for="date" class="control-label">Starting Date & Time</label>
+                            <div class="form-group col-lg-3" style="padding: 0 3px">
+                                <label for="date" class="control-label">Date of the exam</label>
                                 <flatpickr
-                                  v-model="testpaper.start_time"
-                                  :config = "config.start_time"
+                                  v-model="testpaper.date"
+                                  :config = "config.date"
                                   class="form-control"
-                                  placeholder="Starting date & time"
+                                  placeholder="Exam Date"
                                   required
                                 ></flatpickr>
                             </div>
                         
-                            <div class="form-group col-lg-3 col-md-3">
+                            <div class="form-group col-lg-3" style="padding: 0 3px">
                                 <label for="end" class="control-label">Duration</label>
                                 <flatpickr
                                   v-model="testpaper.duration"
@@ -120,29 +120,28 @@ export default {
   data: function() {
     return {
       testpaper: {
-        course_id: "",
-        title: "",
-        start_time: "",
+        course_id: 6,
+        title: "sdf",
+        date: "2019-04-24",
         duration: "01:00",
         over_mark: "",
         questions: [this.generateQuestion(), this.generateQuestion()]
       },
       config: {
-        start_time: {
-          altFormat: "j F Y, H:i",
-          enableTime: true,
+        date: {
+          altFormat: "j F Y",
+          enableTime: false,
           altInput: true,
-          minTime: "07:00",
-          maxTime: "18:00",
-          minDate: "today"
+          minDate: "today",
+          weekNumbers: true
         },
         duration: {
-          dateFormat: "H:i",
-          noCalendar: true,
+          altFormat: "H:i",
           enableTime: true,
-          time_24hr: true,
+          noCalendar: true,
           minTime: "01:00",
-          maxTime: "01:30"
+          maxTime: "01:30",
+          time_24hr: true
         }
       }
     };
@@ -164,9 +163,7 @@ export default {
           .parsley()
           .isValid()
       ) {
-        console.log(this.testpaper);
         var iQ = -1;
-
         this.testpaper.questions.forEach(question => {
           iQ++;
           question.index = iQ;
@@ -181,18 +178,16 @@ export default {
         axios
           .post("api/testpaper", params)
           .then(res => {
-            $("#testpapermodal").modal("hide");
-            this.testpaper.title = "";
-            this.testpaper.course_id = "";
-            console.log("dattaaa");
+            // $("#testpapermodal").modal("hide");
+            // this.testpaper.title = "";
+            // this.testpaper.course_id = "";
+            // this.mytestpapers.unshift(res.data[0]);
             console.log(res.data);
-            this.mytestpapers.unshift(res.data[0]);
           })
           .catch(error => console.log(error));
       }
     },
     deleteQuestionForm: function(index) {
-      console.log(this.testpaper);
       this.testpaper.questions[index].index = index;
       this.testpaper.questions.splice(index, 1);
     },

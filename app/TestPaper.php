@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class TestPaper extends Model
 {
     protected $fillable = [
-        'duration', 'title', 'start_time', 'over_mark', 'course_id',
+         'title','date', 'start_time','end_time' ,'over_mark', 'course_id',
     ];
 
     public function course()
