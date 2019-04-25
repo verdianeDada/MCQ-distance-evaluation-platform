@@ -12925,6 +12925,11 @@ exports.default = _default;
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -12945,13 +12950,14 @@ exports.default = _default;
   data: function data() {
     return {
       testpaper: {
-        course_id: 6,
-        title: "sdf",
-        date: "2019-04-24",
+        course_id: "",
+        title: "",
+        date: "",
         duration: "01:00",
         over_mark: "",
         questions: [this.generateQuestion(), this.generateQuestion()]
       },
+      dateProblem: "",
       config: {
         date: {
           altFormat: "j F Y",
@@ -12983,6 +12989,8 @@ exports.default = _default;
       this.testpaper.questions.push(this.generateQuestion());
     },
     createTestPaper: function createTestPaper() {
+      var _this = this;
+
       if ($("#test-paper-form").parsley().isValid()) {
         var iQ = -1;
         this.testpaper.questions.forEach(function (question) {
@@ -12997,11 +13005,15 @@ exports.default = _default;
         this.testpaper.over_mark = this.totalMark;
         var params = Object.assign({}, this.testpaper);
         axios.post("api/testpaper", params).then(function (res) {
-          // $("#testpapermodal").modal("hide");
-          // this.testpaper.title = "";
-          // this.testpaper.course_id = "";
-          // this.mytestpapers.unshift(res.data[0]);
           console.log(res.data);
+
+          if (res.data.problem) _this.dateProblem = res.data.problem;else {
+            _this.dateProblem = "";
+            $("#testpapermodal").modal("hide");
+            _this.testpaper.title = "";
+            _this.testpaper.course_id = "";
+            _this.mytestpapers.unshift(res.data);
+          }
         }).catch(function (error) {
           return console.log(error);
         });
@@ -74104,31 +74116,42 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "row margin-0" }, [
-                _c("div", { staticClass: "form-group" }, [
-                  _c(
-                    "label",
-                    {
-                      staticClass: "control-label col-md-1 col-lg-1 padding-0",
-                      attrs: { for: "number" }
-                    },
-                    [_vm._v("Add question")]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    {
-                      staticClass: "col-md-1 col-lg-1",
-                      staticStyle: { padding: "0 8px" }
-                    },
-                    [
-                      _c("i", {
-                        staticClass: "fa fa-plus bold color btn",
-                        staticStyle: { "font-size": "20px" },
-                        on: { click: _vm.addQuestion }
-                      })
-                    ]
-                  )
-                ])
+                _c("div", { staticClass: "col-lg-6" }, [
+                  _c("div", { staticClass: "form-group" }, [
+                    _c(
+                      "label",
+                      {
+                        staticClass:
+                          "control-label col-md-1 col-lg-1 padding-0",
+                        attrs: { for: "number" }
+                      },
+                      [_vm._v("Add question")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        staticClass: "col-md-1 col-lg-1",
+                        staticStyle: { padding: "0 8px" }
+                      },
+                      [
+                        _c("i", {
+                          staticClass: "fa fa-plus bold color btn",
+                          staticStyle: { "font-size": "20px" },
+                          on: { click: _vm.addQuestion }
+                        })
+                      ]
+                    )
+                  ])
+                ]),
+                _vm._v(" "),
+                _vm.dateProblem !== ""
+                  ? _c("div", { staticClass: "col-lg-6" }, [
+                      _c("span", { staticClass: "color-alarm bold" }, [
+                        _vm._v(_vm._s(_vm.dateProblem))
+                      ])
+                    ])
+                  : _vm._e()
               ])
             ]),
             _vm._v(" "),

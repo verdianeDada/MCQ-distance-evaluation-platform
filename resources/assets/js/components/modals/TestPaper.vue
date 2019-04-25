@@ -58,12 +58,17 @@
                             </div>                        
                         </div>
                         <div class="row margin-0">
-                            <div class="form-group">
-                                <label for="number" class="control-label col-md-1 col-lg-1 padding-0">Add question</label>
-                                <div class="col-md-1 col-lg-1" style="padding: 0 8px;">
-                                    <i class="fa fa-plus bold color btn" style="font-size: 20px" @click="addQuestion"></i>
-                                </div>                            
-                            </div>
+                          <div class="col-lg-6">
+                              <div class="form-group">
+                                  <label for="number" class="control-label col-md-1 col-lg-1 padding-0">Add question</label>
+                                  <div class="col-md-1 col-lg-1" style="padding: 0 8px;">
+                                      <i class="fa fa-plus bold color btn" style="font-size: 20px" @click="addQuestion"></i>
+                                  </div>                            
+                              </div>
+                          </div>
+                          <div class="col-lg-6" v-if= "dateProblem !== ''">
+                            <span class="color-alarm bold">{{dateProblem}}</span>
+                          </div>
                         </div> 
                     </div>     
                     <!-- a question  -->
@@ -120,13 +125,14 @@ export default {
   data: function() {
     return {
       testpaper: {
-        course_id: 6,
-        title: "sdf",
-        date: "2019-04-24",
+        course_id: "",
+        title: "",
+        date: "",
         duration: "01:00",
         over_mark: "",
         questions: [this.generateQuestion(), this.generateQuestion()]
       },
+      dateProblem: "",
       config: {
         date: {
           altFormat: "j F Y",
@@ -178,11 +184,16 @@ export default {
         axios
           .post("api/testpaper", params)
           .then(res => {
-            // $("#testpapermodal").modal("hide");
-            // this.testpaper.title = "";
-            // this.testpaper.course_id = "";
-            // this.mytestpapers.unshift(res.data[0]);
             console.log(res.data);
+
+            if (res.data.problem) this.dateProblem = res.data.problem;
+            else {
+              this.dateProblem = "";
+              $("#testpapermodal").modal("hide");
+              this.testpaper.title = "";
+              this.testpaper.course_id = "";
+              this.mytestpapers.unshift(res.data);
+            }
           })
           .catch(error => console.log(error));
       }

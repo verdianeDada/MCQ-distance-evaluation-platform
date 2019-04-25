@@ -12,6 +12,7 @@ textarea.parsley-error {
   /* color: #b94a48; */
   /* background-color: rgba(242, 222, 222, 0.3); */
   border: 1px solid #b7727c;
+  background-color: #f3e9eb;
 }
 #login input.parsley-error,
 #login select.parsley-error,
