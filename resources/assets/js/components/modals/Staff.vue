@@ -1,6 +1,6 @@
 <template>
     <div class="modal-dialog">
-        <form data-parsley-validate @submit.prevent>
+        <form data-parsley-validate @submit.prevent id="staff-form">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close color-alarm" data-dismiss="modal">&times;</button>
@@ -96,12 +96,24 @@ export default {
   },
   methods: {
     createStaff: function() {
-      let params = Object.assign({}, this.staff);
-      this.$emit("createStaff", params);
+      if (
+        $("#staff-form")
+          .parsley()
+          .isValid()
+      ) {
+        let params = Object.assign({}, this.staff);
+        this.$emit("createStaff", params);
+      }
     },
     updateStaff: function(id) {
-      let params = Object.assign({}, this.staff);
-      this.$emit("updateStaff", id, params);
+      if (
+        $("#staff-form")
+          .parsley()
+          .isValid()
+      ) {
+        let params = Object.assign({}, this.staff);
+        this.$emit("updateStaff", id, params);
+      }
     }
   },
   props: ["staffList", "staff", "editStaff"]

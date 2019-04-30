@@ -17,8 +17,7 @@ Route::get('/', 'WelcomeController@index');
 
 Route::prefix('api')->middleware(['auth'])->group(function() {
     
-    Route::resource('/course', 'CourseController');
-    Route::resource('/testpaper', 'TestPaperController');
+    
     //news
     Route::get('/all-news', 'NewStaffController@all_news');
     Route::post('/news', 'NewStaffController@store_news');
@@ -36,9 +35,13 @@ Route::prefix('api')->middleware(['auth'])->group(function() {
 
     //test paper
     Route::get('/teacherdashboard', 'TeacherDashboardController@index');
+    Route::get('/set_update_testpaper/{id}', 'TeacherDashboardController@set_update_testpaper');
     Route::post('/testpaper', 'TeacherDashboardController@create_testpaper');
+    Route::delete('/testpaper/{id}', 'TeacherDashboardController@delete_testpaper');
+    Route::patch('/testpaper', 'TeacherDashboardController@update_testpaper');
 
 
+    Route::resource('/course', 'CourseController');
 });
 
 
@@ -56,6 +59,6 @@ Auth::routes();
 // Route::get('/login', ['as' => 'login', 'uses' => 'Auth\LoginController@showLoginForm']);
 
 
-Route::any('{query}',function(){
-    return view('pagenotfound');
-})->where('query','.*');
+// Route::any('{query}',function(){
+//     return view('pagenotfound');
+// })->where('query','.*');

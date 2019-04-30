@@ -8,8 +8,9 @@
         >
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close color-alarm" data-dismiss="modal">&times;</button>
-                    <h3 class="bold color">New Test Paper</h3>
+                    <button type="button" class="close color-alarm" data-dismiss="modal" @click="clean">&times;</button>
+                    <h3 class="bold color" v-if="!edit">New Test Paper</h3>
+                    <h3 class="bold color" v-if="edit">Modify Test Paper</h3>
                 </div>
                 <div class="modal-body">               
                     <div style="margin-bottom: 30px">
@@ -58,15 +59,15 @@
                             </div>                        
                         </div>
                         <div class="row margin-0">
-                          <div class="col-lg-6">
+                          <div class="col-lg-2">
                               <div class="form-group">
-                                  <label for="number" class="control-label col-md-1 col-lg-1 padding-0">Add question</label>
-                                  <div class="col-md-1 col-lg-1" style="padding: 0 8px;">
+                                  <label for="number" class="control-label col-md-1 col-lg-6 padding-0">Add question</label>
+                                  <div class="col-md-1 col-lg-6" style="padding: 0 8px;">
                                       <i class="fa fa-plus bold color btn" style="font-size: 20px" @click="addQuestion"></i>
                                   </div>                            
                               </div>
                           </div>
-                          <div class="col-lg-6" v-if= "dateProblem !== ''">
+                          <div class="col-lg-9 col-lg-offset-1" v-if= "dateProblem !== ''">
                             <span class="color-alarm bold">{{dateProblem}}</span>
                           </div>
                         </div> 
@@ -93,12 +94,20 @@
                     <button
                         class="btn btn-danger"
                         data-dismiss = "modal"
+                        @click="clean"
                     >Cancel</button>
                     <button
                         class="btn btn-primary"
                         type="submit"
+                        v-if="!edit"
                         @click="createTestPaper"
                     >Save</button>
+                    <button
+                        class="btn btn-primary"
+                        type="submit"
+                        v-if="edit"
+                        @click="updateTestPaper"
+                    >Update</button>
                 </div>
             </div>
         </form>
@@ -119,20 +128,12 @@ export default {
           total = total + question.over_mark;
         });
       }
+      this.testpaper.over_mark = total;
       return total;
     }
   },
   data: function() {
     return {
-      testpaper: {
-        course_id: "",
-        title: "",
-        date: "",
-        duration: "01:00",
-        over_mark: "",
-        questions: [this.generateQuestion(), this.generateQuestion()]
-      },
-      dateProblem: "",
       config: {
         date: {
           altFormat: "j F Y",
@@ -152,7 +153,6 @@ export default {
       }
     };
   },
-
   methods: {
     addDistractor: function(indexQ) {
       this.testpaper.questions[indexQ].distractors.push({
@@ -163,70 +163,30 @@ export default {
     addQuestion: function() {
       this.testpaper.questions.push(this.generateQuestion());
     },
-    createTestPaper: function() {
-      if (
-        $("#test-paper-form")
-          .parsley()
-          .isValid()
-      ) {
-        var iQ = -1;
-        this.testpaper.questions.forEach(question => {
-          iQ++;
-          question.index = iQ;
-          var iD = -1;
-          question.distractors.forEach(dis => {
-            iD++;
-            dis.index = iD;
-          });
-        });
-        this.testpaper.over_mark = this.totalMark;
-        var params = Object.assign({}, this.testpaper);
-        axios
-          .post("api/testpaper", params)
-          .then(res => {
-            console.log(res.data);
 
-            if (res.data.problem) this.dateProblem = res.data.problem;
-            else {
-              this.dateProblem = "";
-              $("#testpapermodal").modal("hide");
-              this.testpaper.title = "";
-              this.testpaper.course_id = "";
-              this.mytestpapers.unshift(res.data);
-            }
-          })
-          .catch(error => console.log(error));
-      }
-    },
-    deleteQuestionForm: function(index) {
-      this.testpaper.questions[index].index = index;
-      this.testpaper.questions.splice(index, 1);
-    },
     deleteDistractor: function(indexQ, indexD) {
       this.testpaper.questions[indexQ].distractors[indexD].index = indexD;
       this.testpaper.questions[indexQ].distractors.splice(indexD, 1);
     },
-    generateQuestion() {
-      return {
-        index: "",
-        is_correct: "0",
-        text: "",
-        over_mark: 2,
-        distractors: [
-          {
-            text: ""
-          },
-          {
-            text: ""
-          }
-        ]
-      };
+    deleteQuestionForm: function(index) {
+      this.testpaper.questions[index].index = index;
+      this.testpaper.questions.splice(index, 1);
     }
   },
   components: {
     newquestion,
     flatpickr
   },
-  props: ["courses", "mytestpapers"]
+  props: [
+    "courses",
+    "mytestpapers",
+    "edit",
+    "testpaper",
+    "generateQuestion",
+    "dateProblem",
+    "createTestPaper",
+    "updateTestPaper",
+    "clean"
+  ]
 };
 </script>

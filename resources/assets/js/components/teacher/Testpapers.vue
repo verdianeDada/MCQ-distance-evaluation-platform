@@ -8,6 +8,7 @@
               <th>#</th>
               <th>Title</th>
               <th>Course Code</th>
+              <th>Credit</th>
               <th>Date</th>
               <th>Start time</th>
               <th>End time</th>
@@ -23,15 +24,16 @@
               <td>{{index}}</td>
               <td>{{testpaper.title}}</td>
               <td>{{testpaper.course.code}}</td>
+              <td>{{testpaper.course.credit}}</td>
               <td>{{testpaper.date}}</td>
               <td>{{testpaper.start_time}}</td>
               <td>{{testpaper.end_time}}</td>
               <td>{{testpaper.over_mark}}</td>
               <td>
-                <button >
+                <button data-toggle="modal" data-target="#testpapermodal" @click="setModal(testpaper.id)">
                   <i class="fa fa-pen bold color" ></i>
                 </button>
-                <button>
+                <button data-toggle="modal" data-target="#deletetest" @click="setdelete(testpaper.id)">
                   <i class="fa fa-trash color-alarm"></i>
                 </button>
               </td>
@@ -39,16 +41,32 @@
           </tbody>
         </table>
       </div>
+      <div class="fade modal" id="deletetest" role="dialog">
+          <deletetest
+            :id = "deleteid"
+            :mytestpapers="mytestpapers"
+            :deleteTestPaper= "deleteTestPaper"
+          ></deletetest>
+      </div>
     
     </div>
 </template>
 
 <script>
+import deletetest from "../modals/DeleteTestPaper.vue";
+
 export default {
   data: function() {
-    return {};
+    return {
+      deleteid: ""
+    };
   },
-  methods: {},
-  props: ["mytestpapers"]
+  methods: {
+    setdelete: function(id) {
+      this.deleteid = id;
+    }
+  },
+  props: ["mytestpapers", "courses", "deleteTestPaper", "setModal"],
+  components: { deletetest }
 };
 </script>

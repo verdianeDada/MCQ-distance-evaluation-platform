@@ -32,13 +32,13 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-1" style="padding-left: 0">
+        <div class="col-lg-1" style="padding-left: 0" v-if="numberQ > 0">
             <i class="fa fa-trash bold color-alarm btn" @click="remove(numberQ)"></i>
         </div>                        
         <div class="col-lg-1 padding-0">
             <label for="mark" class="control-label col-lg-6 padding-0" style="padding-top: 6px;">Mark</label>
             <div class="col-lg-6 md-4 padding-0">
-                <input type="number" min="1" class="form-control"  style="padding: 0" v-model.number="question.over_mark">
+                <input type="number" min="1" class="form-control"  style="padding: 0" required v-model.number="question.over_mark">
             </div>            
         </div>
         

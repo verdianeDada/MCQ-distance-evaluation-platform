@@ -33,7 +33,7 @@ class TeacherDashboardController extends Controller
 
         $testpapers = TestPaper::with(['course'=>function($query) use ($userid){
             $query->where('user_id','=', $userid);
-        }])->orderBy('updated_at', 'asc')->get();
+        }])->orderBy('updated_at', 'desc')->get();
         
         foreach($testpapers as $key => $test){
             if (empty($test->course))
@@ -56,7 +56,6 @@ class TeacherDashboardController extends Controller
                     $course->option="FCS";
             }
         }
-        
         return ['courses'=>$courses,'testpapers'=>$testpapers];
     }
 
@@ -241,7 +240,7 @@ class TeacherDashboardController extends Controller
                     $period = new Period;
                     $period->start_time = $ICTPapers[0]->end_time;
                     $period->end_time = "15:00:00";
-                    array_push($freePeriodICT, $ICTPapers[0]);
+                    array_push($freePeriodICT, $period);
                 }
                 else{
                     $period = new Period;
@@ -281,7 +280,7 @@ class TeacherDashboardController extends Controller
                     $period = new Period;
                     $period->start_time = $FCSPapers[0]->end_time;
                     $period->end_time = "15:00:00";
-                    array_push($freePeriodFCS, $FCSPapers[0]);
+                    array_push($freePeriodFCS, $period);
                 }
                 else{
                     $period = new Period;
@@ -361,6 +360,51 @@ class TeacherDashboardController extends Controller
 
         catch(\Exception $e){  return $e->getMessage();}
        
+    }
+
+    public function delete_testpaper($id){
+        try{
+            $testpaper = TestPaper::where('id',$id)->get()[0];
+            $questions = $testpaper->questions;
+            foreach($questions as $quest){
+                $distractors = $quest->question_distractors;
+                foreach($distractors as $dist){
+                    QuestionDistractor::destroy($dist->id);
+                }
+                Question::destroy($quest->id);
+            }
+            TestPaper::destroy($testpaper->id);
+            return $testpaper;
+        }
+        catch(\Exception $e){  return $e->getMessage();}
+    }
+
+   
+
+    public function set_update_testpaper($id){
+        try{
+            $testpaper = TestPaper::where('id',$id)->with(['questions'])->orderBy('updated_at', 'desc')->get()[0];
+            
+            foreach($testpaper->questions as $keyQ => $quest){
+                $testpaper->questions[$keyQ]->distractors = $quest->question_distractors;
+                foreach($quest->distractors as $keyD => $dist){
+                    if($dist->isCorrect){
+                        $testpaper->questions[$keyQ]->is_correct = $keyD;
+                    }
+                }
+            }
+            $testpaper->duration = date("H:i", strtotime($testpaper->end_time)-strtotime($testpaper->start_time));
+            return $testpaper;
+    }
+    catch(\Exception $e){
+          return $e->getMessage();
+    } 
+}
+    
+    public function update_testpaper(Request $request){
+         $this->delete_testpaper($request->id);
+        return $this->create_testpaper($request);
+
     }
 
 } ;

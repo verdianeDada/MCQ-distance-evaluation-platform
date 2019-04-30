@@ -1,6 +1,6 @@
 <template>
     <div class="modal-dialog">
-        <form data-parsley-validate @submit.prevent>
+        <form data-parsley-validate @submit.prevent id="news-form">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close color-alarm" data-dismiss="modal">&times;</button>
@@ -58,14 +58,26 @@ export default {
   },
   methods: {
     createNews: function() {
-      let params = Object.assign({}, this.news);
-      this.$emit("createNews", params);
+      if (
+        $("#news-form")
+          .parsley()
+          .isValid()
+      ) {
+        let params = Object.assign({}, this.news);
+        this.$emit("createNews", params);
+      }
     },
     updateNews: function(id) {
-      let params = Object.assign({}, this.news);
-      this.$emit("updateNews", id, params);
+      if (
+        $("#news-form")
+          .parsley()
+          .isValid()
+      ) {
+        let params = Object.assign({}, this.news);
+        this.$emit("updateNews", id, params);
+      }
     }
   },
-  props: ["newsList", "news", "edit"]
+  props: ["newsList", "news", "edit", "cleanModal"]
 };
 </script>
