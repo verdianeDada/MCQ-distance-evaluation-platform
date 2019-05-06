@@ -11,6 +11,10 @@
             </teacher-dashboard>
         </div>
     @else
-        <p>am student board</p>
+        <div id="student-dashboard" class="container-fluid">
+            <student-dashboard>
+                
+            </student-dashboard>
+        </div>
     @endif
 @endsection

@@ -40,6 +40,13 @@ Route::prefix('api')->middleware(['auth'])->group(function() {
     Route::delete('/testpaper/{id}', 'TeacherDashboardController@delete_testpaper');
     Route::patch('/testpaper', 'TeacherDashboardController@update_testpaper');
 
+    //student
+    Route::get('/studentdashboard', 'StudentDashboardController@index');
+    // Route::get('/set_update_testpaper/{id}', 'TeacherDashboardController@set_update_testpaper');
+    // Route::post('/testpaper', 'TeacherDashboardController@create_testpaper');
+    // Route::delete('/testpaper/{id}', 'TeacherDashboardController@delete_testpaper');
+    // Route::patch('/testpaper', 'TeacherDashboardController@update_testpaper');
+
 
     Route::resource('/course', 'CourseController');
 });

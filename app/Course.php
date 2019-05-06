@@ -18,7 +18,9 @@ class Course extends Model
     public function test_papers()
     {
         return $this->hasMany('App\TestPaper');
-        
     }
-  
+    public function user_repeat(){
+
+        return $this->belongsToMany('App\User');
+    }
 }

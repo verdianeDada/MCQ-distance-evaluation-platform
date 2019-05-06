@@ -22,6 +22,14 @@ let axios = require("axios");
  */
 
 Vue.component(
+  "student-dashboard",
+  require("./components/student/Dashboard.vue").default
+);
+
+const app0 = new Vue({
+  el: "#student-dashboard"
+});
+Vue.component(
   "teacher-dashboard",
   require("./components/teacher/Dashboard.vue").default
 );

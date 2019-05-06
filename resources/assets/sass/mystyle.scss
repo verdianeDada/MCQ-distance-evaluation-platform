@@ -38,6 +38,32 @@ p {
 .underline {
   text-decoration: underline;
 }
+div::-webkit-scrollbar {
+  width: 7px;
+  background-color: #f5f5f5;
+}
+div::-webkit-scrollbar-thumb {
+  // background-image: -webkit-linear-gradient(
+  //   0deg,
+  //   rgb(10, 101, 10) 25%,
+  //   transparent 25%,
+  //   transparent 50%,
+  //   #fff 50%,
+  //   rgb(10, 101, 10) 75%,
+  //   transparent 100%,
+  //   transparent
+  // );
+  border-radius: 7px;
+  background-color: rgb(10, 101, 10);
+}
+
+div::-webkit-scrollbar-track {
+  /* -webkit-box-shadow: inset 0 0 6px rgba(11, 11, 11, 0.9); */
+  /* box-shadow: inset 0 0 6px rgb(55, 59, 55); */
+  border-radius: 10px;
+  background-color: #f1f1f1;
+}
+
 /* navigation bar*/
 
 nav {
@@ -179,14 +205,15 @@ a:hover {
   background-color: rgba(10, 101, 10, 0.12);
 }
 .sidebar {
-  min-height: 575px;
+  height: 575px;
+  overflow: scroll;
   padding: 34px 5px 24px 36px;
   box-shadow: 0 2px 14px 0 black;
 }
 .panel-heading {
   padding: 0;
 }
-.sidebar > .panel-heading {
+.sidebar.courses .panel-heading {
   border-color: rgb(10, 101, 10);
 }
 p {

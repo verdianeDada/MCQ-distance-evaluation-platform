@@ -107,18 +107,11 @@
                                 <li><a href="/forum-page">Forum</a></li>
                                 <li class="dropdown">
                                     <div class="my-li">
-                                        @if (Auth::check() &&  Auth::user()->isTeacher)
-                                            <i class="dropdown-toggle btn name glyphicon glyphicon-user color-black"
-                                                data-toggle="dropdown" role="button" aria-expanded="false"
-                                                style="font-size: 23px;"
-                                            ><span class="caret"></span></i>
-                                        @else
-                                            <i class="dropdown-toggle btn name fa fa-user color-black"
-                                                data-toggle="dropdown" role="button" aria-expanded="false"
-                                            ><span class="caret"></span></i>
-                                        @endif
-
-                                        
+                                        <i class="dropdown-toggle btn name glyphicon glyphicon-user color-black"
+                                            data-toggle="dropdown" role="button" aria-expanded="false"
+                                            style="font-size: 23px;"
+                                        ><span class="caret"></span></i>
+                                    
                                         <ul class="dropdown-menu" role="menu">
                                             <li class="color">{{Auth::user()->name}}</li>
                                             <li>

@@ -17,6 +17,7 @@
           data-toggle = "modal"
           data-target = "#testpapermodal"
           v-if="courses[0]"
+          @click="clean"
         >
           Create a Test
         </button>
