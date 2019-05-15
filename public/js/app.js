@@ -14562,11 +14562,6 @@ exports.default = _default;
 //
 //
 //
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["a"] = ({
@@ -14630,7 +14625,6 @@ exports.default = _default;
   data: function data() {
     return {
       timer: "",
-      wordString: {},
       start: "",
       end: "",
       interval: "",
@@ -14639,9 +14633,6 @@ exports.default = _default;
       hours: "",
       expired: false
     };
-  },
-  created: function created() {
-    this.wordString = JSON.parse(this.trans);
   },
   mounted: function mounted() {
     var _this = this;
@@ -14671,35 +14662,22 @@ exports.default = _default;
       var passTime = end - now;
 
       if (distance < 0 && passTime < 0) {
-        // this.message = this.wordString.expired;
-        // this.statusType = "expired";
         this.expired = true;
-        // this.statusText = this.wordString.status.expired;
         clearInterval(this.interval);
         return;
       } else if (distance < 0 && passTime > 0) {
         this.calcTime(passTime);
-        // this.message = this.wordString.running;
-        // this.statusType = s"running";
-        // this.statusText = this.wordString.status.running;
       } else if (distance > 0 && passTime > 0) {
         this.calcTime(distance);
-        //   this.message = this.wordString.upcoming;
-        //   this.statusType = "upcoming";
-        //   this.statusText = this.wordString.status.upcoming;
       }
     },
     calcTime: function calcTime(dist) {
-      // Time calculations for days, hours, minutes and seconds
-      // this.days = Math.floor(dist / (1000 * 60 * 60 * 24));
-      this.hours = Math.floor(
-      // (dist % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-      dist / (1000 * 60 * 60));
+      this.hours = Math.floor(dist / (1000 * 60 * 60));
       this.minutes = Math.floor(dist % (1000 * 60 * 60) / (1000 * 60));
       this.seconds = Math.floor(dist % (1000 * 60) / 1000);
     }
   },
-  props: ["start_datetime", "end_datetime", "trans"]
+  props: ["start_datetime", "end_datetime"]
 });
 
 /***/ }),
@@ -77922,9 +77900,7 @@ var render = function() {
               _c("timer", {
                 attrs: {
                   start_datetime: _vm.start_datetime,
-                  end_datetime: _vm.end_datetime,
-                  trans:
-                    '{  \n            "hours":"Hours",\n            "minutes":"Minuts",\n            "seconds":"Seconds"\n            }'
+                  end_datetime: _vm.end_datetime
                 }
               })
             ],

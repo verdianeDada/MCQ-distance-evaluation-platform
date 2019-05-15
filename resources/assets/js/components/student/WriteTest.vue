@@ -9,11 +9,6 @@
           <timer 
             :start_datetime="start_datetime" 
             :end_datetime="end_datetime" 
-            trans='{  
-              "hours":"Hours",
-              "minutes":"Minuts",
-              "seconds":"Seconds"
-              }'
          ></timer>
         </div>
         <div class="col-lg-9" id="test-body">
