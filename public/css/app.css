@@ -13172,3 +13172,9 @@ fieldset[disabled] .form-control {
   background-color: silver;
 }
 
+.pagination > li > a.btn-primary {
+  background-color: #0a650a !important;
+  font-weight: bold;
+  color: white;
+}
+

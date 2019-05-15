@@ -14562,6 +14562,7 @@ exports.default = _default;
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["a"] = ({
@@ -14575,10 +14576,38 @@ exports.default = _default;
       user: {},
       error: "",
       start_datetime: 0,
-      end_datetime: 0
+      end_datetime: 0,
+      pageNumber: 0,
+      size: 2,
+      paginatedQuestions: []
     };
   },
   methods: {
+    goToPage: function goToPage(page) {
+      this.pageNumber = page;
+      this.paginatedData();
+      // <li v-for="(p,index) in paginatedData" :key="index">
+    },
+    paginatedData: function paginatedData() {
+      var start = this.pageNumber * this.size;
+      var end = start + this.size;
+      console.log(this.actualTest.questions.slice(start, end));
+      this.paginatedQuestions = this.actualTest.questions.slice(start, end);
+    },
+    nextPage: function nextPage() {
+      this.pageNumber++;
+      this.paginatedData();
+    },
+    prevPage: function prevPage() {
+      this.pageNumber--;
+      this.paginatedData();
+    },
+    pageCount: function pageCount() {
+      var l = this.actualTest.questions.length,
+          s = this.size;
+      return Math.ceil(l / s);
+    },
+
     loadpage: function loadpage() {
       var _this = this;
 
@@ -14591,6 +14620,8 @@ exports.default = _default;
 
         _this.start_datetime = _this.actualTest.start_datetime;
         _this.end_datetime = _this.actualTest.end_datetime;
+        _this.pageCount();
+        _this.paginatedData();
       }).catch(function (error) {
         return console.log(error);
       });
@@ -77992,7 +78023,7 @@ var render = function() {
             _c(
               "div",
               { staticClass: "questions" },
-              _vm._l(_vm.actualTest.questions, function(question, index) {
+              _vm._l(_vm.paginatedQuestions, function(question) {
                 return _c(
                   "div",
                   { key: question.id, staticClass: "question" },
@@ -78000,7 +78031,9 @@ var render = function() {
                     _c("p", [
                       _c("span", { staticClass: "bold" }, [
                         _vm._v(
-                          _vm._s(index + 1) + "    " + _vm._s(question.text)
+                          _vm._s(question.number) +
+                            "    " +
+                            _vm._s(question.text)
                         )
                       ])
                     ]),
@@ -78032,36 +78065,61 @@ var render = function() {
             _vm._v(" "),
             _c("legend"),
             _vm._v(" "),
-            _vm._m(0),
+            _c(
+              "div",
+              { staticClass: "row", staticStyle: { "text-align": "right" } },
+              [
+                _c(
+                  "ul",
+                  { staticClass: "pagination" },
+                  [
+                    _vm.pageNumber > 0
+                      ? _c("li", { on: { click: _vm.prevPage } }, [
+                          _c("a", { attrs: { href: "#" } }, [_vm._v("<<")])
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm._l(_vm.pageCount(), function(pne, p) {
+                      return _c(
+                        "li",
+                        {
+                          key: p,
+                          on: {
+                            click: function($event) {
+                              return _vm.goToPage(p)
+                            }
+                          }
+                        },
+                        [
+                          _c(
+                            "a",
+                            {
+                              class: { "btn-primary": p === _vm.pageNumber },
+                              attrs: { href: "#" }
+                            },
+                            [_vm._v(_vm._s(p + 1))]
+                          )
+                        ]
+                      )
+                    }),
+                    _vm._v(" "),
+                    _vm.pageNumber + 1 < _vm.pageCount()
+                      ? _c("li", { on: { click: _vm.nextPage } }, [
+                          _c("a", { attrs: { href: "#" } }, [_vm._v(">>")])
+                        ])
+                      : _vm._e()
+                  ],
+                  2
+                )
+              ]
+            ),
             _vm._v(" "),
-            _vm._m(1)
+            _vm._m(0)
           ])
         ])
   ])
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "row", staticStyle: { "text-align": "right" } },
-      [
-        _c("ul", { staticClass: "pagination" }, [
-          _c("li", [_c("a", { attrs: { href: "#" } }, [_vm._v("<<")])]),
-          _vm._v(" "),
-          _c("li", [_c("a", { attrs: { href: "#" } }, [_vm._v("1")])]),
-          _vm._v(" "),
-          _c("li", [_c("a", { attrs: { href: "#" } }, [_vm._v("2")])]),
-          _vm._v(" "),
-          _c("li", [_c("a", { attrs: { href: "#" } }, [_vm._v("3")])]),
-          _vm._v(" "),
-          _c("li", [_c("a", { attrs: { href: "#" } }, [_vm._v(">>")])])
-        ])
-      ]
-    )
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement

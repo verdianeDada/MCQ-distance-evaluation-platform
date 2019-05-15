@@ -61,6 +61,7 @@ class WriteTestController extends Controller
                 }
                 //clear correct answers
                 foreach($actualTest->questions as $keyQ=> $quest){
+                    $actualTest->questions[$keyQ]->number = $keyQ + 1;
                     foreach($actualTest->questions[$keyQ]->distractors as $keyD=> $dist){
                         $actualTest->questions[$keyQ]->distractors[$keyD]->isCorrect = "";
                     }

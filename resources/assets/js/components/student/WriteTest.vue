@@ -37,11 +37,11 @@
           <!-- questions -->
           <div class="questions">
             <div 
-              v-for="(question,index) in actualTest.questions"
+              v-for="(question) in paginatedQuestions"
               :key="question.id"
               class="question"
             >
-              <p><span class="bold">{{index + 1}}&nbsp;&nbsp;&nbsp;&nbsp;{{question.text}}</span></p>
+              <p><span class="bold">{{question.number}}&nbsp;&nbsp;&nbsp;&nbsp;{{question.text}}</span></p>
               <p><i>{{question.over_mark}} mark(s)</i></p>
               <div class="distrators">
                 <div v-for = "distractor in question.distractors" :key="distractor.id">
@@ -51,13 +51,14 @@
             </div>
         </div> 
         <legend></legend>
+       
         <div class="row" style="text-align: right">
           <ul class="pagination">
-            <li><a href="#">&lt;&lt;</a></li>
-            <li><a href="#">1</a></li>
-            <li><a href="#">2</a></li>
-            <li><a href="#">3</a></li>
-            <li><a href="#">&gt;&gt;</a></li>
+            <li v-if="pageNumber>0" @click="prevPage" ><a href="#">&lt;&lt;</a></li>
+            <li v-for="(pne,p) in pageCount()" :key="p" @click="goToPage(p)" >
+              <a :class="{'btn-primary': (p)===pageNumber}" href="#">{{p + 1}}</a>
+            </li>
+            <li v-if="(pageNumber + 1)<pageCount()" @click="nextPage" ><a href="#">&gt;&gt;</a></li>
           </ul>
       </div> 
       <div class="row" style="text-align: right">
@@ -80,10 +81,37 @@ export default {
       user: {},
       error: "",
       start_datetime: 0,
-      end_datetime: 0
+      end_datetime: 0,
+      pageNumber: 0,
+      size: 2,
+      paginatedQuestions: []
     };
   },
   methods: {
+    goToPage: function(page) {
+      this.pageNumber = page;
+      this.paginatedData();
+      // <li v-for="(p,index) in paginatedData" :key="index">
+    },
+    paginatedData() {
+      var start = this.pageNumber * this.size;
+      var end = start + this.size;
+      console.log(this.actualTest.questions.slice(start, end));
+      this.paginatedQuestions = this.actualTest.questions.slice(start, end);
+    },
+    nextPage() {
+      this.pageNumber++;
+      this.paginatedData();
+    },
+    prevPage() {
+      this.pageNumber--;
+      this.paginatedData();
+    },
+    pageCount() {
+      let l = this.actualTest.questions.length,
+        s = this.size;
+      return Math.ceil(l / s);
+    },
     loadpage: function() {
       axios
         .get("api/set_test")
@@ -96,6 +124,8 @@ export default {
 
           this.start_datetime = this.actualTest.start_datetime;
           this.end_datetime = this.actualTest.end_datetime;
+          this.pageCount();
+          this.paginatedData();
         })
         .catch(error => console.log(error));
     }

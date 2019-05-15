@@ -451,3 +451,8 @@ fieldset[disabled] .form-control {
     }
   }
 }
+.pagination > li > a.btn-primary {
+  background-color: rgb(10, 101, 10) !important;
+  font-weight: bold;
+  color: white;
+}
