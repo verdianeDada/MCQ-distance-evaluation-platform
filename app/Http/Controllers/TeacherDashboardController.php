@@ -42,7 +42,7 @@ class TeacherDashboardController extends Controller
        
         // look for teacher's taught courses
 
-        $user = User::find($userid);
+        $user = Auth::user();
         $courses = $user->courses()
             ->orderBy('year', 'asc')->get();
             

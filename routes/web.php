@@ -42,10 +42,7 @@ Route::prefix('api')->middleware(['auth'])->group(function() {
 
     //student
     Route::get('/studentdashboard', 'StudentDashboardController@index');
-    // Route::get('/set_update_testpaper/{id}', 'TeacherDashboardController@set_update_testpaper');
-    // Route::post('/testpaper', 'TeacherDashboardController@create_testpaper');
-    // Route::delete('/testpaper/{id}', 'TeacherDashboardController@delete_testpaper');
-    // Route::patch('/testpaper', 'TeacherDashboardController@update_testpaper');
+    Route::get('set_test', 'WriteTestController@set_test');
 
 
     Route::resource('/course', 'CourseController');
@@ -59,6 +56,7 @@ Route::group(['middleware'=>'auth'], function(){
     Route::get('/newstaff', 'NewStaffController@index');
     Route::get('/forum-page', 'ForumController@index');
     Route::get('/testreport', 'TestReportController@index');
+    Route::get('/write_test','writeTestController@index');
 });
 
 Auth::routes();

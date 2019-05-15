@@ -50,3 +50,13 @@ Vue.component("forum", require("./components//Forum.vue").default);
 const app3 = new Vue({
   el: "#forum"
 });
+
+// write test page
+Vue.component(
+  "write-test",
+  require("./components/student/WriteTest.vue").default
+);
+
+const app4 = new Vue({
+  el: "#write-test"
+});

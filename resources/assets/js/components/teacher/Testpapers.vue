@@ -21,7 +21,7 @@
               v-for="(testpaper,index) in mytestpapers"
               :key ="testpaper.id"
             >
-              <td>{{index}}</td>
+              <td>{{index + 1}}</td>
               <td>{{testpaper.title}}</td>
               <td>{{testpaper.course.code}}</td>
               <td>{{testpaper.course.credit}}</td>

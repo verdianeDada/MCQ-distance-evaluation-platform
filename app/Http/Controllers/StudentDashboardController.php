@@ -19,7 +19,7 @@ class StudentDashboardController extends Controller
         try{
             // look for testpapers
             $userid = Auth::user()->id;
-            $user = User::find($userid);
+            $user = Auth::user();
 
             $repeatingCourses = $user->course_repeat()->orderBy('code')->get();
             $courses = Course::where([
@@ -44,15 +44,20 @@ class StudentDashboardController extends Controller
                     ["courses.isCommon", 1]
                 ]);
             }])->orderBy('updated_at', 'desc')->get();
-
             $testpapers = array();
+            $todayTestpapers = array();
             foreach($testpapers_o as $key => $test){
                 if ( !empty($test->course)){
-                    if (strtotime($test->date.' '.$test->end_time) > strtotime($now) )
+                    if (strtotime($test->date.' '.$test->end_time) > strtotime($now) ){
                         $test->obsolete = false;
+                    }
                     else 
                         $test->obsolete = true;
                     array_push($testpapers, $test);
+                    
+                    if ($test->date == date("Y-m-d", strtotime($now)))
+                    array_push($todayTestpapers, $test);
+
                 }
             }
             
@@ -62,11 +67,15 @@ class StudentDashboardController extends Controller
            foreach($repeatingCourses as $key=>$rc){
                 $temp = Testpaper::with(['course'])->where('course_id',$rc->id)->get();
                 if ( sizeof($temp)>0){
-                    if (strtotime($temp[0]->date.' '.$temp[0]->end_time) > strtotime($now) )
-                        $temp[0]->obsolete = false;
+                    if (strtotime($temp[0]->date.' '.$temp[0]->end_time) > strtotime($now) ){
+                        $temp[0]->obsolete = false;                        
+                    }
                     else 
                         $temp[0]->obsolete = true;
                     array_push($repeatingTestpapers, $temp[0]);
+
+                    if ($temp[0]->date == date("Y-m-d", strtotime($now)))
+                            array_push($todayTestpapers, $temp[0]);
                 }
            }
            
@@ -74,7 +83,8 @@ class StudentDashboardController extends Controller
                 'courses'=>$courses,
                 'testpapers'=>$testpapers, 
                 'repeatingCourses'=>$repeatingCourses, 
-                'repeatingTestpapers'=>$repeatingTestpapers
+                'repeatingTestpapers'=>$repeatingTestpapers,
+                'todayTestpapers'=>$todayTestpapers
             ];
         }
         catch(\Exception $e){

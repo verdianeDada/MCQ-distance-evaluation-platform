@@ -132,7 +132,7 @@ nav input {
 /* body*/
 
 .index-bg {
-  background: url("../images/bg.jpg") center fixed;
+  background: url("./images/bg.jpg") center fixed;
   margin: 12px 0;
   padding: 60px 0 0 0;
   box-shadow: 0 4px 14px 0 black;
@@ -283,7 +283,7 @@ h4 {
   margin-bottom: 12px;
 }
 footer {
-  background: url(../images/footer.jpg) center fixed;
+  background: url("./images/footer.jpg") center fixed;
   margin-top: 83px;
   font-size: 15px;
   border-top: 7px #037703 solid;
@@ -374,4 +374,80 @@ button.fake-button {
 .form-control[readonly],
 fieldset[disabled] .form-control {
   background-color: #fff;
+}
+#write-test {
+  background: #032503;
+}
+#test-body {
+  box-shadow: inset 0 0 5px #c7ca34, 0 0 5px #dde00a;
+  background-color: #fff;
+}
+#write-test table,
+#write-test td {
+  padding: 3px 0;
+}
+
+#write-test .distrators {
+  background-color: rgba(3, 119, 3, 0.05);
+  margin-left: 22px;
+  margin-bottom: 30px;
+  margin-top: 20px;
+}
+#write-test .test-header {
+  box-shadow: 0 0 5px #032503, 0 0 5px #163504;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+  padding-left: 7px;
+}
+#write-test .questions {
+  padding: 25px 15px;
+}
+#write-test .question {
+  margin-bottom: 20px;
+  margin-top: 10px;
+}
+// tilmerrr
+
+.timer {
+  font-size: 14px;
+  text-align: center;
+  margin-top: 13px;
+  margin-left: 7px;
+  position: fixed;
+
+  .day,
+  .hour,
+  .min,
+  .sec {
+    font-size: 18px;
+    display: inline-block;
+    font-weight: 500;
+    text-align: center;
+  }
+  .number {
+    color: white;
+  }
+  .message {
+    font-size: 14px;
+    font-weight: 400;
+    margin-top: 5px;
+  }
+  .status-tag {
+    width: 270px;
+    margin: 10px auto;
+    padding: 8px 0;
+    font-weight: 500;
+    color: #000;
+    text-align: center;
+    border-radius: 15px;
+    &.upcoming {
+      background-color: lightGreen;
+    }
+    &.running {
+      background-color: gold;
+    }
+    &.expired {
+      background-color: silver;
+    }
+  }
 }
