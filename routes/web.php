@@ -42,7 +42,8 @@ Route::prefix('api')->middleware(['auth'])->group(function() {
 
     //student
     Route::get('/studentdashboard', 'StudentDashboardController@index');
-    Route::get('set_test', 'WriteTestController@set_test');
+    Route::get('/set_test', 'WriteTestController@set_test');
+    Route::post('/submit_test', 'WriteTestController@submit_test');
 
 
     Route::resource('/course', 'CourseController');

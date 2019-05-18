@@ -8,8 +8,8 @@ use Illuminate\Support\Facades\DB;
 
 use App\TestPaper;
 use App\User;
-// use App\Question;
-// use App\QuestionDistractor;
+use App\WrittenTestPaper;
+use App\RepeatingCourse;
 use App\Course;
 
 class StudentDashboardController extends Controller
@@ -21,7 +21,13 @@ class StudentDashboardController extends Controller
             $userid = Auth::user()->id;
             $user = Auth::user();
 
-            $repeatingCourses = $user->course_repeat()->orderBy('code')->get();
+            $temp = RepeatingCourse::where('user_id', $userid)->get();
+            $repeatingCourses = array();
+            if (!empty($temp)){
+                foreach($temp as $rc){
+                    array_push($repeatingCourses, Course::where('id', $rc->course_id)->get()[0]);
+                }
+            }
             $courses = Course::where([
                             ['year',$user->year],
                             ['option',$user->option],
@@ -51,33 +57,60 @@ class StudentDashboardController extends Controller
                     if (strtotime($test->date.' '.$test->end_time) > strtotime($now) ){
                         $test->obsolete = false;
                     }
-                    else 
+                    else {
                         $test->obsolete = true;
+                        $temp = WrittenTestPaper::where([['user_id', Auth::user()->id], ['test_paper_id', $test->id]])->get();
+                        if (sizeof($temp) != 0)
+                            $test->mark_obtained = $temp[0]->over_mark;
+                        else    
+                        $test->mark_obtained = 0;
+                    }
                     array_push($testpapers, $test);
                     
-                    if ($test->date == date("Y-m-d", strtotime($now)))
-                    array_push($todayTestpapers, $test);
+                    if ($test->date == date("Y-m-d", strtotime($now))){
+                        $temp = WrittenTestPaper::where([['user_id', Auth::user()->id], ['test_paper_id', $test->id]])->get();
+                                if (sizeof($temp) != 0)
+                                    $test->done = true;
+                                else    
+                                    $test->done = false;
+                        array_push($todayTestpapers, $test);
+                    }
 
                 }
             }
             
             //repeating testpapers
-            
-           $repeatingTestpapers = array();
-           foreach($repeatingCourses as $key=>$rc){
-                $temp = Testpaper::with(['course'])->where('course_id',$rc->id)->get();
-                if ( sizeof($temp)>0){
-                    if (strtotime($temp[0]->date.' '.$temp[0]->end_time) > strtotime($now) ){
-                        $temp[0]->obsolete = false;                        
-                    }
-                    else 
-                        $temp[0]->obsolete = true;
-                    array_push($repeatingTestpapers, $temp[0]);
+            $repeatingTestpapers = array();
 
-                    if ($temp[0]->date == date("Y-m-d", strtotime($now)))
-                            array_push($todayTestpapers, $temp[0]);
+            if (!empty($repeatingCourses)){
+                foreach($repeatingCourses as $rc){
+                        $test = Testpaper::with(['course'])->where('course_id',$rc->id)->get();
+                        if ( sizeof($test)>0){
+                            if (strtotime($test[0]->date.' '.$test[0]->end_time) > strtotime($now) ){
+                                $test[0]->obsolete = false;                        
+                            }
+                            else {
+                                $test[0]->obsolete = true;
+                                $temp = WrittenTestPaper::where([['user_id', Auth::user()->id], ['test_paper_id', $test[0]->id]])->get();
+                                if (sizeof($temp) != 0)
+                                    $test[0]->mark_obtained = $temp[0]->over_mark;
+                                else    
+                                    $test[0]->mark_obtained = 0;
+                            }
+                            array_push($repeatingTestpapers, $test[0]);
+
+                            if ($test[0]->date == date("Y-m-d", strtotime($now))){
+                                $temp = WrittenTestPaper::where([['user_id', Auth::user()->id], ['test_paper_id', $test[0]->id]])->get();
+                                if (sizeof($temp) != 0)
+                                    $test[0]->done = true;
+                                else    
+                                    $test[0]->done = false;
+                                array_push($todayTestpapers, $test[0]);
+
+                            }
+                        }
                 }
-           }
+            }
            
             return [
                 'courses'=>$courses,

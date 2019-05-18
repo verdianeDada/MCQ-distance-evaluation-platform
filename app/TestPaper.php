@@ -25,4 +25,7 @@ class TestPaper extends Model
         return $this->hasOne('App\TestReport');
         
     }
+    // public function written_papers_user(){
+    //     return $this->belongsToMany('App\User');
+    // }
 }

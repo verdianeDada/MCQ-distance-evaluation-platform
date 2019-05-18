@@ -27,7 +27,7 @@
                 <a href="#">Copyright © 2019</a>
             </div>
             <div class="col-lg-4">
-                <a href="http://www.ubastudent.online/student/no_documents">
+                <a href="http://www.ubastudent.online">
                     <i class="fa fa-globe" style="font-size: 22px;"></i>&nbsp;Uba Student Online
                 </a>
             </div>

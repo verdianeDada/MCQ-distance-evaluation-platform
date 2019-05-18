@@ -36,6 +36,9 @@ class User extends Authenticatable
     public function course_repeat(){
         return $this->belongsToMany('App\Course','course_repeatings');
     }
+    public function user_written_papers(){
+        return $this->belongsToMany('App\TestPaper','written_testpapers')->withPivot('over_mark');
+    }
     /**
      * The attributes that should be hidden for arrays.
      *

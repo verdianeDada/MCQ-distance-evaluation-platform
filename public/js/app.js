@@ -12651,6 +12651,8 @@ exports.default = _default;
 //
 //
 //
+//
+//
 
 
 
@@ -12669,7 +12671,7 @@ exports.default = _default;
       todayTestpapers: [],
       examPeriod: "",
       actualTest: {},
-      testNow: true
+      testNow: false
     };
   },
   methods: {
@@ -12677,63 +12679,66 @@ exports.default = _default;
       var _this = this;
 
       axios.get("api/studentdashboard/").then(function (res) {
-        _this.courses = res.data.courses;
-        _this.repeatingCourses = res.data.repeatingCourses;
-        _this.testpapers = res.data.testpapers;
-        _this.repeatingTestpapers = res.data.repeatingTestpapers;
-        _this.todayTestpapers = res.data.todayTestpapers;
+        console.log(res);
+        if (res.data.courses) _this.courses = res.data.courses;
+        if (res.data.testpapers) _this.testpapers = res.data.testpapers;
+        if (res.data.repeatingCourses) _this.repeatingCourses = res.data.repeatingCourses;
+        if (res.data.repeatingTestpapers) {
+          _this.repeatingTestpapers = res.data.repeatingTestpapers;
 
-        _this.repeatingTestpapers.sort(function compare(a, b) {
-          var dateA = new Date(a.date);
-          var dateB = new Date(b.date);
-          return new Date(b.updated_at) - new Date(a.updated_at);
-        });
+          _this.repeatingTestpapers.sort(function compare(a, b) {
+            var dateA = new Date(a.date);
+            var dateB = new Date(b.date);
+            return new Date(b.updated_at) - new Date(a.updated_at);
+          });
+        }
 
-        _this.todayTestpapers.sort(function compare(a, b) {
-          var time1 = parseFloat(a.start_time.replace(":", ".").replace(/[^\d.-]/g, ""));
-          var time2 = parseFloat(b.start_time.replace(":", ".").replace(/[^\d.-]/g, ""));
-          if (time1 < time2) return -1;
-          if (time1 > time2) return 1;
-          return 0;
-        });
-
-        _this.actualTest = _this.todayTestpapers[0];
-        // this.examPeriod = setInterval(() => {
-        //   var now = new Date();
-        //   now = new Date(+now - now.getTimezoneOffset() + 3600000)
-        //     .toISOString()
-        //     .split(".")[0];
-
-        //   now = now.split("T");
-        //   var todayDate = now[0];
-
-        //   now = now[1].split(":");
-        //   now = now[0] + ":" + now[1] + ":" + "00";
-        //   console.log(this.testNow);
-        //   if (!this.testNow) {
-        //     // console.log("is ts false");
-        //     this.todayTestpapers.forEach(test => {
-        //       if (
-        //         now >= test.start_time &&
-        //         now < test.end_time &&
-        //         test.date == todayDate
-        //       ) {
-        //         this.actualTest = test;
-        //         this.testNow = true;
-        //         console.log("ther is new test");
-        //       }
-        //     });
-        //   } else {
-        //     if (now >= this.actualTest.end_time) {
-        //       this.testNow = false;
-        //       this.actualTest = {};
-        //       console.log("test ended");
-        //     } else console.log("RAS");
-        //   }
-        // }, 700);
+        if (res.data.todayTestpapers) {
+          _this.todayTestpapers = res.data.todayTestpapers;
+          _this.todayTestpapers.sort(function compare(a, b) {
+            var time1 = parseFloat(a.start_time.replace(":", ".").replace(/[^\d.-]/g, ""));
+            var time2 = parseFloat(b.start_time.replace(":", ".").replace(/[^\d.-]/g, ""));
+            if (time1 < time2) return -1;
+            if (time1 > time2) return 1;
+            return 0;
+          });
+          _this.checkActualTest();
+          _this.examPeriod = setInterval(function () {
+            _this.checkActualTest();
+          }, 30000);
+        }
       }).catch(function (error) {
         console.log(error);
       });
+    },
+    checkActualTest: function checkActualTest() {
+      var _this2 = this;
+
+      var now = new Date();
+      now = new Date(+now - now.getTimezoneOffset() + 3600000).toISOString().split(".")[0];
+
+      now = now.split("T");
+      var todayDate = now[0];
+
+      now = now[1].split(":");
+      now = now[0] + ":" + now[1] + ":" + "00";
+      console.log(this.testNow);
+      if (!this.testNow) {
+        // console.log("is ts false");
+        this.todayTestpapers.forEach(function (test) {
+          if (now >= test.start_time && now < test.end_time && test.date == todayDate) {
+            _this2.actualTest = test;
+            _this2.testNow = true;
+            console.log("ther is new test");
+          }
+        });
+      } else {
+        if (now >= this.actualTest.end_time) {
+          this.testNow = false;
+          this.actualTest = {};
+          console.log("test ended");
+        } else console.log("RAS");
+      }
     }
   },
 
@@ -12826,6 +12831,33 @@ exports.default = _default;
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -14563,6 +14595,7 @@ exports.default = _default;
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["a"] = ({
@@ -14574,9 +14607,12 @@ exports.default = _default;
       actualTest: {},
       course: {},
       user: {},
-      error: "",
-      start_datetime: 0,
-      end_datetime: 0,
+      error: {
+        isThereError: false,
+        message: ""
+      },
+      start_datetime: "",
+      end_datetime: "",
       pageNumber: 0,
       size: 2,
       paginatedQuestions: []
@@ -14586,12 +14622,10 @@ exports.default = _default;
     goToPage: function goToPage(page) {
       this.pageNumber = page;
       this.paginatedData();
-      // <li v-for="(p,index) in paginatedData" :key="index">
     },
     paginatedData: function paginatedData() {
       var start = this.pageNumber * this.size;
       var end = start + this.size;
-      console.log(this.actualTest.questions.slice(start, end));
       this.paginatedQuestions = this.actualTest.questions.slice(start, end);
     },
     nextPage: function nextPage() {
@@ -14603,28 +14637,64 @@ exports.default = _default;
       this.paginatedData();
     },
     pageCount: function pageCount() {
-      var l = this.actualTest.questions.length,
-          s = this.size;
-      return Math.ceil(l / s);
+      if (this.actualTest !== {}) {
+        var l = this.actualTest.questions.length;
+        var s = this.size;
+        return Math.ceil(l / s);
+      }
     },
 
     loadpage: function loadpage() {
       var _this = this;
 
       axios.get("api/set_test").then(function (res) {
-        _this.actualTest = res.data.actualTest;
-        _this.course = res.data.course;
-        _this.user = res.data.user;
         console.log(res.data);
-        if (res.data.error) _this.error = res.data.error;
-
-        _this.start_datetime = _this.actualTest.start_datetime;
-        _this.end_datetime = _this.actualTest.end_datetime;
-        _this.pageCount();
-        _this.paginatedData();
+        if (res.data.error) {
+          _this.error.isThereError = true;
+          _this.error.message = res.data.error;
+        } else {
+          if (res.data.course) _this.course = res.data.course;
+          if (res.data.user) _this.user = res.data.user;
+          if (res.data.actualTest) {
+            res.data.actualTest.questions.forEach(function (quest) {
+              quest.distractors = _this.shuffle(quest.distractors);
+            });
+            _this.actualTest = res.data.actualTest;
+            _this.start_datetime = _this.actualTest.start_datetime;
+            _this.end_datetime = _this.actualTest.end_datetime;
+            _this.pageCount();
+            _this.paginatedData();
+          }
+        }
       }).catch(function (error) {
         return console.log(error);
       });
+    },
+    shuffle: function shuffle(array) {
+      var counter = array.length;
+
+      while (counter > 0) {
+        var index = Math.floor(Math.random() * counter);
+        counter--;
+        var temp = array[counter];
+        array[counter] = array[index];
+        array[index] = temp;
+      }
+      return array;
+    },
+    submitTest: function submitTest() {
+      var params = Object.assign({}, this.actualTest);
+      axios.post("api/submit_test", params).then(function (res) {
+        location.href = "/home";
+      }).catch(function (error) {
+        return console.log(error);
+      });
+    },
+    insertAnswer: function insertAnswer(qPos, dPos) {
+      this.actualTest.questions[qPos].distractors.forEach(function (dist) {
+        dist.isCorrect = 0;
+      });
+      this.actualTest.questions[qPos].distractors[dPos].isCorrect = 1;
     }
   },
   components: {
@@ -14661,8 +14731,7 @@ exports.default = _default;
       interval: "",
       minutes: "",
       seconds: "",
-      hours: "",
-      expired: false
+      hours: ""
     };
   },
   mounted: function mounted() {
@@ -14677,13 +14746,15 @@ exports.default = _default;
     start_count: function start_count() {
       var _this2 = this;
 
-      this.start = new Date(this.start_datetime).getTime();
-      this.end = new Date(this.end_datetime).getTime();
-      // Update the count down every 1 second
-      this.timerCount(this.start, this.end);
-      this.interval = setInterval(function () {
-        _this2.timerCount(_this2.start, _this2.end);
-      }, 1000);
+      if (this.start_datetime != "") {
+        this.start = new Date(this.start_datetime).getTime();
+        this.end = new Date(this.end_datetime).getTime();
+        // Update the count down every 1 second
+        this.timerCount(this.start, this.end);
+        this.interval = setInterval(function () {
+          _this2.timerCount(_this2.start, _this2.end);
+        }, 1000);
+      }
     },
     timerCount: function timerCount(start, end) {
       // Get todays date and time
@@ -14693,8 +14764,8 @@ exports.default = _default;
       var passTime = end - now;
 
       if (distance < 0 && passTime < 0) {
-        this.expired = true;
         clearInterval(this.interval);
+        this.submitTest();
         return;
       } else if (distance < 0 && passTime > 0) {
         this.calcTime(passTime);
@@ -14708,7 +14779,7 @@ exports.default = _default;
       this.seconds = Math.floor(dist % (1000 * 60) / 1000);
     }
   },
-  props: ["start_datetime", "end_datetime"]
+  props: ["start_datetime", "end_datetime", "submitTest"]
 });
 
 /***/ }),
@@ -71150,7 +71221,7 @@ var render = function() {
     _vm.todayTestpapers[0]
       ? _c("div", { staticClass: "w3-padding w3-white" }, [
           _c("h1", { staticClass: "color bold center" }, [
-            _vm._v("Today Test Papers")
+            _vm._v("Today's Test Papers")
           ]),
           _vm._v(" "),
           _c("table", { staticClass: "table table-hover" }, [
@@ -71174,20 +71245,28 @@ var render = function() {
                   _vm._v(" "),
                   _c("td", [_vm._v(_vm._s(testpaper.end_time))]),
                   _vm._v(" "),
-                  _c("td", [_vm._v("12 / " + _vm._s(testpaper.over_mark))]),
-                  _vm._v(" "),
                   _c("td", { staticClass: "center" }, [
                     testpaper.obsolete
-                      ? _c("i", { staticClass: "fa fa-check color bold " })
-                      : _vm._e()
+                      ? _c("i", [
+                          _vm._v(
+                            _vm._s(testpaper.mark_obtained) +
+                              " / " +
+                              _vm._s(testpaper.over_mark)
+                          )
+                        ])
+                      : _c("i", [_vm._v("--")])
                   ]),
                   _vm._v(" "),
                   _c("td", { staticClass: "center" }, [
                     testpaper.obsolete
-                      ? _c("button", [
-                          _c("i", { staticClass: "fa fa-download color bold" })
-                        ])
-                      : _vm._e()
+                      ? _c("span", { staticClass: "fa fa-check color bold " })
+                      : _c("span", [_vm._v("--")])
+                  ]),
+                  _vm._v(" "),
+                  _c("td", { staticClass: "center" }, [
+                    testpaper.obsolete
+                      ? _c("div", [_vm._m(1, true)])
+                      : _c("div", [_c("i", [_vm._v("--")])])
                   ])
                 ])
               }),
@@ -71200,11 +71279,11 @@ var render = function() {
     _vm.repeatingTestpapers[0]
       ? _c("div", { staticClass: "w3-padding w3-white" }, [
           _c("h1", { staticClass: "color bold center" }, [
-            _vm._v("Scheduled Repeating Test Papers")
+            _vm._v("Carried Courses' Tests Papers ")
           ]),
           _vm._v(" "),
           _c("table", { staticClass: "table table-hover" }, [
-            _vm._m(1),
+            _vm._m(2),
             _vm._v(" "),
             _c(
               "tbody",
@@ -71224,20 +71303,28 @@ var render = function() {
                   _vm._v(" "),
                   _c("td", [_vm._v(_vm._s(testpaper.end_time))]),
                   _vm._v(" "),
-                  _c("td", [_vm._v("12 / " + _vm._s(testpaper.over_mark))]),
-                  _vm._v(" "),
                   _c("td", { staticClass: "center" }, [
                     testpaper.obsolete
-                      ? _c("i", { staticClass: "fa fa-check color bold " })
-                      : _vm._e()
+                      ? _c("span", [
+                          _vm._v(
+                            _vm._s(testpaper.mark_obtained) +
+                              " / " +
+                              _vm._s(testpaper.over_mark)
+                          )
+                        ])
+                      : _c("span", [_vm._v("--")])
                   ]),
                   _vm._v(" "),
                   _c("td", { staticClass: "center" }, [
                     testpaper.obsolete
-                      ? _c("button", [
-                          _c("i", { staticClass: "fa fa-download color bold" })
-                        ])
-                      : _vm._e()
+                      ? _c("i", { staticClass: "fa fa-check color bold " })
+                      : _c("i", [_vm._v("--")])
+                  ]),
+                  _vm._v(" "),
+                  _c("td", { staticClass: "center" }, [
+                    testpaper.obsolete
+                      ? _c("div", [_vm._m(3, true)])
+                      : _c("div", [_c("i", [_vm._v("--")])])
                   ])
                 ])
               }),
@@ -71248,12 +71335,10 @@ var render = function() {
       : _vm._e(),
     _vm._v(" "),
     _c("div", { staticClass: "w3-padding w3-white" }, [
-      _c("h1", { staticClass: "color bold center" }, [
-        _vm._v("Scheduled Test Papers")
-      ]),
+      _c("h1", { staticClass: "color bold center" }, [_vm._v("Test Papers")]),
       _vm._v(" "),
       _c("table", { staticClass: "table table-hover" }, [
-        _vm._m(2),
+        _vm._m(4),
         _vm._v(" "),
         _c(
           "tbody",
@@ -71273,20 +71358,28 @@ var render = function() {
               _vm._v(" "),
               _c("td", [_vm._v(_vm._s(testpaper.end_time))]),
               _vm._v(" "),
-              _c("td", [_vm._v("12 / " + _vm._s(testpaper.over_mark))]),
-              _vm._v(" "),
               _c("td", { staticClass: "center" }, [
                 testpaper.obsolete
-                  ? _c("i", { staticClass: "fa fa-check color bold" })
-                  : _vm._e()
+                  ? _c("span", [
+                      _vm._v(
+                        _vm._s(testpaper.mark_obtained) +
+                          " / " +
+                          _vm._s(testpaper.over_mark)
+                      )
+                    ])
+                  : _c("span", [_vm._v("--")])
               ]),
               _vm._v(" "),
               _c("td", { staticClass: "center" }, [
                 testpaper.obsolete
-                  ? _c("button", [
-                      _c("i", { staticClass: "fa fa-download color bold" })
-                    ])
-                  : _vm._e()
+                  ? _c("i", { staticClass: "fa fa-check color bold " })
+                  : _c("i", [_vm._v("--")])
+              ]),
+              _vm._v(" "),
+              _c("td", { staticClass: "center" }, [
+                testpaper.obsolete
+                  ? _c("div", [_vm._m(5, true)])
+                  : _c("div", [_c("i", [_vm._v("--")])])
               ])
             ])
           }),
@@ -71329,29 +71422,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("thead", {}, [
-      _c("tr", [
-        _c("th", [_vm._v("#")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Title")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Course Code")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Credit")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Date")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Start time")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("End time")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Marks obtained")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Obsolete")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Answer")])
-      ])
-    ])
+    return _c("button", [_c("i", { staticClass: "fa fa-download color bold" })])
   },
   function() {
     var _vm = this
@@ -71380,6 +71451,46 @@ var staticRenderFns = [
         _c("th", [_vm._v("Answer")])
       ])
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("button", [_c("i", { staticClass: "fa fa-download color bold" })])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", {}, [
+      _c("tr", [
+        _c("th", [_vm._v("#")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Title")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Course Code")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Credit")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Date")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Start time")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("End time")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Marks obtained")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Obsolete")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Answer")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("button", [_c("i", { staticClass: "fa fa-download color bold" })])
   }
 ]
 render._withStripped = true
@@ -71416,29 +71527,56 @@ var render = function() {
           "div",
           { staticClass: "row", staticStyle: { "margin-top": "20px" } },
           [
-            _vm.testNow && _vm.actualTest != {}
-              ? _c("div", [
-                  _c(
-                    "a",
-                    {
-                      staticClass: "btn btn-primary",
-                      attrs: { target: "_blank", href: "/write_test" }
-                    },
-                    [_vm._v("Start test")]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "span",
-                    {
-                      staticClass: "bold capitalize",
-                      staticStyle: { "font-size": "15px" }
-                    },
-                    [_vm._v(_vm._s(_vm.actualTest.title) + ": ")]
-                  )
-                ])
+            _vm.testNow && _vm.actualTest != {} && !_vm.actualTest.done
+              ? _c(
+                  "div",
+                  {
+                    staticStyle: {
+                      "margin-bottom": "20px",
+                      "background-color": "rgba(255, 0, 0, 0.16)"
+                    }
+                  },
+                  [
+                    _c(
+                      "a",
+                      {
+                        staticClass: "btn btn-primary",
+                        attrs: { href: "/write_test" }
+                      },
+                      [_vm._v("Start test")]
+                    ),
+                    _vm._v("\n          ...\n        "),
+                    _c(
+                      "span",
+                      {
+                        staticClass: "bold capitalize",
+                        staticStyle: { "font-size": "15px" }
+                      },
+                      [_vm._v(_vm._s(_vm.actualTest.title) + " ")]
+                    ),
+                    _vm._v(" "),
+                    _c("span", [_vm._v("   Start-time:  ")]),
+                    _c(
+                      "span",
+                      {
+                        staticClass: "bold capitalize",
+                        staticStyle: { "font-size": "15px" }
+                      },
+                      [_vm._v(_vm._s(_vm.actualTest.start_time))]
+                    ),
+                    _vm._v(" "),
+                    _c("span", [_vm._v("   End-time:  ")]),
+                    _c(
+                      "span",
+                      {
+                        staticClass: "bold capitalize",
+                        staticStyle: { "font-size": "15px" }
+                      },
+                      [_vm._v(_vm._s(_vm.actualTest.end_time))]
+                    )
+                  ]
+                )
               : _vm._e(),
-            _vm._v(" "),
-            _c("legend"),
             _vm._v(" "),
             _c("testpapers", {
               staticClass: "test-paper",
@@ -77902,10 +78040,10 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "row" }, [
-    _vm.error
+    _vm.error.isThereError
       ? _c(
           "div",
-          { staticStyle: { padding: "130px 0", "text-align": "center" } },
+          { staticStyle: { padding: "140px 20px", "text-align": "center" } },
           [
             _c(
               "h1",
@@ -77913,7 +78051,7 @@ var render = function() {
                 staticClass: "bold",
                 staticStyle: { "font-size": "42px", color: "white" }
               },
-              [_vm._v("Sorry, There is not exam now!")]
+              [_vm._v(_vm._s(_vm.error.message))]
             ),
             _vm._v(" "),
             _c(
@@ -77931,7 +78069,8 @@ var render = function() {
               _c("timer", {
                 attrs: {
                   start_datetime: _vm.start_datetime,
-                  end_datetime: _vm.end_datetime
+                  end_datetime: _vm.end_datetime,
+                  submitTest: _vm.submitTest
                 }
               })
             ],
@@ -77943,7 +78082,7 @@ var render = function() {
               _c("table", { staticStyle: { width: "100%" } }, [
                 _c("caption", [
                   _c("h1", { staticClass: "bold color capitalize center" }, [
-                    _vm._v("Test title:" + _vm._s(_vm.actualTest.title) + " ")
+                    _vm._v("Test title: " + _vm._s(_vm.actualTest.title) + " ")
                   ])
                 ]),
                 _vm._v(" "),
@@ -78038,18 +78177,29 @@ var render = function() {
                       ])
                     ]),
                     _vm._v(" "),
-                    _c("p", [
+                    _c("p", { staticStyle: { "padding-left": "24px" } }, [
                       _c("i", [_vm._v(_vm._s(question.over_mark) + " mark(s)")])
                     ]),
                     _vm._v(" "),
                     _c(
                       "div",
                       { staticClass: "distrators" },
-                      _vm._l(question.distractors, function(distractor) {
+                      _vm._l(question.distractors, function(distractor, index) {
                         return _c("div", { key: distractor.id }, [
                           _c("input", {
                             attrs: { type: "radio", name: question.id },
-                            domProps: { value: distractor.id }
+                            domProps: {
+                              value: distractor.id,
+                              checked: distractor.isCorrect == 1
+                            },
+                            on: {
+                              change: function($event) {
+                                return _vm.insertAnswer(
+                                  question.number - 1,
+                                  index
+                                )
+                              }
+                            }
                           }),
                           _vm._v("   "),
                           _c("span", [_vm._v(_vm._s(distractor.text))])
@@ -78114,27 +78264,29 @@ var render = function() {
               ]
             ),
             _vm._v(" "),
-            _vm._m(0)
+            _c(
+              "div",
+              { staticClass: "row", staticStyle: { "text-align": "right" } },
+              [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-danger",
+                    on: {
+                      click: function($event) {
+                        return _vm.submitTest()
+                      }
+                    }
+                  },
+                  [_vm._v("Submit Test")]
+                )
+              ]
+            )
           ])
         ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "row", staticStyle: { "text-align": "right" } },
-      [
-        _c("button", { staticClass: "btn btn-primary" }, [
-          _vm._v("Submit Test")
-        ])
-      ]
-    )
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 if (false) {

@@ -374,6 +374,8 @@ class TeacherDashboardController extends Controller
                 Question::destroy($quest->id);
             }
             TestPaper::destroy($testpaper->id);
+            // DB::table('written_test_papers')->where([['user_id', Auth::user()->id], ['test_paper_id'],$testpaper->id])->delete();
+
             return $testpaper;
         }
         catch(\Exception $e){  return $e->getMessage();}

@@ -22,8 +22,7 @@ export default {
       interval: "",
       minutes: "",
       seconds: "",
-      hours: "",
-      expired: false
+      hours: ""
     };
   },
   mounted() {
@@ -33,13 +32,15 @@ export default {
   },
   methods: {
     start_count: function() {
-      this.start = new Date(this.start_datetime).getTime();
-      this.end = new Date(this.end_datetime).getTime();
-      // Update the count down every 1 second
-      this.timerCount(this.start, this.end);
-      this.interval = setInterval(() => {
+      if (this.start_datetime != "") {
+        this.start = new Date(this.start_datetime).getTime();
+        this.end = new Date(this.end_datetime).getTime();
+        // Update the count down every 1 second
         this.timerCount(this.start, this.end);
-      }, 1000);
+        this.interval = setInterval(() => {
+          this.timerCount(this.start, this.end);
+        }, 1000);
+      }
     },
     timerCount: function(start, end) {
       // Get todays date and time
@@ -49,8 +50,8 @@ export default {
       var passTime = end - now;
 
       if (distance < 0 && passTime < 0) {
-        this.expired = true;
         clearInterval(this.interval);
+        this.submitTest();
         return;
       } else if (distance < 0 && passTime > 0) {
         this.calcTime(passTime);
@@ -64,7 +65,7 @@ export default {
       this.seconds = Math.floor((dist % (1000 * 60)) / 1000);
     }
   },
-  props: ["start_datetime", "end_datetime"]
+  props: ["start_datetime", "end_datetime", "submitTest"]
 };
 </script>
 
