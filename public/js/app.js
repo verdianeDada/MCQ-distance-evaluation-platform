@@ -12726,7 +12726,7 @@ exports.default = _default;
       if (!this.testNow) {
         // console.log("is ts false");
         this.todayTestpapers.forEach(function (test) {
-          if (now >= test.start_time && now < test.end_time && test.date == todayDate) {
+          if (now >= test.start_time && now < test.end_time && test.date == todayDate && !test.done) {
             _this2.actualTest = test;
             _this2.testNow = true;
             console.log("ther is new test");
@@ -71246,7 +71246,7 @@ var render = function() {
                   _c("td", [_vm._v(_vm._s(testpaper.end_time))]),
                   _vm._v(" "),
                   _c("td", { staticClass: "center" }, [
-                    testpaper.obsolete
+                    testpaper.done
                       ? _c("i", [
                           _vm._v(
                             _vm._s(testpaper.mark_obtained) +
@@ -71304,7 +71304,7 @@ var render = function() {
                   _c("td", [_vm._v(_vm._s(testpaper.end_time))]),
                   _vm._v(" "),
                   _c("td", { staticClass: "center" }, [
-                    testpaper.obsolete
+                    testpaper.done
                       ? _c("span", [
                           _vm._v(
                             _vm._s(testpaper.mark_obtained) +
@@ -71359,7 +71359,7 @@ var render = function() {
               _c("td", [_vm._v(_vm._s(testpaper.end_time))]),
               _vm._v(" "),
               _c("td", { staticClass: "center" }, [
-                testpaper.obsolete
+                testpaper.done
                   ? _c("span", [
                       _vm._v(
                         _vm._s(testpaper.mark_obtained) +
@@ -78171,7 +78171,7 @@ var render = function() {
                       _c("span", { staticClass: "bold" }, [
                         _vm._v(
                           _vm._s(question.number) +
-                            "    " +
+                            " -   " +
                             _vm._s(question.text)
                         )
                       ])

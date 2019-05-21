@@ -15,7 +15,7 @@ class Question extends Model
         return $this->belongsTo('App\TestPaper');
         
     }
-    public function question_distractors()
+    public function distractors()
     {
         return $this->hasMany('App\QuestionDistractor');
         

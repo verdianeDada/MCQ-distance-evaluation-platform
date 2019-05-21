@@ -32,7 +32,7 @@
               <td>{{testpaper.start_time}}</td>
               <td>{{testpaper.end_time}}</td>
               <td class="center">
-                <i v-if="testpaper.obsolete">{{testpaper.mark_obtained}}&nbsp;/&nbsp;{{testpaper.over_mark}}</i>
+                <i v-if="testpaper.done">{{testpaper.mark_obtained}}&nbsp;/&nbsp;{{testpaper.over_mark}}</i>
                 <i v-else>--</i>
               </td>
               <td class="center">
@@ -86,7 +86,7 @@
               <td>{{testpaper.start_time}}</td>
               <td>{{testpaper.end_time}}</td>
               <td class="center">
-                <span v-if="testpaper.obsolete">{{testpaper.mark_obtained}}&nbsp;/&nbsp;{{testpaper.over_mark}}</span>
+                <span v-if="testpaper.done">{{testpaper.mark_obtained}}&nbsp;/&nbsp;{{testpaper.over_mark}}</span>
                 <span v-else>--</span>
               </td>
               <td class="center">
@@ -140,7 +140,7 @@
               <td>{{testpaper.start_time}}</td>
               <td>{{testpaper.end_time}}</td>
               <td class="center">
-                <span v-if="testpaper.obsolete">{{testpaper.mark_obtained}}&nbsp;/&nbsp;{{testpaper.over_mark}}</span>
+                <span v-if="testpaper.done">{{testpaper.mark_obtained}}&nbsp;/&nbsp;{{testpaper.over_mark}}</span>
                 <span v-else>--</span>
               </td>
               <td class="center">

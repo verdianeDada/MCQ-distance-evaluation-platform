@@ -47,17 +47,17 @@ class WriteTestController extends Controller
             }
             if ($actualTest == "no-test"){
                 // look for repeating test courses
-
+                // repeating course ids, and tetspaper::wherein (ids) with courses
                 $repeatingCourses = RepeatingCourse::where('user_id', $user->id)->get();
                 if (sizeof($repeatingCourses) != 0){
 
-                    foreach($repeatingCourses as $key=>$rc){
-                        $temp = TestPaper::where([
-                            [ 'course_id',$rc->course_id],
-                            ['date', date("Y-m-d", $now)],
-                            ['start_time','<=',date("H:i:s", $now)],
-                            ['end_time','>',date("H:i:s", $now)]
-                            ])->with(['questions'])->orderBy('updated_at', 'desc')->get();
+                    // foreach($repeatingCourses as $key=>$rc){
+                    //     $temp = TestPaper::where([
+                    //         [ 'course_id',$rc->course_id],
+                    //         ['date', date("Y-m-d", $now)],
+                    //         ['start_time','<=',date("H:i:s", $now)],
+                    //         ['end_time','>',date("H:i:s", $now)]
+                    //         ])->with(['questions'])->orderBy('updated_at', 'desc')->get();
                             
 
                         if (sizeof($temp) !=0 ){
@@ -78,9 +78,9 @@ class WriteTestController extends Controller
                         else{
                             $actualTest->start_datetime = Date("M j,Y", strtotime($actualTest->date))." ".$actualTest->start_time;
                             $actualTest->end_datetime = Date("M j,Y", strtotime($actualTest->date))." ".$actualTest->end_time;
-                            foreach($actualTest->questions as $keyQ => $quest){
-                                $actualTest->questions[$keyQ]->distractors = $quest->question_distractors;
-                            }
+                            // foreach($actualTest->questions as $keyQ => $quest){
+                            //     $actualTest->questions[$keyQ]->distractors = $quest->distractors;
+                            // }
                             //clear correct answers
                             foreach($actualTest->questions as $keyQ=> $quest){
                                 $actualTest->questions[$keyQ]->number = $keyQ + 1;
@@ -116,7 +116,7 @@ class WriteTestController extends Controller
                     $actualTest->start_datetime = Date("M j,Y", strtotime($actualTest->date))." ".$actualTest->start_time;
                     $actualTest->end_datetime = Date("M j,Y", strtotime($actualTest->date))." ".$actualTest->end_time;
                     foreach($actualTest->questions as $keyQ => $quest){
-                        $actualTest->questions[$keyQ]->distractors = $quest->question_distractors;
+                        $actualTest->questions[$keyQ]->distractors = $quest->distractors;
                     }
                     //clear correct answers
                     foreach($actualTest->questions as $keyQ=> $quest){
@@ -139,7 +139,7 @@ class WriteTestController extends Controller
         try{
             $test = TestPaper::where('id',$request->id)->with(['questions'])->orderBy('updated_at', 'desc')->get()[0];
             foreach($test->questions as $keyQ => $quest){
-                $test->questions[$keyQ]->distractors = $quest->question_distractors;
+                $test->questions[$keyQ]->distractors = $quest->distractors;
             }
             $DBquestions = $test->questions;
             $totalMark = 0;

@@ -137,24 +137,26 @@ class TeacherDashboardController extends Controller
                         "course_id"=> $request->course_id,
                     ]);
                     if (!empty($request->questions)){
+                        $distractorsData = array();
                         foreach($request->questions as $question){
                             $actualQuestion = Question::create([
                                 "text" => $question['text'],
                                 "over_mark" => $question['over_mark'],
                                 "test_paper_id"=> $testpaper->id,
-                            ]);
+                            ]);                            
                             foreach ($question['distractors'] as $distractor){
                                 $is_correct = false;
                                 if ($question['is_correct'] == $distractor['index']){
                                     $is_correct = true;
                                 }
-                                QuestionDistractor::create([
+                                array_push($distractorsData, [
                                     'text' => $distractor['text'],
                                     'question_id' => $actualQuestion->id,
                                     'isCorrect' => $is_correct
                                 ]);
                             }
                         }
+                        DB::table('question_distractors')->insert($distractorsData);
                     }
                     return TestPaper::where('id','=', $testpaper->id)->with(['course'])->get()[0];
                 }
@@ -310,8 +312,6 @@ class TeacherDashboardController extends Controller
 
                 // create testpaper
 
-
-                
                 if (!empty($goodplace)){
                         $start_time = date('H:i:s',strtotime($goodplace)+900);
                         $end_time = date('H:i:s',strtotime($start_time)+$timeRequired-1800);
@@ -325,24 +325,28 @@ class TeacherDashboardController extends Controller
                         ]);
     
                     if (!empty($request->questions)){
-                    foreach($request->questions as $question){
-                        $actualQuestion = Question::create([
-                            "text" => $question['text'],
-                            "over_mark" => $question['over_mark'],
-                            "test_paper_id"=> $testpaper->id,
-                        ]);
-                        foreach ($question['distractors'] as $distractor){
-                            $is_correct = false;
-                            if ($question['is_correct'] == $distractor['index']){
-                                $is_correct = true;
+                        $distractorsData = array();
+                        foreach($request->questions as $question){
+                            $actualQuestion = Question::create([
+                                "text" => $question['text'],
+                                "over_mark" => $question['over_mark'],
+                                "test_paper_id"=> $testpaper->id,
+                            ]);                            
+                            foreach ($question['distractors'] as $distractor){
+                                $is_correct = false;
+                                if ($question['is_correct'] == $distractor['index']){
+                                    $is_correct = true;
+                                }
+                                array_push($distractorsData, [
+                                    'text' => $distractor['text'],
+                                    'question_id' => $actualQuestion->id,
+                                    'isCorrect' => $is_correct
+                                ]);
                             }
-                            QuestionDistractor::create([
-                                'text' => $distractor['text'],
-                                'question_id' => $actualQuestion->id,
-                                'isCorrect' => $is_correct
-                            ]);
                         }
-                    }}
+                        DB::table('question_distractors')->insert($distractorsData);
+                   
+                    }
                     
                     return TestPaper::where('id','=', $testpaper->id)->with(['course'])->get()[0];
                 }
@@ -366,17 +370,17 @@ class TeacherDashboardController extends Controller
         try{
             $testpaper = TestPaper::where('id',$id)->get()[0];
             $questions = $testpaper->questions;
-            foreach($questions as $quest){
-                $distractors = $quest->question_distractors;
-                foreach($distractors as $dist){
-                    QuestionDistractor::destroy($dist->id);
+            $questions_id = array();
+            if (sizeof($questions) > 0){
+                foreach ($questions as $quest){
+                    array_push($questions_id, $quest->id);
                 }
-                Question::destroy($quest->id);
             }
+             DB::table('questions')->whereIn('id', $questions_id)->delete();
+             DB::table('question_distractors')->whereIn('question_id', $questions_id)->delete();
             TestPaper::destroy($testpaper->id);
-            // DB::table('written_test_papers')->where([['user_id', Auth::user()->id], ['test_paper_id'],$testpaper->id])->delete();
 
-            return $testpaper;
+            return;
         }
         catch(\Exception $e){  return $e->getMessage();}
     }
@@ -385,22 +389,24 @@ class TeacherDashboardController extends Controller
 
     public function set_update_testpaper($id){
         try{
-            $testpaper = TestPaper::where('id',$id)->with(['questions'])->orderBy('updated_at', 'desc')->get()[0];
-            
-            foreach($testpaper->questions as $keyQ => $quest){
-                $testpaper->questions[$keyQ]->distractors = $quest->question_distractors;
-                foreach($quest->distractors as $keyD => $dist){
-                    if($dist->isCorrect){
-                        $testpaper->questions[$keyQ]->is_correct = $keyD;
+            $testpaper = TestPaper::where('id',$id)->with(['questions.distractors'])->orderBy('updated_at', 'desc')->get();
+            if (sizeof($testpaper) > 0 && sizeof($testpaper[0]->questions) > 0){
+                foreach($testpaper[0]->questions as $keyQ => $quest){
+                    if (sizeof($testpaper[0]->questions[$keyQ]->distractors) > 0){
+                        foreach($quest->distractors as $keyD => $dist){
+                            if($dist->isCorrect){
+                                $testpaper[0]->questions[$keyQ]->is_correct = $keyD;
+                            }
+                        }
                     }
                 }
+                $testpaper[0]->duration = date("H:i", strtotime($testpaper[0]->end_time)-strtotime($testpaper[0]->start_time));
+                return $testpaper[0];
             }
-            $testpaper->duration = date("H:i", strtotime($testpaper->end_time)-strtotime($testpaper->start_time));
-            return $testpaper;
-    }
-    catch(\Exception $e){
-          return $e->getMessage();
-    } 
+        }
+        catch(\Exception $e){
+            return $e->getMessage();
+        } 
 }
     
     public function update_testpaper(Request $request){

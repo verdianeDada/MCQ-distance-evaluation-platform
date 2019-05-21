@@ -42,7 +42,7 @@
               :key="question.id"
               class="question"
             >
-              <p><span class="bold">{{question.number}}&nbsp;&nbsp;&nbsp;&nbsp;{{question.text}}</span></p>
+              <p><span class="bold">{{question.number}}&nbsp;-&nbsp;&nbsp;&nbsp;{{question.text}}</span></p>
               <p style="padding-left: 24px"><i>{{question.over_mark}} mark(s)</i></p>
               <div class="distrators">
                 <div v-for = "(distractor, index) in question.distractors" :key="distractor.id">

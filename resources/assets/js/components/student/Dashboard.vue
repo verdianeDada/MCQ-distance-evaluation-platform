@@ -109,7 +109,8 @@ export default {
           if (
             now >= test.start_time &&
             now < test.end_time &&
-            test.date == todayDate
+            test.date == todayDate &&
+            !test.done
           ) {
             this.actualTest = test;
             this.testNow = true;

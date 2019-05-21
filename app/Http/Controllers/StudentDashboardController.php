@@ -18,16 +18,17 @@ class StudentDashboardController extends Controller
     {
         try{
             // look for testpapers
-            $userid = Auth::user()->id;
             $user = Auth::user();
 
-            $temp = RepeatingCourse::where('user_id', $userid)->get();
-            $repeatingCourses = array();
+            $temp = RepeatingCourse::where('user_id', Auth::user()->id)->get();
             if (!empty($temp)){
-                foreach($temp as $rc){
-                    array_push($repeatingCourses, Course::where('id', $rc->course_id)->get()[0]);
+                $repeatingCoursesId = array();
+                foreach($temp as $rc){                    
+                    array_push($repeatingCoursesId, $rc->course_id);
                 }
+                $repeatingCourses = Course::whereIn('id', $repeatingCoursesId)->get();
             }
+
             $courses = Course::where([
                             ['year',$user->year],
                             ['option',$user->option],
@@ -40,7 +41,7 @@ class StudentDashboardController extends Controller
             //testpapers
             $now = date("Y-m-d H:i:s",strtotime(date("Y-m-d H:i:s"))+3600);
 
-            $testpapers_o = TestPaper::with(['course'=>function($query) use ($user){
+            $testpapers = TestPaper::with(['course'=>function($query) use ($user){
                 $query->where([
                     ['courses.year', $user->year],
                     ['courses.option', $user->option],
@@ -50,65 +51,83 @@ class StudentDashboardController extends Controller
                     ["courses.isCommon", 1]
                 ]);
             }])->orderBy('updated_at', 'desc')->get();
-            $testpapers = array();
+
             $todayTestpapers = array();
-            foreach($testpapers_o as $key => $test){
+
+            $writtenTestPapers = WrittenTestPaper::where('user_id', Auth::user()->id)->get();
+
+            foreach($testpapers as $keyT => $test){
                 if ( !empty($test->course)){
                     if (strtotime($test->date.' '.$test->end_time) > strtotime($now) ){
-                        $test->obsolete = false;
+                        $testpapers[$keyT]->obsolete = false;         
+                        if ($test->date == date("Y-m-d", strtotime($now))){
+                            if (sizeof($writtenTestPapers) > 0){
+                                foreach ( $writtenTestPapers as $wrt){                                    
+                                    if ($test->id == $wrt->test_paper_id){
+                                        $test->mark_obtained = $wrt->over_mark;
+                                        $test->done = true;
+                                    }
+                                    else{
+                                        $test->done = false;
+                                    }
+                                }
+                            } 
+                            array_push($todayTestpapers, $test);
+                        }             
                     }
                     else {
-                        $test->obsolete = true;
-                        $temp = WrittenTestPaper::where([['user_id', Auth::user()->id], ['test_paper_id', $test->id]])->get();
-                        if (sizeof($temp) != 0)
-                            $test->mark_obtained = $temp[0]->over_mark;
-                        else    
-                        $test->mark_obtained = 0;
-                    }
-                    array_push($testpapers, $test);
-                    
-                    if ($test->date == date("Y-m-d", strtotime($now))){
-                        $temp = WrittenTestPaper::where([['user_id', Auth::user()->id], ['test_paper_id', $test->id]])->get();
-                                if (sizeof($temp) != 0)
-                                    $test->done = true;
-                                else    
-                                    $test->done = false;
-                        array_push($todayTestpapers, $test);
-                    }
+                        $testpapers[$keyT]->obsolete = true;
+                        $testpapers[$keyT]->mark_obtained = 0;
+                        if (sizeof($writtenTestPapers) > 0){
+                            foreach ( $writtenTestPapers as $wrt){
+                                if ($test->id == $wrt->test_paper_id){
+                                    $testpapers[$keyT]->mark_obtained = $wrt->over_mark;
+                                    $testpapers[$keyT]->done = true;
+                                }
+                                else{
+                                    $testpapers[$keyT]->done = false;
+                                }
+                            }
+                        }
 
+                    }
+                }
+                else{
+                    unset($testpapers[$keyT]);
                 }
             }
             
             //repeating testpapers
-            $repeatingTestpapers = array();
 
             if (!empty($repeatingCourses)){
-                foreach($repeatingCourses as $rc){
-                        $test = Testpaper::with(['course'])->where('course_id',$rc->id)->get();
-                        if ( sizeof($test)>0){
-                            if (strtotime($test[0]->date.' '.$test[0]->end_time) > strtotime($now) ){
-                                $test[0]->obsolete = false;                        
-                            }
-                            else {
-                                $test[0]->obsolete = true;
-                                $temp = WrittenTestPaper::where([['user_id', Auth::user()->id], ['test_paper_id', $test[0]->id]])->get();
-                                if (sizeof($temp) != 0)
-                                    $test[0]->mark_obtained = $temp[0]->over_mark;
-                                else    
-                                    $test[0]->mark_obtained = 0;
-                            }
-                            array_push($repeatingTestpapers, $test[0]);
+                $repeatingTestpapers = TestPaper::with('course')->whereIn('course_id', $repeatingCoursesId)->get();
 
-                            if ($test[0]->date == date("Y-m-d", strtotime($now))){
-                                $temp = WrittenTestPaper::where([['user_id', Auth::user()->id], ['test_paper_id', $test[0]->id]])->get();
-                                if (sizeof($temp) != 0)
-                                    $test[0]->done = true;
-                                else    
-                                    $test[0]->done = false;
-                                array_push($todayTestpapers, $test[0]);
-
-                            }
+                if (sizeof($repeatingTestpapers) > 0){
+                    foreach($repeatingTestpapers as $keyT => $test){
+                        if (strtotime($test->date.' '.$test->end_time) > strtotime($now) ){
+                            $repeatingTestpapers[$keyT]->obsolete = false;         
+                            if ($test->date == date("Y-m-d", strtotime($now))){  
+                                array_push($todayTestpapers, $test);
+                            }             
                         }
+                        else {
+                            $repeatingTestpapers[$keyT]->obsolete = true;
+                            $repeatingTestpapers[$keyT]->mark_obtained = 0;
+                            if (sizeof($writtenTestPapers) > 0){
+                                foreach ( $writtenTestPapers as $wrt){
+                                    if ($test->id == $wrt->test_paper_id){
+                                        $repeatingTestpapers[$keyT]->mark_obtained = $wrt->over_mark;
+                                        $repeatingTestpapers[$keyT]->done = true;
+                                        break;
+                                    }
+                                    else{
+                                        $repeatingTestpapers[$keyT]->done = false;
+                                    }
+                                }
+                            }
+
+                        }
+                    }
                 }
             }
            
