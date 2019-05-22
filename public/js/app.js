@@ -14683,9 +14683,14 @@ exports.default = _default;
       return array;
     },
     submitTest: function submitTest() {
+      var _this2 = this;
+
       var params = Object.assign({}, this.actualTest);
       axios.post("api/submit_test", params).then(function (res) {
-        location.href = "/home";
+        if (res.data.error) {
+          _this2.error.isThereError = true;
+          _this2.error.message = res.data.error;
+        } else location.href = "/home";
       }).catch(function (error) {
         return console.log(error);
       });

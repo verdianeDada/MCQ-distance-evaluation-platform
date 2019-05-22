@@ -158,7 +158,10 @@ export default {
       axios
         .post("api/submit_test", params)
         .then(res => {
-          location.href = "/home";
+          if (res.data.error) {
+            this.error.isThereError = true;
+            this.error.message = res.data.error;
+          } else location.href = "/home";
         })
         .catch(error => console.log(error));
     },
