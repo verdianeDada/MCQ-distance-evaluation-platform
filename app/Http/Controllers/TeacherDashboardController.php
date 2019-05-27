@@ -476,22 +476,23 @@ class TeacherDashboardController extends Controller
                         }
                     }
                 }
-                
                 // view()->share('users',$users);
+                $now = date("Y-m-d H:i",strtotime(date("Y-m-d H:i"))+3600);
                 if ($testpaper->course->isCommon)
                     $data = [
                          'testpaper' => $testpaper, 
                          'teacher' => $teacher, 
                          'ictUsers' => $ictUsers, 
-                         'fcsUsers' => $fcsUsers
+                         'fcsUsers' => $fcsUsers,
+                         'now' => $now,
                         ];
                 else
                     $data = [
                         'testpaper' => $testpaper, 
                         'teacher' => $teacher, 
-                        'users' => $users
+                        'users' => $users,
+                        'now' => $now
                     ];
-
                 PDF::setOptions(['dpi' => 150, 'defaultFont' => 'sans-serif']);
                  
                 $pdf = PDF::loadView('results', $data);

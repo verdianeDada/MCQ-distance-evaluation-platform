@@ -18,7 +18,7 @@ class CreateWrittenTestPapersTable extends Migration
 
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('test_paper_id');
-            $table->integer('over_mark');
+            $table->integer('mark_obtained');
 
             $table->timestamps();
         });
