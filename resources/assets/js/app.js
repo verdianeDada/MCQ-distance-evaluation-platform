@@ -60,3 +60,10 @@ Vue.component(
 const app4 = new Vue({
   el: "#write-test"
 });
+
+//test
+Vue.component("test", require("./components/Test.vue").default);
+
+const app5 = new Vue({
+  el: "#test"
+});

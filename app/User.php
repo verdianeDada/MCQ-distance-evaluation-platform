@@ -37,7 +37,7 @@ class User extends Authenticatable
         return $this->belongsToMany('App\Course','course_repeatings');
     }
     public function user_written_papers(){
-        return $this->belongsToMany('App\TestPaper','written_testpapers')->withPivot('over_mark');
+        return $this->belongsToMany('App\TestPaper', 'written_test_papers');
     }
     /**
      * The attributes that should be hidden for arrays.

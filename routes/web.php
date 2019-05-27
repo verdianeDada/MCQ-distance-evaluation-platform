@@ -39,6 +39,7 @@ Route::prefix('api')->middleware(['auth'])->group(function() {
     Route::post('/testpaper', 'TeacherDashboardController@create_testpaper');
     Route::delete('/testpaper/{id}', 'TeacherDashboardController@delete_testpaper');
     Route::patch('/testpaper', 'TeacherDashboardController@update_testpaper');
+    // Route::get('/testpaper_results/{id}', 'TeacherDashboardController@testpaper_results');
 
     //student
     Route::get('/studentdashboard', 'StudentDashboardController@index');
@@ -58,6 +59,10 @@ Route::group(['middleware'=>'auth'], function(){
     Route::get('/forum-page', 'ForumController@index');
     Route::get('/testreport', 'TestReportController@index');
     Route::get('/write_test','writeTestController@index');
+    Route::get('/results/{id}','TeacherDashboardController@testpaper_results');
+});
+Route::get('/test', function(){
+    return view("test");
 });
 
 Auth::routes();

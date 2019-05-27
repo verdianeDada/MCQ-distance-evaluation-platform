@@ -13160,18 +13160,6 @@ fieldset[disabled] .form-control {
   border-radius: 15px;
 }
 
-.timer .status-tag.upcoming {
-  background-color: lightGreen;
-}
-
-.timer .status-tag.running {
-  background-color: gold;
-}
-
-.timer .status-tag.expired {
-  background-color: silver;
-}
-
 .pagination > li > a.btn-primary {
   background-color: #0a650a !important;
   font-weight: bold;

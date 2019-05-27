@@ -11,6 +11,7 @@ use App\User;
 use App\Question;
 use App\QuestionDistractor;
 use App\Course;
+use PDF;
 // Define our class.
 
 class Period {
@@ -30,14 +31,23 @@ class TeacherDashboardController extends Controller
         // look for testpapers
 
         $userid = Auth::user()->id;
+        $now = date("Y-m-d H:i:s",strtotime(date("Y-m-d H:i:s"))+3600);
+
 
         $testpapers = TestPaper::with(['course'=>function($query) use ($userid){
             $query->where('user_id','=', $userid);
         }])->orderBy('updated_at', 'desc')->get();
         
-        foreach($testpapers as $key => $test){
-            if (empty($test->course))
-                unset($testpapers[$key]);
+        if (sizeof($testpapers) > 0){
+            foreach($testpapers as $key => $test){
+                if (empty($test->course))
+                    unset($testpapers[$key]);
+                else{
+                    if (strtotime($test->date.' '.$test->end_time) < strtotime($now) ){
+                        $testpapers[$key]->obsolete = true;
+                    }
+                }
+            }
         }
        
         // look for teacher's taught courses
@@ -45,15 +55,16 @@ class TeacherDashboardController extends Controller
         $user = Auth::user();
         $courses = $user->courses()
             ->orderBy('year', 'asc')->get();
-            
-        foreach($courses as $course) {
-            if ($course->isCommon)
-                $course->option="FCS & ICT";
-            else{
-                if ($course->option)
-                    $course->option = "ICT";
-                else
-                    $course->option="FCS";
+        if (sizeof($courses) > 0){
+            foreach($courses as $course) {
+                if ($course->isCommon)
+                    $course->option="FCS & ICT";
+                else{
+                    if ($course->option)
+                        $course->option = "ICT";
+                    else
+                        $course->option="FCS";
+                }
             }
         }
         return ['courses'=>$courses,'testpapers'=>$testpapers];
@@ -87,9 +98,11 @@ class TeacherDashboardController extends Controller
 
                 //cleaning null courses
                 $classPapers = array();
-                foreach($objectClassPapers as $test){
-                    if (!empty($test->course))
-                        array_push($classPapers, $test);
+                if (sizeof($objectClassPapers)){
+                    foreach($objectClassPapers as $test){
+                        if (!empty($test->course))
+                            array_push($classPapers, $test);
+                    }
                 }
 
                 // look for gaps between classpapers
@@ -185,9 +198,11 @@ class TeacherDashboardController extends Controller
                 // removing null values
 
                 $ICTPapers = array();
-                foreach($ICTPapers_o as $test){
-                    if (!empty($test->course))
-                        array_push($ICTPapers, $test);
+                if (sizeof($ICTPapers_o)){
+                    foreach($ICTPapers_o as $test){
+                        if (!empty($test->course))
+                            array_push($ICTPapers, $test);
+                    }
                 }
                  
                 //FCS papers
@@ -207,10 +222,12 @@ class TeacherDashboardController extends Controller
                     // removing null values
 
                 $FCSPapers = array();
-                foreach($FCSPapers_o as $test){
-                    if (!empty($test->course))
-                        array_push($FCSPapers, $test);
-                }   
+                if (sizeof($FCSPapers)){
+                    foreach($FCSPapers_o as $test){
+                        if (!empty($test->course))
+                            array_push($FCSPapers, $test);
+                    }   
+                }
                 // free periods  for ICT
 
                 $freePeriodICT = array();
@@ -292,22 +309,26 @@ class TeacherDashboardController extends Controller
                 }
                 // look for common free time 
                 $goodplace = "";
-                foreach($freePeriodFCS as $keyF => $fcs){
-                    foreach($freePeriodICT as $keyI => $ict){
-                        if (  ( strtotime($freePeriodFCS[$keyF]->end_time) > strtotime($freePeriodICT[$keyI]->start_time) ) && 
-                              ( strtotime($freePeriodFCS[$keyF]->start_time) < strtotime($freePeriodICT[$keyI]->end_time) )
-                            ){
-                            $period = new Period;
-                            $period->start_time =  max( strtotime($freePeriodFCS[$keyF]->start_time) , strtotime($freePeriodICT[$keyI]->start_time));
-                            $period->end_time = min( strtotime($freePeriodFCS[$keyF]->end_time) , strtotime($freePeriodICT[$keyI]->end_time));
-                            if ( ($period->end_time - $period->start_time) >= $timeRequired ){
-                                $goodplace = date("H:i:s", $period->start_time);
-                                break;
+                if (sizeof($freePeriodFCS)){
+                    foreach($freePeriodFCS as $keyF => $fcs){
+                        if (sizeof($freePeriodICT) > 0){
+                            foreach($freePeriodICT as $keyI => $ict){
+                                if (  ( strtotime($freePeriodFCS[$keyF]->end_time) > strtotime($freePeriodICT[$keyI]->start_time) ) && 
+                                    ( strtotime($freePeriodFCS[$keyF]->start_time) < strtotime($freePeriodICT[$keyI]->end_time) )
+                                    ){
+                                    $period = new Period;
+                                    $period->start_time =  max( strtotime($freePeriodFCS[$keyF]->start_time) , strtotime($freePeriodICT[$keyI]->start_time));
+                                    $period->end_time = min( strtotime($freePeriodFCS[$keyF]->end_time) , strtotime($freePeriodICT[$keyI]->end_time));
+                                    if ( ($period->end_time - $period->start_time) >= $timeRequired ){
+                                        $goodplace = date("H:i:s", $period->start_time);
+                                        break;
+                                    }
+                                }
                             }
                         }
+                        if(!empty($goodplace))
+                            break;
                     }
-                    if(!empty($goodplace))
-                        break;
                 }
 
                 // create testpaper
@@ -413,6 +434,74 @@ class TeacherDashboardController extends Controller
          $this->delete_testpaper($request->id);
         return $this->create_testpaper($request);
 
+    }
+
+    public function testpaper_results($id){
+        try{
+            
+            $testpaper = TestPaper::where('id',$id)->with(['course'])->get();
+            if (sizeof($testpaper)> 0){
+                $testpaper = $testpaper[0];
+                $teacher = Auth::user();
+                
+                $users_o =  User::with(['user_written_papers' => function($query) use($id){
+                    $query->where('test_paper_id', $id);
+                }])->orderBy('matricule')->get();
+
+                
+                if (!$testpaper->course->isCommon){
+                    $users = array();
+                    if ($testpaper->course->option == 0)
+                        $testpaper->course->option = 'FCS';
+                    else
+                        $testpaper->course->option = 'ICT';
+                }
+                else{
+                    $testpaper->course->option = 'FCS & ICT';
+                
+                    $fcsUsers = array();
+                    $ictUsers = array();
+                }
+                if ( sizeof($users_o) > 0){
+                    foreach ($users_o as $user){
+                        if (sizeof($user->user_written_papers) > 0){
+                            if ($testpaper->course->isCommon){
+                                if ($user->option)
+                                    array_push($ictUsers, $user);
+                                else 
+                                    array_push($fcsUsers, $user);
+                            }
+                            else 
+                                array_push($users, $user);
+                        }
+                    }
+                }
+                
+                // view()->share('users',$users);
+                if ($testpaper->course->isCommon)
+                    $data = [
+                         'testpaper' => $testpaper, 
+                         'teacher' => $teacher, 
+                         'ictUsers' => $ictUsers, 
+                         'fcsUsers' => $fcsUsers
+                        ];
+                else
+                    $data = [
+                        'testpaper' => $testpaper, 
+                        'teacher' => $teacher, 
+                        'users' => $users
+                    ];
+
+                PDF::setOptions(['dpi' => 150, 'defaultFont' => 'sans-serif']);
+                 
+                $pdf = PDF::loadView('results', $data);
+
+                return $pdf->download($testpaper->course->code.' '.$testpaper->title.'.pdf');
+            }
+        }
+        catch (\Exception $e){
+            return $e->getMessage();
+        }
     }
 
 } ;

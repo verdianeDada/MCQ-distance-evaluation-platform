@@ -441,15 +441,6 @@ fieldset[disabled] .form-control {
     color: #000;
     text-align: center;
     border-radius: 15px;
-    &.upcoming {
-      background-color: lightGreen;
-    }
-    &.running {
-      background-color: gold;
-    }
-    &.expired {
-      background-color: silver;
-    }
   }
 }
 .pagination > li > a.btn-primary {

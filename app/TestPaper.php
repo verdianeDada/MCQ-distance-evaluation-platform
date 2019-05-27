@@ -22,10 +22,11 @@ class TestPaper extends Model
     }
     public function test_report()
     {
+
         return $this->hasOne('App\TestReport');
         
     }
-    // public function written_papers_user(){
-    //     return $this->belongsToMany('App\User');
-    // }
+     public function written_paper_users() {
+       return $this->belongsToMany('App\User', 'written_test_papers');
+   }
 }

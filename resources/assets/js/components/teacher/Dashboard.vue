@@ -29,6 +29,7 @@
           :courses="courses"
           :deleteTestPaper ="deleteTestPaper"
           :setModal="setModal"
+          :downloadResults="downloadResults"
         ></testpapers>
       </div>
     </div>
@@ -57,6 +58,7 @@
 import sidebar from "./Sidebar.vue";
 import testpapers from "./Testpapers.vue";
 import testpapermodal from "../modals/TestPaper.vue";
+import html from "./pdf.html";
 
 export default {
   mounted() {
@@ -138,6 +140,14 @@ export default {
         })
         .catch(error => console.log(error));
     },
+    downloadResults: function(id) {
+      axios;
+      // .get("api/testpaper_results/" + id)
+      // .then(res => {
+      location.href = "/results/" + id;
+      // })
+      // .catch(error => console.log(error));
+    },
     generateQuestion: function() {
       return {
         index: "",
@@ -158,8 +168,8 @@ export default {
       axios
         .get("api/teacherdashboard/")
         .then(res => {
-          this.courses = res.data.courses;
-          this.mytestpapers = res.data.testpapers;
+          if (res.data.courses) this.courses = res.data.courses;
+          if (res.data.testpapers) this.mytestpapers = res.data.testpapers;
         })
         .catch(error => {
           console.log(error);

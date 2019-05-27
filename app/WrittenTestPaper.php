@@ -10,4 +10,5 @@ class WrittenTestPaper extends Model
         'user_id','test_paper_id', 'over_mark'    
         
    ];
+  
 }

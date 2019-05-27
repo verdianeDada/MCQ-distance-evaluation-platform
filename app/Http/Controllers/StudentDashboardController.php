@@ -56,44 +56,46 @@ class StudentDashboardController extends Controller
 
             $writtenTestPapers = WrittenTestPaper::where('user_id', Auth::user()->id)->get();
 
-            foreach($testpapers as $keyT => $test){
-                if ( !empty($test->course)){
-                    if (strtotime($test->date.' '.$test->end_time) > strtotime($now) ){
-                        $testpapers[$keyT]->obsolete = false;         
-                        if ($test->date == date("Y-m-d", strtotime($now))){
+            if (sizeof($testpapers)){
+                foreach($testpapers as $keyT => $test){
+                    if ( !empty($test->course)){
+                        if (strtotime($test->date.' '.$test->end_time) > strtotime($now) ){
+                            $testpapers[$keyT]->obsolete = false;         
+                            if ($test->date == date("Y-m-d", strtotime($now))){
+                                if (sizeof($writtenTestPapers) > 0){
+                                    foreach ( $writtenTestPapers as $wrt){                                    
+                                        if ($test->id == $wrt->test_paper_id){
+                                            $test->mark_obtained = $wrt->over_mark;
+                                            $test->done = true;
+                                        }
+                                        else{
+                                            $test->done = false;
+                                        }
+                                    }
+                                } 
+                                array_push($todayTestpapers, $test);
+                            }             
+                        }
+                        else {
+                            $testpapers[$keyT]->obsolete = true;
+                            $testpapers[$keyT]->mark_obtained = 0;
                             if (sizeof($writtenTestPapers) > 0){
-                                foreach ( $writtenTestPapers as $wrt){                                    
+                                foreach ( $writtenTestPapers as $wrt){
                                     if ($test->id == $wrt->test_paper_id){
-                                        $test->mark_obtained = $wrt->over_mark;
-                                        $test->done = true;
+                                        $testpapers[$keyT]->mark_obtained = $wrt->over_mark;
+                                        $testpapers[$keyT]->done = true;
                                     }
                                     else{
-                                        $test->done = false;
+                                        $testpapers[$keyT]->done = false;
                                     }
                                 }
-                            } 
-                            array_push($todayTestpapers, $test);
-                        }             
-                    }
-                    else {
-                        $testpapers[$keyT]->obsolete = true;
-                        $testpapers[$keyT]->mark_obtained = 0;
-                        if (sizeof($writtenTestPapers) > 0){
-                            foreach ( $writtenTestPapers as $wrt){
-                                if ($test->id == $wrt->test_paper_id){
-                                    $testpapers[$keyT]->mark_obtained = $wrt->over_mark;
-                                    $testpapers[$keyT]->done = true;
-                                }
-                                else{
-                                    $testpapers[$keyT]->done = false;
-                                }
                             }
-                        }
 
+                        }
                     }
-                }
-                else{
-                    unset($testpapers[$keyT]);
+                    else{
+                        unset($testpapers[$keyT]);
+                    }
                 }
             }
             
