@@ -9,14 +9,16 @@
   <!-- CSRF Token -->
   <meta name="csrf-token" content="{{ csrf_token() }}">  
   <style>
-    #users td{
+    .users td{
       border: 1px solid black;
       padding: 3px;
     }
-    #users{
-      border: 1px solid rgb(10, 101, 10);
+    .users{
+      width: 100%;
+      margin: 0px 5px;
+      border: 1px solid black;
     }
-    @page { margin: 25px 25px; }
+    @page { margin: 20px 20px; }
     footer { position: fixed; bottom: -1px; text-align: right}
     p { page-break-after: always; }
     p:last-child { page-break-after: never; }
@@ -34,7 +36,7 @@
 <body 
   style="
     color: black; font-size: 14px; 
-    border: double 2px rgb(10, 101, 10);
+    border: double 4px rgb(10, 101, 10);
   "
 > 
 
@@ -49,7 +51,7 @@
       <img src="./images/logo.png" style="height: 250px">
     </div>
   </background>
-  
+
 <!-- header -->
   <div>
     <table style="width: 100%; text-align: center; ">                
@@ -89,7 +91,7 @@
     @if (!$testpaper->common && isset($users))
       <h3 style="text-align: center; color: rgb(10, 101, 10); text-decoration: underline; margin: 40px 10px;">Test's results</h3>
 
-      <table id="users" style="width: 100%; margin: 0px 5px;">
+      <table class="users">
         <tr>
           <td style="border: none;"></td>
           <td style="  font-weight: bolder">Matricule</td>
@@ -117,7 +119,7 @@
     @else
       <h3 style="text-align: center; color: rgb(10, 101, 10); text-decoration: underline; margin: 40px 10px;">Fundamental Computer Science's results</h3>
       <!-- fcs results -->
-      <table id="users" style="width: 100%; margin: 560px 5px;">
+      <table class="users">
           <tr>
             <td style="border: none;"></td>
             <td style="  font-weight: bold">Matricule</td>
@@ -145,7 +147,7 @@
         <!-- ict results -->
         <h3 style="text-align: center; color: rgb(10, 101, 10); text-decoration: underline; margin: 40px 10px;">Information and Communication Technology's results</h3>
 
-        <table id="users" style="width: 100%; margin: 0 5px;">
+        <table class="users">
         <tr>
           <td style="border: none;"></td>
           <td style="  font-weight: bold">Matricule</td>
