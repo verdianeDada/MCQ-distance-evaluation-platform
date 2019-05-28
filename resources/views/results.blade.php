@@ -11,6 +11,22 @@
   <style>
     #users td{
       border: 1px solid black;
+      padding: 3px;
+    }
+    #users{
+      border: 1px solid rgb(10, 101, 10);
+    }
+    @page { margin: 25px 25px; }
+    footer { position: fixed; bottom: -1px; text-align: right}
+    p { page-break-after: always; }
+    p:last-child { page-break-after: never; }
+    footer .pagenum:before {
+      content: counter(page);
+    }
+    background {
+      position: fixed;
+      top: 30%;
+      left: 50%;
     }
   </style>     
 
@@ -21,10 +37,19 @@
     border: double 2px rgb(10, 101, 10);
   "
 > 
+
+<!-- setting the page numbers -->
+  <footer class="pagenum">
+    <div class="pagenum-container">Page <span class="pagenum"></span></div>
+  </footer>
+  
   <!-- setting the background blurred image -->
-  <div style="position: absolute; opacity: 0.3; left: 50%;top: 40%; transform: translate(-50%,0); position: absolute; z-index: 1 ">
-    <img src="./images/logo.png" style="height: 160px">
-  </div>
+  <background>
+    <div style="opacity: 0.3; transform: translate(-50%,0); z-index: 1 ">
+      <img src="./images/logo.png" style="height: 250px">
+    </div>
+  </background>
+  
 <!-- header -->
   <div>
     <table style="width: 100%; text-align: center; ">                
@@ -64,22 +89,27 @@
     @if (!$testpaper->common && isset($users))
       <h3 style="text-align: center; color: rgb(10, 101, 10); text-decoration: underline; margin: 40px 10px;">Test's results</h3>
 
-      <table id="users" style="width: 100%; padding: 0 5px;">
+      <table id="users" style="width: 100%; margin: 0px 5px;">
         <tr>
-          <td></td>
-          <td style=" padding: 6px; font-weight: bold">Matricule</td>
-          <td style=" padding: 6px; font-weight: bold">Name</td>
-          <td style=" padding: 6px; font-weight: bold">Phone</td>
-          <td style=" padding: 6px; font-weight: bold">Mark / {{$testpaper->over_mark}}</td>
+          <td style="border: none;"></td>
+          <td style="  font-weight: bolder">Matricule</td>
+          <td style="  font-weight: bolder">Name</td>
+          <td style="  font-weight: bolder">Phone</td>
+          <td style="  font-weight: bolder">Mark / {{$testpaper->over_mark}}</td>
         </tr>
         <tbody>
-          @foreach ($users as $user)
+          @foreach ($users as $key=>$user)
             <tr> 
-              <td>1</td>
-              <td style="padding: 6px;"> <span style="text-transform: uppercase">{{$user->matricule}}</span></td>
-              <td style="padding: 6px;"> <span style="text-transform: capitalize">{{$user->name}}</span></td>
+              <td>{{$key + 1}}</td>
+              <td style=""> <span style="text-transform: uppercase">{{$user->matricule}}</span></td>
+              <td style=""> <span style="text-transform: capitalize">{{$user->name}}</span></td>
               <td>{{$user->phone}}</td>
-              <td>{{$user->user_written_papers[0]->pivot->mark_obtained}}</td>
+              @if ( $user->user_written_papers[0]->pivot->mark_obtained < $testpaper->over_mark / 2)
+                <td style="color: #800000; font-weight: bold">{{$user->user_written_papers[0]->pivot->mark_obtained}}</td>
+              @else
+                <td>{{$user->user_written_papers[0]->pivot->mark_obtained}}</td>
+              @endif
+
             </tr>
           @endforeach
         </tbody>
@@ -87,22 +117,26 @@
     @else
       <h3 style="text-align: center; color: rgb(10, 101, 10); text-decoration: underline; margin: 40px 10px;">Fundamental Computer Science's results</h3>
       <!-- fcs results -->
-      <table id="users" style="width: 100%; padding: 0 5px;">
+      <table id="users" style="width: 100%; margin: 560px 5px;">
           <tr>
-            <td></td>
-            <td style=" padding: 6px; font-weight: bold">Matricule</td>
-            <td style=" padding: 6px; font-weight: bold">Name</td>
-            <td style=" padding: 6px; font-weight: bold">Phone</td>
-            <td style=" padding: 6px; font-weight: bold">Mark / {{$testpaper->over_mark}}</td>
+            <td style="border: none;"></td>
+            <td style="  font-weight: bold">Matricule</td>
+            <td style="  font-weight: bold">Name</td>
+            <td style="  font-weight: bold">Phone</td>
+            <td style="  font-weight: bold">Mark / {{$testpaper->over_mark}}</td>
           </tr>
           <tbody>
-            @foreach ($fcsUsers as $user)
+            @foreach ($fcsUsers as $key => $user)
               <tr> 
-                <td>1</td>
-                <td style="padding: 6px;"> <span style="text-transform: uppercase">{{$user->matricule}}</span></td>
-                <td style="padding: 6px;"> <span style="text-transform: capitalize">{{$user->name}}</span></td>
+                <td>{{$key + 1}}</td>
+                <td style=""> <span style="text-transform: uppercase">{{$user->matricule}}</span></td>
+                <td style=""> <span style="text-transform: capitalize">{{$user->name}}</span></td>
                 <td>{{$user->phone}}</td>
-                <td>{{$user->user_written_papers[0]->pivot->mark_obtained}}</td>
+                @if ( $user->user_written_papers[0]->pivot->mark_obtained < $testpaper->over_mark / 2)
+                  <td style="color: #800000; font-weight: bold">{{$user->user_written_papers[0]->pivot->mark_obtained}}</td>
+                @else
+                  <td>{{$user->user_written_papers[0]->pivot->mark_obtained}}</td>
+                @endif
               </tr>
             @endforeach
           </tbody>
@@ -111,27 +145,32 @@
         <!-- ict results -->
         <h3 style="text-align: center; color: rgb(10, 101, 10); text-decoration: underline; margin: 40px 10px;">Information and Communication Technology's results</h3>
 
-        <table id="users" style="width: 100%; padding: 0 5px;">
+        <table id="users" style="width: 100%; margin: 0 5px;">
         <tr>
-          <td></td>
-          <td style=" padding: 6px; font-weight: bold">Matricule</td>
-          <td style=" padding: 6px; font-weight: bold">Name</td>
-          <td style=" padding: 6px; font-weight: bold">Phone</td>
-          <td style=" padding: 6px; font-weight: bold">Mark / {{$testpaper->over_mark}}</td>
+          <td style="border: none;"></td>
+          <td style="  font-weight: bold">Matricule</td>
+          <td style="  font-weight: bold">Name</td>
+          <td style="  font-weight: bold">Phone</td>
+          <td style="  font-weight: bold">Mark / {{$testpaper->over_mark}}</td>
         </tr>
         <tbody>
-          @foreach ($ictUsers as $user)
+          @foreach ($ictUsers as $key => $user)
             <tr> 
-              <td>1</td>
-              <td style="padding: 6px;"> <span style="text-transform: uppercase">{{$user->matricule}}</span></td>
-              <td style="padding: 6px;"> <span style="text-transform: capitalize">{{$user->name}}</span></td>
+              <td>{{$key + 1}}</td>
+              <td style=""> <span style="text-transform: uppercase">{{$user->matricule}}</span></td>
+              <td style=""> <span style="text-transform: capitalize">{{$user->name}}</span></td>
               <td>{{$user->phone}}</td>
-              <td>{{$user->user_written_papers[0]->pivot->mark_obtained}}</td>
+              @if ( $user->user_written_papers[0]->pivot->mark_obtained < $testpaper->over_mark / 2)
+                <td style="color: #800000; font-weight: bold">{{$user->user_written_papers[0]->pivot->mark_obtained}}</td>
+              @else
+                <td>{{$user->user_written_papers[0]->pivot->mark_obtained}}</td>
+              @endif
             </tr>
           @endforeach
         </tbody>
       </table>
     @endif
+
   </div>
 </body>
 </html>

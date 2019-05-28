@@ -465,6 +465,9 @@ class TeacherDashboardController extends Controller
                 if ( sizeof($users_o) > 0){
                     foreach ($users_o as $user){
                         if (sizeof($user->user_written_papers) > 0){
+                            if ($user->user_written_papers[0]->pivot->mark_obtained < 10){
+                                $user->user_written_papers[0]->pivot->mark_obtained = (int) '0'.$user->user_written_papers[0]->pivot->mark_obtained;
+                            }
                             if ($testpaper->course->isCommon){
                                 if ($user->option)
                                     array_push($ictUsers, $user);
@@ -493,8 +496,8 @@ class TeacherDashboardController extends Controller
                         'users' => $users,
                         'now' => $now
                     ];
+                    
                 PDF::setOptions(['dpi' => 150, 'defaultFont' => 'sans-serif']);
-                 
                 $pdf = PDF::loadView('results', $data);
 
                 return $pdf->download($testpaper->course->code.' '.$testpaper->title.'.pdf');
