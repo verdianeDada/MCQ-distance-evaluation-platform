@@ -17,7 +17,6 @@ Route::get('/', 'WelcomeController@index');
 
 Route::prefix('api')->middleware(['auth'])->group(function() {
     
-    
     //news
     Route::get('/all-news', 'NewStaffController@all_news');
     Route::post('/news', 'NewStaffController@store_news');
@@ -39,15 +38,16 @@ Route::prefix('api')->middleware(['auth'])->group(function() {
     Route::post('/testpaper', 'TeacherDashboardController@create_testpaper');
     Route::delete('/testpaper/{id}', 'TeacherDashboardController@delete_testpaper');
     Route::patch('/testpaper', 'TeacherDashboardController@update_testpaper');
-    // Route::get('/testpaper_results/{id}', 'TeacherDashboardController@testpaper_results');
 
     //student
     Route::get('/studentdashboard', 'StudentDashboardController@index');
     Route::get('/set_test', 'WriteTestController@set_test');
     Route::post('/submit_test', 'WriteTestController@submit_test');
 
-
-    Route::resource('/course', 'CourseController');
+    //  site management
+    Route::get('/sitemanagement/loadpage', 'SiteManagementController@loadpage');
+    // user
+    Route::delete('/user/{id}', 'UserController@delete_user');
 });
 
 

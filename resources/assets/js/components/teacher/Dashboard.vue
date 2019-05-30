@@ -5,12 +5,6 @@
       :courses = "courses"
     ></sidebar>
     <div class="col-md-9" style="padding:35px">
-      <div class="row" style="margin-top: -30px;  margin-bottom: 20px;">
-        <div class="nav right">
-          <a href="#" class="bold">Home /</a>
-          <a href="/testreport" class="bold">&nbsp;test reports</a>
-        </div>
-      </div>
       <div class="row">
         <button 
           class="btn btn-primary"
@@ -58,7 +52,6 @@
 import sidebar from "./Sidebar.vue";
 import testpapers from "./Testpapers.vue";
 import testpapermodal from "../modals/TestPaper.vue";
-import html from "./pdf.html";
 
 export default {
   mounted() {

@@ -61,9 +61,11 @@ const app4 = new Vue({
   el: "#write-test"
 });
 
-//test
-Vue.component("test", require("./components/Test.vue").default);
+Vue.component(
+  "sitemanagement",
+  require("./components/admin/sitemanagement/SiteManagement.vue").default
+);
 
-const app5 = new Vue({
-  el: "#test"
+const app6 = new Vue({
+  el: "#sitemanagement"
 });

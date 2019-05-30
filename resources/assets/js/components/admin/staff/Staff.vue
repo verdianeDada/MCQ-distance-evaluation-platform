@@ -191,7 +191,6 @@ export default {
         });
     },
     deleteStaff: function(id) {
-      console.log("in delee");
       axios
         .delete("api/staff/" + id)
         .then(res => {

@@ -13166,3 +13166,28 @@ fieldset[disabled] .form-control {
   color: white;
 }
 
+#sitemanagement a {
+  color: black;
+}
+
+#sitemanagement a.selected {
+  text-decoration: underline;
+  font-size: 16px;
+  color: #0a650a;
+}
+
+#sitemanagement a:hover,
+#sitemanagement a:focus,
+#sitemanagement a:active {
+  border: none;
+  font-size: 16px !important;
+}
+
+#sitemanagement #sitemanagement-body {
+  background-color: #fff;
+}
+
+#sitemanagement .blocked {
+  background-color: rgba(255, 0, 0, 0.062);
+}
+
