@@ -12670,6 +12670,10 @@ h1 {
   font-size: 24px;
 }
 
+table th {
+  font-weight: bolder;
+}
+
 .capitalize {
   text-transform: capitalize;
 }
@@ -12970,7 +12974,7 @@ h4 {
   margin-top: 10px;
 }
 
-#test-paper-form .form-group,
+#testr-form .form-group,
 .modal .form-group {
   margin-bottom: 12px;
 }
@@ -13189,5 +13193,9 @@ fieldset[disabled] .form-control {
 
 #sitemanagement .blocked {
   background-color: rgba(255, 0, 0, 0.062);
+}
+
+#sitemanagement .form-group {
+  padding: 0 8px;
 }
 

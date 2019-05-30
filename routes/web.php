@@ -47,7 +47,9 @@ Route::prefix('api')->middleware(['auth'])->group(function() {
     //  site management
     Route::get('/sitemanagement/loadpage', 'SiteManagementController@loadpage');
     // user
-    Route::delete('/user/{id}', 'UserController@delete_user');
+    Route::delete('/user/{id}', 'UserController@delete');
+    Route::get('/user/block/{id}', 'UserController@block');
+    Route::patch('/user', 'UserController@update');
 });
 
 

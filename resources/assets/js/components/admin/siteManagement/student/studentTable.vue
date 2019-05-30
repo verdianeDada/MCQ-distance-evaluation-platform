@@ -1,7 +1,7 @@
 <template>
     <div class="w3-example w3-padding w3-padding w3-white">
         <table class="table table-hover">
-          <thead>
+          <thead class="color">
             <tr>
               <th>#</th>
               <th>Matricule</th>
@@ -11,7 +11,7 @@
               <th>Delete</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody v-if="students[0]">
             <tr 
               v-for="(student,index) in students"
               :key ="student.id"
@@ -22,15 +22,15 @@
                 <td class="capitalize" >{{student.name}}</td>
                 <td>{{student.sex}}</td>
                 <td class="center">
-                  <button data-toggle= "modal" >
+                  <button  @click="block(student)">
                               <i class="fa fa-ban bold" :class="[{'color-alarm': student.isAllowed},{'color': !student.isAllowed}]" ></i>
                   </button>
                 </td>
                 <td>
-                  <button  data-toggle="modal" data-target="#">
+                  <button  data-toggle="modal" data-target="#updatemodal" @click="setUpdate(student)">
                       <i class="fa fa-pen color "></i>
                   </button>
-                  <button  data-toggle="modal" data-target="#deleteuser" @click="setDelete(student)">
+                  <button  data-toggle="modal" data-target="#deleteuser" @click="setModal(student)">
                       <i class="fa fa-trash color-alarm "></i>
                   </button>
                 </td>
@@ -38,46 +38,17 @@
           </tbody>
         </table>
         <!-- delete confirmation -->
-        <div class="fade modal" id = "deleteuser" role="dialog">
-        <deleteuser
-          :deleteUser = "deleteUser"
-        ></deleteuser>
-      </div>
+        
     </div>
 </template>
 <script>
-import deleteuser from "../../../modals/DeleteUser";
+// import deleteuser from "../../../modals/DeleteUser";
 export default {
   data: function() {
-    return {
-      actualUser: {}
-    };
+    return {};
   },
-  methods: {
-    setDelete: function(student) {
-      this.actualUser = student;
-    },
-    deleteUser: function() {
-      axios
-        .delete("api/user/" + this.actualUser.id)
-        .then(res => {
-          this.students.forEach(stu => {
-            if (stu.id === this.actualUser.id) {
-              var index = this.students
-                .map(function(stu) {
-                  return stu;
-                })
-                .indexOf(stu);
-              this.students.splice(index, 1);
-            }
-          });
-        })
-        .catch(error => console.log(error));
-    }
-  },
-  props: ["students"],
-  components: {
-    deleteuser
-  }
+  methods: {},
+  props: ["students", "setModal", "block", "setUpdate"],
+  components: {}
 };
 </script>

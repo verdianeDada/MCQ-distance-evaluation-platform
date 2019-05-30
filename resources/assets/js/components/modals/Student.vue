@@ -1,53 +1,145 @@
 <template>
-    <div class="modal-dialog">
-        <!-- <form data-parsley-validate @submit.prevent id="news-form">
+    <div class="modal-dialog modal-lg">
+        <form data-parsley-validate @submit.prevent id="student-form">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close color-alarm" data-dismiss="modal">&times;</button>
-                    <h1 class="bold color">News</h1>
+                    <h1 class="bold color center">Edit Student</h1>
                 </div>
                 <div class="modal-body">                
-                    <div class="row form-group">
-                        <label for="title" class="control-label col-lg-2">Title:</label>
-                        <div class="col-lg-10">
-                            <input type="text" name="" id="title" class="form-control" 
-                                placeholder="New's Title" 
-                                required 
-                                autofocus
-                                v-model="news.title"
+                    <div class="row margin-0">
+                        <div class="form-group col-lg-6 col-sm-6 col-xm-12">
+                            <label for="name" class="control-label">Name<strong>&nbsp;*</strong></label>
+                            <div>
+                                <input 
+                                    placeholder="Eg: Dada " 
+                                    id="name" type="text" 
+                                    class="form-control" 
+                                    name="name" 
+                                    required = "required"
+                                    data-parsley-required-message = "Your name is required"
+                                    data-parsley-maxlength= "32" 
+                                    v-model = "student.name"
+                                >
+                            </div>
+                        </div>
+
+                        <div class="form-group col-lg-6 col-sm-6 col-xm-12">
+                            <label for="phone" class="control-label">Phone number<strong>&nbsp;*</strong></label>
+                            <div>
+                                <input id="phone" 
+                                type="number" 
+                                class="form-control" 
+                                placeholder="Eg: 672778972"
+                                name="phone" 
+                                required ="required"
+                                data-parsley-required-message = "Your phone number is required"
+                                data-parsley-length-message = "Your phone number should have 9 digits"
+                                data-parsley-type="digits"
+                                data-parsley-length= "[9,9]"
+                                v-model = "student.phone"
                             >
+                            </div>
                         </div>
                     </div>
-                    <div class="row form-group">
-                        <label id="des" class="control-label col-lg-2">Description</label>
-                        <div class="col-lg-10">
-                            <textarea id="des" rows="3" class="form-control" placeholder="New's Description" 
-                                required 
-                                v-model="news.text"
-                            ></textarea>
+                    <div class="row margin-0">
+                        <div class="form-group col-lg-6 col-sm-6 col-xm-12">
+                            <label for="password" class="control-label">Password<strong>&nbsp;*</strong></label>
+                            <div>
+                                <input 
+                                id="password" 
+                                type="password" 
+                                class="form-control" 
+                                name="password" 
+                                required
+                                data-parsley-required-message = "Your password is required"
+                                data-parsley-minlength= "3"
+                                data-parsley-minlength-message = "Your password should have at least 3 characters"
+                                >
+                            </div>
+                        </div>
+
+                        <div class="form-group col-lg-6 col-sm-6 col-xm-12">
+                            <label for="password-confirm" class="control-label">Confirm Password<strong>&nbsp;*</strong></label>
+                            <div>
+                                <input 
+                                id ="password-confirm" 
+                                type= "password" 
+                                class= "form-control" 
+                                name= "password_confirm"
+                                required= "required"
+                                data-parsley-required-message = "Confirm your password"
+                                data-parsley-isequal=""
+                                >
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button
-                        class="btn btn-danger"
-                        data-dismiss = "modal"
-                    >Cancel</button>
-                    <button
-                        class="btn btn-primary"
-                        type="submit"
-                        @click="createNews"
-                        v-if = "!edit"
-                    >Save</button>
-                    <button
-                        class="btn btn-primary"
-                        type="submit"
-                        @click="updateNews(news.id)"
-                        v-if = "edit"
-                    >Update</button>
+                    <div class="row margin-0">
+                        <div class="form-group col-lg-6 col-sm-6 col-xm-12">
+                            <label class="control-label">Sex:</label>
+                            <div>
+                                <label for="male" class="radio col-lg-6 col-sm-6 col-xm-12">
+                                    <input type="radio" value="0"  id="male" v-model = "student.sex">Male
+                                </label>
+                                <label for="female" class="radio col-lg-6 col-sm-6 col-xm-12">
+                                    <input type="radio" value="1" id="female" v-model = "student.sex">Female
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-6 col-sm-6 col-xm-12" v-if="!student.isTeacher">
+                            <label for="option" class="control-label">Option:</label>
+                            <div>
+                                <select name="option" id="option" class="form-control" v-model = "student.option">
+                                    <option value="0" selected>Computer Science</option>
+                                    <option value="1">Information &amp; Communication Technology</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row margin-0" v-if="!student.isTeacher">
+                        <div class="form-group col-lg-6 col-sm-6 col-xm-12">
+                            <label for="year" class="control-label">Year:</label>
+                            <div>
+                                <select name="year" id="year" class="form-control" v-model.number = "student.year">
+                                    <option value="1" selected>Year 1</option>
+                                    <option value="2">Year 2</option>
+                                    <option value="3">Year 3</option>
+                                    <option value="4">Year 4</option>
+                                    <option value="5">Year 5</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-6 col-sm-6 col-xm-12">
+                            <label for="matricule" class="control-label">Registration number <strong>&nbsp;*</strong></label>
+                            <div>
+                                <input 
+                                    id ="matricule" 
+                                    type= "text" 
+                                    class= "form-control" 
+                                    name= "matricule"
+                                    placeholder="Eg: 16T0222"
+                                    data-parsley-length-message = "Your matricule should have 7 characters"
+                                    data-parsley-length= "[7,7]"
+                                    v-model = "student.matricule"
+                                >
+                            </div>
+                        </div>
+                    </div>
+                        
+                    <div class="modal-footer">
+                        <button
+                            class="btn btn-danger"
+                            data-dismiss = "modal"
+                        >Cancel</button>
+                        <button
+                            class="btn btn-primary"
+                            type="submit"
+                            @click="update(student.id)"
+                        >Update</button>
+                    </div>
                 </div>
             </div>
-        </form> -->
+        </form>
     </div>
 </template>
 <script>
@@ -56,28 +148,7 @@ export default {
   data: function() {
     return {};
   },
-  methods: {
-    createNews: function() {
-      if (
-        $("#news-form")
-          .parsley()
-          .isValid()
-      ) {
-        let params = Object.assign({}, this.news);
-        this.$emit("createNews", params);
-      }
-    },
-    updateNews: function(id) {
-      if (
-        $("#news-form")
-          .parsley()
-          .isValid()
-      ) {
-        let params = Object.assign({}, this.news);
-        this.$emit("updateNews", id, params);
-      }
-    }
-  },
-  props: ["newsList", "news", "edit", "cleanModal"]
+  methods: {},
+  props: ["student", "update", "cleanModal"]
 };
 </script>

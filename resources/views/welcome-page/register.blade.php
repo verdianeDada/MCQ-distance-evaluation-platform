@@ -10,7 +10,7 @@
             {{ csrf_field() }}
             <div>
                 <div class="form-group col-lg-6 col-sm-6 col-xm-12">
-                    <label for="name" class="control-label">Name<strong>&nbsp;;*</strong></label>
+                    <label for="name" class="control-label">Name<strong>&nbsp;*</strong></label>
                     <div class="col-sm-12">
                         <input 
                         placeholder="Eg: Dada " 
