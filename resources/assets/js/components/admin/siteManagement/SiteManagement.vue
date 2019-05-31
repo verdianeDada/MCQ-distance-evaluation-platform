@@ -20,11 +20,11 @@
             <!-- <coursemanagement 
               v-if="selectedLink == 1"
               :courses = "courses"
-              class="col-lg-10 col-offset-lg-1"
+              class="col-lg-10 col-lg-offset-1"
               ></coursemanagement>-->
             <teachermanagement
               v-if="selectedLink == 2"
-              class="col-lg-10 col-offset-lg-1"
+              class="col-lg-10 col-lg-offset-1"
               :actualUser="actualUser"
               :teachers="teachers"
             ></teachermanagement> 
@@ -62,7 +62,7 @@ export default {
           year5: []
         }
       },
-      selectedLink: 3,
+      selectedLink: 2,
       actualUser: {}
     };
   },

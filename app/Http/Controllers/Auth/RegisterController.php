@@ -80,7 +80,7 @@ class RegisterController extends Controller
 
         if ($data['status'] == 'student')
             return User::create([
-                'name' => $data['name'],
+                'name' => strtolower($data['name']),
                 'phone' => $data['phone'],
                 'sex' => $sex,
                 'option' => $data['option'],
@@ -90,7 +90,7 @@ class RegisterController extends Controller
                 ]);
         else
             return User::create([
-                'name' => $data['name'],
+                'name' => strtolower($data['name']),
                 'phone' => $data['phone'],
                 'sex' => $sex,
                 'isTeacher' => true,

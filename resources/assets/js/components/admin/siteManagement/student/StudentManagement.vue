@@ -4,7 +4,7 @@
 
       <div class="row" >
         <h1 class="color bold center well carousel-search hidden-phone collapse in" data-toggle="collapse" data-target="#ict"  aria-expanded="true" style="margin: 40px 0; font-size: 30px">
-          <i class="fa fa-desktop color-black"> 
+          <i class="fa fa-user-graduate  color-black"> 
             </i>&nbsp;&nbsp;Information and Communication Technology<div class="expand_caret caret"></div>
         </h1>
         <div id="ict" class="collapse in">
@@ -75,7 +75,7 @@
       <!-- FCS students -->
       <div class="row" >
         <h1 class="color bold center well carousel-search hidden-phone collapse in" data-toggle="collapse" data-target="#fcs"  aria-expanded="true" style="margin: 40px 0; font-size: 30px">
-          <i class="fa fa-desktop color-black"> 
+          <i class="fa fa-user-graduate color-black"> 
             </i>&nbsp;&nbsp;Fundamental Computer Science<div class="expand_caret caret"></div>
         </h1>
         <div id="fcs" class="collapse in">
@@ -186,9 +186,6 @@ export default {
     clean: function() {
       this.student = {};
     },
-    dropdown: function(option, year) {
-      this.show[option][year] = !this.show[option][year];
-    },
     setDelete: function(student) {
       this.actualUser = student;
     },
@@ -286,9 +283,9 @@ export default {
               else option = "fcs";
               // get student  option
               year = "year" + stud.year;
-              console.log(stud.year);
-              // console.log(`option${option}yaer${year}`);
-              console.log(this.students[option][year]);
+              if (stud.sex) stud.sex = "F";
+              else stud.sex = "M";
+
               this.students[option][year].push(stud);
               this.students[option][year].sort(
                 (a, b) => (a.matricule > b.matricule ? 1 : -1)

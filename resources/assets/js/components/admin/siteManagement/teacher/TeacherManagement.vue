@@ -1,13 +1,11 @@
 <template>
   <div>
-      <!-- ict students -->
-
-      <div class="row" >
+     <div class="row" >
         <h1 class="color bold center well carousel-search hidden-phone " style="margin: 40px 0; font-size: 30px">
           <i class="fa fa-user-tie color-black"> 
             </i>&nbsp;&nbsp;Computer Science Lecturers
         </h1>
-        <studenttable
+        <teachertable
             class="test-paper"                
             :users="teachers"
             :setModal="setDelete"
@@ -15,9 +13,9 @@
             :putAdmin="putAdmin"
             :setUpdate="setUpdate"
             :isTeacher="true"
-        ></studenttable>
+        ></teachertable>
       </div>
-      <!-- end FCS -->
+          
 
       <div class="fade modal" id = "deleteuser" role="dialog">
         <deleteusermodal
@@ -27,110 +25,68 @@
       <div class="fade modal" id = "updatemodal" role="dialog">
         <updatemodal
           :update = "update"
-          :user = "student"
+          :user = "teacher"
           :cleanModal = "clean"
           :error="error"
         ></updatemodal>
       </div>
-     
-    <!-- modal to create a new course -->
-    <!-- <div class="modal fade" 
-      id="studentmodal"
-      role="dialog"
-    >
-      <studentmodal
-        :course = "course"
-      ></studentmodal>
-    </div> -->
-    
   </div>
 </template>
 
 <script>
 import deleteusermodal from "../../../modals/DeleteUser";
 import updatemodal from "../../../modals/User";
-// import studentmodal from "../modals/Student.vue";
-import studenttable from "../UserTable.vue";
+import teachertable from "../UserTable.vue";
 
 export default {
   data: function() {
     return {
-      student: {
+      teacher: {
         name: "",
         phone: "",
-        password: "",
-        option: "",
-        matricule: "",
-        year: ""
+        password: ""
       },
       actualUser: {},
       error: ""
     };
   },
   methods: {
-    mounted: function() {
-      console.log(this.students);
-    },
     clean: function() {
-      this.student = {};
+      this.teacher = {};
     },
-    dropdown: function(option, year) {
-      this.show[option][year] = !this.show[option][year];
-    },
-    setDelete: function(student) {
-      this.actualUser = student;
+
+    setDelete: function(teacher) {
+      this.actualUser = teacher;
     },
     deleteUser: function() {
       axios
         .delete("api/user/" + this.actualUser.id)
         .then(res => {
-          var option, year;
-          // get student  option
-          if (this.actualUser.option) option = "ict";
-          else option = "fcs";
-          // get student  option
-          if (this.actualUser.year === 1) year = "year1";
-          else if (this.actualUser.year === 2) year = "year2";
-          else if (this.actualUser.year === 3) year = "year3";
-          else if (this.actualUser.year === 4) year = "year4";
-          else year = "year5";
-          this.students[option][year].forEach(stu => {
-            if (stu.id === this.actualUser.id) {
-              var index = this.students[option][year]
-                .map(function(stu) {
-                  return stu;
+          this.teachers.forEach(temp => {
+            if (temp.id === this.actualUser.id) {
+              var index = this.teachers
+                .map(function(temp) {
+                  return temp;
                 })
-                .indexOf(stu);
-              this.students[option][year].splice(index, 1);
+                .indexOf(temp);
+              this.teachers.splice(index, 1);
             }
           });
         })
         .catch(error => console.log(error));
     },
-    block: function(stud) {
+    block: function(teacher) {
       axios
-        .get("api/user/block/" + stud.id)
+        .get("api/user/block/" + teacher.id)
         .then(res => {
-          var option, year;
-          // get student  option
-          if (stud.option) option = "ict";
-          else option = "fcs";
-          // get student  option
-          if (stud.year === 1) year = "year1";
-          else if (stud.year === 2) year = "year2";
-          else if (stud.year === 3) year = "year3";
-          else if (stud.year === 4) year = "year4";
-          else year = "year5";
-          this.students[option][year].forEach(stu => {
-            if (stu.id === stud.id) {
-              var index = this.students[option][year]
-                .map(function(stu) {
-                  return stu;
+          this.teachers.forEach(temp => {
+            if (temp.id === teacher.id) {
+              var index = this.teachers
+                .map(function(temp) {
+                  return temp;
                 })
-                .indexOf(stu);
-              this.students[option][year][index].isAllowed = !this.students[
-                option
-              ][year][index].isAllowed;
+                .indexOf(temp);
+              this.teachers[index].isAllowed = !this.teachers[index].isAllowed;
             }
           });
         })
@@ -142,41 +98,31 @@ export default {
           .parsley()
           .isValid()
       ) {
-        let params = Object.assign({}, this.student);
+        let params = Object.assign({}, this.teacher);
         axios
           .patch("api/user", params)
           .then(res => {
-            console.log(res.data);
             if (res.data.error) {
               this.error = res.data.error;
             } else {
               this.error = "";
-              let stud = res.data;
+              let teacher = res.data;
               $("#updatemodal").modal("hide");
 
-              // delete previous user
-              console.log(params.year);
-              this.students[option][year].forEach(temp => {
-                if (temp.id === stud.id) {
-                  var index = this.students[option][year]
+              this.teachers.forEach(temp => {
+                if (temp.id === teacher.id) {
+                  var index = this.teachers
                     .map(function(temp) {
                       return temp;
                     })
                     .indexOf(temp);
-                  this.students[option][year][index] = temp;
+                  if (teacher.sex) teacher.sex = "F";
+                  else teacher.sex = "M";
+                  this.teachers[index] = teacher;
                 }
               });
 
-              var option, year;
-              // get student  option
-              if (stud.option) option = "ict";
-              else option = "fcs";
-              // get student  option
-              if (stud.year === 1) year = "year1";
-              else if (stud.year === 2) year = "year2";
-              else if (stud.year === 3) year = "year3";
-              else if (stud.year === 4) year = "year4";
-              else year = "year5";
+              this.teachers.sort((a, b) => (a.name > b.name ? 1 : -1));
             }
           })
           .catch(error => {
@@ -184,33 +130,21 @@ export default {
           });
       }
     },
-    setUpdate: function(student) {
-      this.student = student;
+    setUpdate: function(teacher) {
+      this.teacher = teacher;
     },
-    putAdmin: function(stud) {
+    putAdmin: function(teacher) {
       axios
-        .get("api/user/put_admin/" + stud.id)
+        .get("api/user/put_admin/" + teacher.id)
         .then(res => {
-          var option, year;
-          // get student  option
-          if (stud.option) option = "ict";
-          else option = "fcs";
-          // get student  option
-          if (stud.year === 1) year = "year1";
-          else if (stud.year === 2) year = "year2";
-          else if (stud.year === 3) year = "year3";
-          else if (stud.year === 4) year = "year4";
-          else year = "year5";
-          this.students[option][year].forEach(stu => {
-            if (stu.id === stud.id) {
-              var index = this.students[option][year]
-                .map(function(stu) {
-                  return stu;
+          this.teachers.forEach(temp => {
+            if (temp.id === teacher.id) {
+              var index = this.teachers
+                .map(function(temp) {
+                  return temp;
                 })
-                .indexOf(stu);
-              this.students[option][year][index].isAdmin = !this.students[
-                option
-              ][year][index].isAdmin;
+                .indexOf(temp);
+              this.teachers[index].isAdmin = !this.teachers[index].isAdmin;
             }
           });
         })
@@ -219,11 +153,11 @@ export default {
   },
 
   components: {
-    studenttable,
+    teachertable,
     deleteusermodal,
     updatemodal
   },
 
-  props: ["students"]
+  props: ["teachers"]
 };
 </script>

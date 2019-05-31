@@ -26,7 +26,7 @@
                 <td>{{user.phone}}</td>
                 <td class="center">
                   <button v-if="user.isAdmin" @click="putAdmin(user)">Yes</button>
-                  <button v-else @click="putAdmin(user)">No</button>
+                  <button v-else @click="putAdmin(user)">No&nbsp;</button>
                 <td class="center">
                   <button  @click="block(user)">
                     <i class="fa fa-ban bold" :class="[{'color-alarm': user.isAllowed},{'color': !user.isAllowed}]" ></i>

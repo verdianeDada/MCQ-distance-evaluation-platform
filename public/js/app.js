@@ -14904,7 +14904,7 @@ exports.default = _default;
           year5: []
         }
       },
-      selectedLink: 3,
+      selectedLink: 2,
       actualUser: {}
     };
   },
@@ -15297,9 +15297,6 @@ exports.default = _default;
     clean: function clean() {
       this.student = {};
     },
-    dropdown: function dropdown(option, year) {
-      this.show[option][year] = !this.show[option][year];
-    },
     setDelete: function setDelete(student) {
       this.actualUser = student;
     },
@@ -15375,9 +15372,8 @@ exports.default = _default;
             if (stud.option) option = "ict";else option = "fcs";
             // get student  option
             year = "year" + stud.year;
-            console.log(stud.year);
-            // console.log(`option${option}yaer${year}`);
-            console.log(_this3.students[option][year]);
+            if (stud.sex) stud.sex = "F";else stud.sex = "M";
+
             _this3.students[option][year].push(stud);
             _this3.students[option][year].sort(function (a, b) {
               return a.matricule > b.matricule ? 1 : -1;
@@ -79711,7 +79707,7 @@ var staticRenderFns = [
         }
       },
       [
-        _c("i", { staticClass: "fa fa-desktop color-black" }),
+        _c("i", { staticClass: "fa fa-user-graduate  color-black" }),
         _vm._v("  Information and Communication Technology"),
         _c("div", { staticClass: "expand_caret caret" })
       ]
@@ -79824,7 +79820,7 @@ var staticRenderFns = [
         }
       },
       [
-        _c("i", { staticClass: "fa fa-desktop color-black" }),
+        _c("i", { staticClass: "fa fa-user-graduate color-black" }),
         _vm._v("  Fundamental Computer Science"),
         _c("div", { staticClass: "expand_caret caret" })
       ]
@@ -80026,7 +80022,7 @@ var render = function() {
       [
         _vm.selectedLink == 2
           ? _c("teachermanagement", {
-              staticClass: "col-lg-10 col-offset-lg-1",
+              staticClass: "col-lg-10 col-lg-offset-1",
               attrs: { actualUser: _vm.actualUser, teachers: _vm.teachers }
             })
           : _vm._e(),
@@ -80284,7 +80280,7 @@ var render = function() {
                                 }
                               }
                             },
-                            [_vm._v("No")]
+                            [_vm._v("No ")]
                           )
                     ]),
                     _c("td", { staticClass: "center" }, [
@@ -80405,89 +80401,57 @@ if (false) {
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
-// import studentmodal from "../modals/Student.vue";
 
 
 /* harmony default export */ __webpack_exports__["a"] = ({
   data: function data() {
     return {
-      student: {
+      teacher: {
         name: "",
         phone: "",
-        password: "",
-        option: "",
-        matricule: "",
-        year: ""
+        password: ""
       },
       actualUser: {},
       error: ""
     };
   },
   methods: {
-    mounted: function mounted() {
-      console.log(this.students);
-    },
     clean: function clean() {
-      this.student = {};
+      this.teacher = {};
     },
-    dropdown: function dropdown(option, year) {
-      this.show[option][year] = !this.show[option][year];
-    },
-    setDelete: function setDelete(student) {
-      this.actualUser = student;
+
+    setDelete: function setDelete(teacher) {
+      this.actualUser = teacher;
     },
     deleteUser: function deleteUser() {
       var _this = this;
 
       axios.delete("api/user/" + this.actualUser.id).then(function (res) {
-        var option, year;
-        // get student  option
-        if (_this.actualUser.option) option = "ict";else option = "fcs";
-        // get student  option
-        if (_this.actualUser.year === 1) year = "year1";else if (_this.actualUser.year === 2) year = "year2";else if (_this.actualUser.year === 3) year = "year3";else if (_this.actualUser.year === 4) year = "year4";else year = "year5";
-        _this.students[option][year].forEach(function (stu) {
-          if (stu.id === _this.actualUser.id) {
-            var index = _this.students[option][year].map(function (stu) {
-              return stu;
-            }).indexOf(stu);
-            _this.students[option][year].splice(index, 1);
+        _this.teachers.forEach(function (temp) {
+          if (temp.id === _this.actualUser.id) {
+            var index = _this.teachers.map(function (temp) {
+              return temp;
+            }).indexOf(temp);
+            _this.teachers.splice(index, 1);
           }
         });
       }).catch(function (error) {
         return console.log(error);
       });
     },
-    block: function block(stud) {
+    block: function block(teacher) {
       var _this2 = this;
 
-      axios.get("api/user/block/" + stud.id).then(function (res) {
-        var option, year;
-        // get student  option
-        if (stud.option) option = "ict";else option = "fcs";
-        // get student  option
-        if (stud.year === 1) year = "year1";else if (stud.year === 2) year = "year2";else if (stud.year === 3) year = "year3";else if (stud.year === 4) year = "year4";else year = "year5";
-        _this2.students[option][year].forEach(function (stu) {
-          if (stu.id === stud.id) {
-            var index = _this2.students[option][year].map(function (stu) {
-              return stu;
-            }).indexOf(stu);
-            _this2.students[option][year][index].isAllowed = !_this2.students[option][year][index].isAllowed;
+      axios.get("api/user/block/" + teacher.id).then(function (res) {
+        _this2.teachers.forEach(function (temp) {
+          if (temp.id === teacher.id) {
+            var index = _this2.teachers.map(function (temp) {
+              return temp;
+            }).indexOf(temp);
+            _this2.teachers[index].isAllowed = !_this2.teachers[index].isAllowed;
           }
         });
       }).catch(function (error) {
@@ -80498,56 +80462,47 @@ if (false) {
       var _this3 = this;
 
       if ($("#user-form").parsley().isValid()) {
-        var params = Object.assign({}, this.student);
+        var params = Object.assign({}, this.teacher);
         axios.patch("api/user", params).then(function (res) {
-          console.log(res.data);
           if (res.data.error) {
             _this3.error = res.data.error;
           } else {
             _this3.error = "";
-            var stud = res.data;
+            var teacher = res.data;
             $("#updatemodal").modal("hide");
 
-            // delete previous user
-            console.log(params.year);
-            _this3.students[option][year].forEach(function (temp) {
-              if (temp.id === stud.id) {
-                var index = _this3.students[option][year].map(function (temp) {
+            _this3.teachers.forEach(function (temp) {
+              if (temp.id === teacher.id) {
+                var index = _this3.teachers.map(function (temp) {
                   return temp;
                 }).indexOf(temp);
-                _this3.students[option][year][index] = temp;
+                if (teacher.sex) teacher.sex = "F";else teacher.sex = "M";
+                _this3.teachers[index] = teacher;
               }
             });
 
-            var option, year;
-            // get student  option
-            if (stud.option) option = "ict";else option = "fcs";
-            // get student  option
-            if (stud.year === 1) year = "year1";else if (stud.year === 2) year = "year2";else if (stud.year === 3) year = "year3";else if (stud.year === 4) year = "year4";else year = "year5";
+            _this3.teachers.sort(function (a, b) {
+              return a.name > b.name ? 1 : -1;
+            });
           }
         }).catch(function (error) {
           console.log("an error ocurred" + error);
         });
       }
     },
-    setUpdate: function setUpdate(student) {
-      this.student = student;
+    setUpdate: function setUpdate(teacher) {
+      this.teacher = teacher;
     },
-    putAdmin: function putAdmin(stud) {
+    putAdmin: function putAdmin(teacher) {
       var _this4 = this;
 
-      axios.get("api/user/put_admin/" + stud.id).then(function (res) {
-        var option, year;
-        // get student  option
-        if (stud.option) option = "ict";else option = "fcs";
-        // get student  option
-        if (stud.year === 1) year = "year1";else if (stud.year === 2) year = "year2";else if (stud.year === 3) year = "year3";else if (stud.year === 4) year = "year4";else year = "year5";
-        _this4.students[option][year].forEach(function (stu) {
-          if (stu.id === stud.id) {
-            var index = _this4.students[option][year].map(function (stu) {
-              return stu;
-            }).indexOf(stu);
-            _this4.students[option][year][index].isAdmin = !_this4.students[option][year][index].isAdmin;
+      axios.get("api/user/put_admin/" + teacher.id).then(function (res) {
+        _this4.teachers.forEach(function (temp) {
+          if (temp.id === teacher.id) {
+            var index = _this4.teachers.map(function (temp) {
+              return temp;
+            }).indexOf(temp);
+            _this4.teachers[index].isAdmin = !_this4.teachers[index].isAdmin;
           }
         });
       }).catch(function (error) {
@@ -80557,12 +80512,12 @@ if (false) {
   },
 
   components: {
-    studenttable: __WEBPACK_IMPORTED_MODULE_2__UserTable_vue__["a" /* default */],
+    teachertable: __WEBPACK_IMPORTED_MODULE_2__UserTable_vue__["a" /* default */],
     deleteusermodal: __WEBPACK_IMPORTED_MODULE_0__modals_DeleteUser__["a" /* default */],
     updatemodal: __WEBPACK_IMPORTED_MODULE_1__modals_User__["a" /* default */]
   },
 
-  props: ["students"]
+  props: ["teachers"]
 });
 
 /***/ }),
@@ -80637,7 +80592,7 @@ var render = function() {
       [
         _vm._m(0),
         _vm._v(" "),
-        _c("studenttable", {
+        _c("teachertable", {
           staticClass: "test-paper",
           attrs: {
             users: _vm.teachers,
@@ -80672,7 +80627,7 @@ var render = function() {
         _c("updatemodal", {
           attrs: {
             update: _vm.update,
-            user: _vm.student,
+            user: _vm.teacher,
             cleanModal: _vm.clean,
             error: _vm.error
           }

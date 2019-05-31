@@ -52,7 +52,7 @@ class UserController extends Controller
 
     if (!$req['isTeacher']){
         DB::table('users')->where('id', $req['id'])->update([
-        'name' => $req['name'],
+        'name' => strtolower($req['name']),
         'phone' => $req['phone'],
         'sex' => $sex,
         'option' => $req['option'],
@@ -60,17 +60,21 @@ class UserController extends Controller
         'year' => $req['year'],
         'password' => bcrypt($req['password']),
         ]);
-        return User::where('id', $req['id'])->get()[0];
+        $user = User::where('id', $req['id'])->get()[0];
+      
+
     }
     else{
          DB::table('users')->where('id', $req['id'])->update([
-            'name' => $req['name'],
+            'name' => strtolower($req['name']),
             'phone' => $req['phone'],
             'sex' => $sex,
-            'isTeacher' => true,
             'password' => bcrypt($req['password']),
         ]);
-        return User::where('id', $req['id'])->get()[0];
-        }
+
+        $user = User::where('id', $req['id'])->get()[0];
+    }
+    
+    return $user;
     }
 }
