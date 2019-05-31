@@ -1,12 +1,5 @@
 <template>
   <div>
-<!-- <a data-toggle="collapse" data-target="#collapseExampleArea" href="#collapseExampleArea" aria-expanded="false">
-  Click to toggle collapse status of section below
-  <div class="expand_caret caret"></div>
-</a>
-<div id="collapseExampleArea" class="collapse in">
-  <p>Content inside the collapse area</p>
-</div> -->
       <!-- ict students -->
 
       <div class="row" >
@@ -19,55 +12,60 @@
           <div id="ict1" class="collapse in">
               <studenttable
                   class="test-paper"                
-                  :students="students.ict.year1"
+                  :users="students.ict.year1"
                   :setModal="setDelete"
                   :block="block"
                   :putAdmin="putAdmin"
                   :setUpdate="setUpdate"
+                  :isTeacher="false"
               ></studenttable>
           </div>
           <h3 class="bold center color-black collapse in" data-toggle="collapse" data-target="#ict2"  aria-expanded="true" style="margin-top: 40px;">ICT Year 2&nbsp;&nbsp;<div class="expand_caret caret"></div></h3>
           <div class="collapse in" id="ict2">
               <studenttable 
                   class="test-paper"
-                  :students="students.ict.year2"
+                  :users="students.ict.year2"
                   :setModal="setDelete"
                   :block="block"
                   :putAdmin="putAdmin"
                   :setUpdate="setUpdate"
+                  :isTeacher="false"
               ></studenttable>
           </div>
           <h3 class="bold center color-black collapse in" data-toggle="collapse" data-target="#ict3"  aria-expanded="true" style="margin-top: 40px;">ICT Year 3&nbsp;&nbsp;<div class="expand_caret caret"></div></h3>          
           <div class="collapse in" id="ict3">
               <studenttable 
                   class="test-paper"
-                  :students="students.ict.year3"
+                  :users="students.ict.year3"
                   :setModal="setDelete"
                   :block="block"
                   :putAdmin="putAdmin"
                   :setUpdate="setUpdate"
+                  :isTeacher="false"
               ></studenttable>
           </div>
           <h3 class="bold center color-black collapse in" data-toggle="collapse" data-target="#ict4"  aria-expanded="true" style="margin-top: 40px;">ICT Year 4&nbsp;&nbsp;<div class="expand_caret caret"></div></h3>          
           <div class="collapse in" id="ict4">
               <studenttable 
                   class="test-paper"
-                  :students="students.ict.year4"
+                  :users="students.ict.year4"
                   :setModal="setDelete"
                   :block="block"
                   :putAdmin="putAdmin"
                   :setUpdate="setUpdate"
+                  :isTeacher="false"
               ></studenttable>
           </div>
           <h3 class="bold center color-black collapse in" data-toggle="collapse" data-target="#ict5"  aria-expanded="true" style="margin-top: 40px;">ICT Year 5&nbsp;&nbsp;<div class="expand_caret caret"></div></h3>          
           <div class="collapse in" id="ict5">
               <studenttable 
                   class="test-paper"
-                  :students="students.ict.year5"
+                  :users="students.ict.year5"
                   :setModal="setDelete"
                   :block="block"
                   :putAdmin="putAdmin"
                   :setUpdate="setUpdate"
+                  :isTeacher="false"
               ></studenttable>
           </div>
         </div>
@@ -85,55 +83,60 @@
           <div class="collapse in" id="fcs1">
               <studenttable
                   class="test-paper"                
-                  :students="students.fcs.year1"
+                  :users="students.fcs.year1"
                   :setModal="setDelete"
                   :block="block"
                   :putAdmin="putAdmin"
                   :setUpdate="setUpdate"
+                  :isTeacher="false"
               ></studenttable>
           </div>
           <h3 class="bold center color-black collapse in" data-toggle="collapse" data-target="#fcs2"  aria-expanded="true" style="margin-top: 40px;">FCS Year 2&nbsp;&nbsp;<div class="expand_caret caret"></div></h3>          
           <div class="collapse in" id="fcs2">
               <studenttable 
                   class="test-paper"
-                  :students="students.fcs.year2"
+                  :users="students.fcs.year2"
                   :setModal="setDelete"
                   :block="block"
                   :putAdmin="putAdmin"
                   :setUpdate="setUpdate"
+                  :isTeacher="false"
               ></studenttable>
           </div>
           <h3 class="bold center color-black collapse in" data-toggle="collapse" data-target="#fcs3"  aria-expanded="true" style="margin-top: 40px;">FCS Year 3&nbsp;&nbsp;<div class="expand_caret caret"></div></h3>          
           <div class="collapse in" id="fcs3">
               <studenttable 
                   class="test-paper"
-                  :students="students.fcs.year3"
+                  :users="students.fcs.year3"
                   :setModal="setDelete"
                   :block="block"
                   :putAdmin="putAdmin"
                   :setUpdate="setUpdate"
+                  :isTeacher="false"
               ></studenttable>
           </div>
           <h3 class="bold center color-black collapse in" data-toggle="collapse" data-target="#fcs4"  aria-expanded="true" style="margin-top: 40px;">FCS Year 4&nbsp;&nbsp;<div class="expand_caret caret"></div></h3>          
           <div class="collapse in" id="fcs4">
               <studenttable 
                   class="test-paper"
-                  :students="students.fcs.year4"
+                  :users="students.fcs.year4"
                   :setModal="setDelete"
                   :block="block"
                   :putAdmin="putAdmin"
                   :setUpdate="setUpdate"
+                  :isTeacher="false"
               ></studenttable>
           </div>
           <h3 class="bold center color-black collapse in" data-toggle="collapse" data-target="#fcs5"  aria-expanded="true" style="margin-top: 40px;">FCS Year 5&nbsp;&nbsp;<div class="expand_caret caret"></div></h3>          
           <div class="collapse in" id="fcs5">
               <studenttable 
                   class="test-paper"
-                  :students="students.fcs.year5"
+                  :users="students.fcs.year5"
                   :setModal="setDelete"
                   :block="block"
                   :putAdmin="putAdmin"
                   :setUpdate="setUpdate"
+                  :isTeacher="false"
               ></studenttable>
           </div>
         </div>
@@ -148,30 +151,21 @@
       <div class="fade modal" id = "updatemodal" role="dialog">
         <updatemodal
           :update = "update"
-          :student = "student"
+          :user = "student"
           :cleanModal = "clean"
           :error="error"
         ></updatemodal>
       </div>
-     
-    <!-- modal to create a new course -->
-    <!-- <div class="modal fade" 
-      id="studentmodal"
-      role="dialog"
-    >
-      <studentmodal
-        :course = "course"
-      ></studentmodal>
-    </div> -->
+ 
     
   </div>
 </template>
 
 <script>
 import deleteusermodal from "../../../modals/DeleteUser";
-import updatemodal from "../../../modals/Student";
+import updatemodal from "../../../modals/User";
 // import studentmodal from "../modals/Student.vue";
-import studenttable from "./StudentTable.vue";
+import studenttable from "../UserTable.vue";
 
 export default {
   data: function() {
@@ -189,9 +183,6 @@ export default {
     };
   },
   methods: {
-    mounted: function() {
-      console.log(this.students);
-    },
     clean: function() {
       this.student = {};
     },
@@ -257,9 +248,9 @@ export default {
         })
         .catch(error => console.log(error));
     },
-    update: function(id, params) {
+    update: function(id) {
       if (
-        $("#student-form")
+        $("#user-form")
           .parsley()
           .isValid()
       ) {
@@ -267,33 +258,41 @@ export default {
         axios
           .patch("api/user", params)
           .then(res => {
-            console.log(res.data);
             if (res.data.error) {
               this.error = res.data.error;
             } else {
               this.error = "";
-              let stu = res.data;
+              let stud = res.data;
               $("#updatemodal").modal("hide");
               var option, year;
-              // get student  option
+              // delete previous user
+              console.log(this.actualUser);
+              if (this.actualUser.option) option = "ict";
+              else option = "fcs";
+              year = "year" + this.actualUser.year;
+              this.students[option][year].forEach(temp => {
+                if (temp.id === this.actualUser.id) {
+                  var index = this.students[option][year]
+                    .map(function(temp) {
+                      return temp;
+                    })
+                    .indexOf(temp);
+                  this.students[option][year].splice(index, 1);
+                }
+              });
+
+              // addd new student info
               if (stud.option) option = "ict";
               else option = "fcs";
               // get student  option
-              if (stud.year === 1) year = "year1";
-              else if (stud.year === 2) year = "year2";
-              else if (stud.year === 3) year = "year3";
-              else if (stud.year === 4) year = "year4";
-              else year = "year5";
-              this.students[option][year].forEach(stu => {
-                if (stu.id === stud.id) {
-                  var index = this.students[option][year]
-                    .map(function(stu) {
-                      return stu;
-                    })
-                    .indexOf(stu);
-                  this.students[option][year][index] = stu;
-                }
-              });
+              year = "year" + stud.year;
+              console.log(stud.year);
+              // console.log(`option${option}yaer${year}`);
+              console.log(this.students[option][year]);
+              this.students[option][year].push(stud);
+              this.students[option][year].sort(
+                (a, b) => (a.matricule > b.matricule ? 1 : -1)
+              );
             }
           })
           .catch(error => {
@@ -303,6 +302,7 @@ export default {
     },
     setUpdate: function(student) {
       this.student = student;
+      this.actualUser = Object.assign({}, student);
     },
     putAdmin: function(stud) {
       axios

@@ -1,10 +1,10 @@
 <template>
     <div class="modal-dialog modal-lg">
-        <form data-parsley-validate @submit.prevent id="student-form">
+        <form data-parsley-validate @submit.prevent id="user-form">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close color-alarm" data-dismiss="modal">&times;</button>
-                    <h1 class="bold color center">Edit Student</h1>
+                    <h1 class="bold color center">Edit User</h1>
                 </div>
                 <div class="modal-body">                
                     <div class="row margin-0">
@@ -19,7 +19,8 @@
                                     required = "required"
                                     data-parsley-required-message = "Your name is required"
                                     data-parsley-maxlength= "32" 
-                                    v-model = "student.name"
+                                    v-model = "user.name"
+                                    autofocus
                                 >
                             </div>
                         </div>
@@ -37,7 +38,7 @@
                                 data-parsley-length-message = "Your phone number should have 9 digits"
                                 data-parsley-type="digits"
                                 data-parsley-length= "[9,9]"
-                                v-model = "student.phone"
+                                v-model = "user.phone"
                             >
                             </div>
                         </div>
@@ -56,7 +57,7 @@
                                     data-parsley-required-message = "Your password is required"
                                     data-parsley-minlength= "3"
                                     data-parsley-minlength-message = "Your password should have at least 3 characters"
-                                    v-model = "student.password"
+                                    v-model = "user.password"
                                 >
                             </div>
                         </div>
@@ -84,28 +85,28 @@
                             <label class="control-label">Sex:</label>
                             <div>
                                 <label for="male" class="radio col-lg-6 col-sm-6 col-xm-12">
-                                    <input type="radio" value="M"  id="male" v-model="student.sex">Male
+                                    <input type="radio" value="M"  id="male" v-model="user.sex">Male
                                 </label>
                                 <label for="female" class="radio col-lg-6 col-sm-6 col-xm-12">
-                                    <input type="radio" value="F" id="female" v-model="student.sex">Female
+                                    <input type="radio" value="F" id="female" v-model="user.sex">Female
                                 </label>
                             </div>
                         </div>
-                        <div class="form-group col-lg-6 col-sm-6 col-xm-12" v-if="!student.isTeacher">
+                        <div class="form-group col-lg-6 col-sm-6 col-xm-12" v-if="!user.isTeacher">
                             <label for="option" class="control-label">Option:</label>
                             <div>
-                                <select name="option" id="option" class="form-control" v-model = "student.option">
+                                <select name="option" id="option" class="form-control" v-model = "user.option">
                                     <option value="0" selected>Computer Science</option>
                                     <option value="1">Information &amp; Communication Technology</option>
                                 </select>
                             </div>
                         </div>
                     </div>
-                    <div class="row margin-0" v-if="!student.isTeacher">
+                    <div class="row margin-0" v-if="!user.isTeacher">
                         <div class="form-group col-lg-6 col-sm-6 col-xm-12">
                             <label for="year" class="control-label">Year:</label>
                             <div>
-                                <select name="year" id="year" class="form-control" v-model.number = "student.year">
+                                <select name="year" id="year" class="form-control" v-model.number = "user.year">
                                     <option value="1" selected>Year 1</option>
                                     <option value="2">Year 2</option>
                                     <option value="3">Year 3</option>
@@ -125,7 +126,7 @@
                                     placeholder="Eg: 16T0222"
                                     data-parsley-length-message = "Your matricule should have 7 characters"
                                     data-parsley-length= "[7,7]"
-                                    v-model = "student.matricule"
+                                    v-model = "user.matricule"
                                 >
                             </div>
                         </div>
@@ -139,7 +140,7 @@
                         <button
                             class="btn btn-primary"
                             type="submit"
-                            @click="update(student.id)"
+                            @click="update(user.id)"
                         >Update</button>
                     </div>
                 </div>
@@ -154,6 +155,6 @@ export default {
     return {};
   },
   methods: {},
-  props: ["student", "update", "cleanModal", "error"]
+  props: ["user", "update", "cleanModal", "error"]
 };
 </script>

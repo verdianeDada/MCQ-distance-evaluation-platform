@@ -4,7 +4,7 @@
           <thead class="color">
             <tr>
               <th>#</th>
-              <th>Matricule</th>
+              <th v-if="!isTeacher">Matricule</th>
               <th style="width: 500px;">Name</th>
               <th>Sex</th>
               <th>Phone</th>
@@ -13,30 +13,30 @@
               <th></th>
             </tr>
           </thead>
-          <tbody v-if="students[0]">
+          <tbody v-if="users[0]">
             <tr 
-              v-for="(student,index) in students"
-              :key ="student.id"
-              :class="[{'blocked':student.isAllowed == 0}]"
+              v-for="(user,index) in users"
+              :key ="user.id"
+              :class="[{'blocked':user.isAllowed == 0}]"
             >
                 <td>{{index + 1}}</td>
-                <td class="uppercase">{{student.matricule}}</td>
-                <td class="capitalize" >{{student.name}}</td>
-                <td>{{student.sex}}</td>
-                <td>{{student.phone}}</td>
+                <td v-if="!isTeacher" class="uppercase">{{user.matricule}}</td>
+                <td class="capitalize" >{{user.name}}</td>
+                <td>{{user.sex}}</td>
+                <td>{{user.phone}}</td>
                 <td class="center">
-                  <button v-if="student.isAdmin" @click="putAdmin(student)">Yes</button>
-                  <button v-else @click="putAdmin(student)">No</button>
+                  <button v-if="user.isAdmin" @click="putAdmin(user)">Yes</button>
+                  <button v-else @click="putAdmin(user)">No</button>
                 <td class="center">
-                  <button  @click="block(student)">
-                    <i class="fa fa-ban bold" :class="[{'color-alarm': student.isAllowed},{'color': !student.isAllowed}]" ></i>
+                  <button  @click="block(user)">
+                    <i class="fa fa-ban bold" :class="[{'color-alarm': user.isAllowed},{'color': !user.isAllowed}]" ></i>
                   </button>
                 </td>
                 <td>
-                  <button  data-toggle="modal" data-target="#updatemodal" @click="setUpdate(student)">
+                  <button  data-toggle="modal" data-target="#updatemodal" @click="setUpdate(user)">
                     <i class="fa fa-pen color "></i>
                   </button>
-                  <button  data-toggle="modal" data-target="#deleteuser" @click="setModal(student)">
+                  <button  data-toggle="modal" data-target="#deleteuser" @click="setModal(user)">
                     <i class="fa fa-trash color-alarm "></i>
                   </button>
                 </td>
@@ -54,7 +54,7 @@ export default {
     return {};
   },
   methods: {},
-  props: ["students", "setModal", "block", "setUpdate", "putAdmin"],
+  props: ["users", "setModal", "block", "setUpdate", "putAdmin", "isTeacher"],
   components: {}
 };
 </script>

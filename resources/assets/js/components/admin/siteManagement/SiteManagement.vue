@@ -21,12 +21,13 @@
               v-if="selectedLink == 1"
               :courses = "courses"
               class="col-lg-10 col-offset-lg-1"
-              ></coursemanagement>
-            <teachers
+              ></coursemanagement>-->
+            <teachermanagement
               v-if="selectedLink == 2"
               class="col-lg-10 col-offset-lg-1"
               :actualUser="actualUser"
-            ></teachers> -->
+              :teachers="teachers"
+            ></teachermanagement> 
             <studentmanagement 
               v-if="selectedLink == 3"
               class="col-lg-10 col-lg-offset-1"
@@ -38,7 +39,7 @@
 <script>
 import coursemanagement from "./course/CourseManagement.vue";
 import studentmanagement from "./student/StudentManagement.vue";
-import teachers from "./Teachers.vue";
+import teachermanagement from "./teacher/TeacherManagement.vue";
 
 export default {
   data: function() {
@@ -108,7 +109,8 @@ export default {
     }
   },
   components: {
-    studentmanagement
+    studentmanagement,
+    teachermanagement
   }
 };
 </script>
