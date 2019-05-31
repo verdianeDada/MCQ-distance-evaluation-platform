@@ -1,10 +1,10 @@
 <div class="dropdown open">
     <h1 class="dropdown-toggle color bold"
-            data-toggle="dropdown" role="button" aria-expanded="false"
-        >
-            Computer Science Department Staff
-            <span class="caret"></span>
-        </h1>
+        data-toggle="dropdown" role="button" aria-expanded="false"
+    >
+        Computer Science Department Staff
+        <span class="caret"></span>
+    </h1>
     <div class="dropdown-menu">
         <h4 class="bold center color-black " style="padding-top: 15px">Head Of Department</h4>
         @foreach ($hod as $staff)

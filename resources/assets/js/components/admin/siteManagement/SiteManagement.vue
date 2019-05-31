@@ -25,6 +25,7 @@
             <teachers
               v-if="selectedLink == 2"
               class="col-lg-10 col-offset-lg-1"
+              :actualUser="actualUser"
             ></teachers> -->
             <studentmanagement 
               v-if="selectedLink == 3"
@@ -60,7 +61,8 @@ export default {
           year5: []
         }
       },
-      selectedLink: 3
+      selectedLink: 3,
+      actualUser: {}
     };
   },
   mounted: function() {
@@ -74,11 +76,12 @@ export default {
       axios
         .get("api/sitemanagement/loadpage")
         .then(res => {
+          this.actualUser = res.data.actualUser;
           this.courses = res.data.courses;
           res.data.users.forEach(user => {
             if (user.sex) user.sex = "F";
             else user.sex = "M";
-
+            user.password = "";
             if (user.isTeacher) this.teachers.push(user);
             else {
               if (user.year == 1) {

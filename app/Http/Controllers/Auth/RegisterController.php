@@ -76,6 +76,7 @@ class RegisterController extends Controller
             $sex = true;
         else 
             $sex = false;
+            
 
         if ($data['status'] == 'student')
             return User::create([
@@ -83,7 +84,7 @@ class RegisterController extends Controller
                 'phone' => $data['phone'],
                 'sex' => $sex,
                 'option' => $data['option'],
-                'matricule' => $data['matricule'],
+                'matricule' => strtolower($data['matricule']),
                 'year' => $data['year'],
                 'password' => bcrypt($data['password']),
                 ]);

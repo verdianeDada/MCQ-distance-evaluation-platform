@@ -47,14 +47,16 @@
                             <label for="password" class="control-label">Password<strong>&nbsp;*</strong></label>
                             <div>
                                 <input 
-                                id="password" 
-                                type="password" 
-                                class="form-control" 
-                                name="password" 
-                                required
-                                data-parsley-required-message = "Your password is required"
-                                data-parsley-minlength= "3"
-                                data-parsley-minlength-message = "Your password should have at least 3 characters"
+                                    id="password" 
+                                    type="password" 
+                                    class="form-control" 
+                                    name="password" 
+                                    value=""
+                                    required
+                                    data-parsley-required-message = "Your password is required"
+                                    data-parsley-minlength= "3"
+                                    data-parsley-minlength-message = "Your password should have at least 3 characters"
+                                    v-model = "student.password"
                                 >
                             </div>
                         </div>
@@ -74,15 +76,18 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row margin-0" style="padding: 16px" v-if="error">
+                        <span class="color-alarm bold">{{error}}</span>
+                    </div>
                     <div class="row margin-0">
                         <div class="form-group col-lg-6 col-sm-6 col-xm-12">
                             <label class="control-label">Sex:</label>
                             <div>
                                 <label for="male" class="radio col-lg-6 col-sm-6 col-xm-12">
-                                    <input type="radio" value="0"  id="male" v-model = "student.sex">Male
+                                    <input type="radio" value="M"  id="male" v-model="student.sex">Male
                                 </label>
                                 <label for="female" class="radio col-lg-6 col-sm-6 col-xm-12">
-                                    <input type="radio" value="1" id="female" v-model = "student.sex">Female
+                                    <input type="radio" value="F" id="female" v-model="student.sex">Female
                                 </label>
                             </div>
                         </div>
@@ -149,6 +154,6 @@ export default {
     return {};
   },
   methods: {},
-  props: ["student", "update", "cleanModal"]
+  props: ["student", "update", "cleanModal", "error"]
 };
 </script>

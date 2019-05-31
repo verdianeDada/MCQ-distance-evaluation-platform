@@ -17,7 +17,9 @@ class SiteManagementController extends Controller
     public function loadpage(){
         $courses = DB::table('courses')->orderBy('code')->get();
         $users = DB::table('users')->orderBy('matricule')->get();
-        return ['courses' =>$courses, 'users' => $users];
+        return ['courses' =>$courses, 'users' => $users,'actualUser'=>Auth::user()];
     }
 }
 
+
+// exclude('id', 'name', 'phone','isAllowed','isAdmin', 'isTeacher','option','matricule','year')

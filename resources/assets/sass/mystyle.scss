@@ -475,4 +475,46 @@ fieldset[disabled] .form-control {
   .form-group {
     padding: 0 8px;
   }
+  table th {
+    font-size: 16px;
+  }
+  .caret {
+    border-top: 11px dashed;
+    border-right: 8px solid transparent;
+    border-left: 8px solid transparent;
+  }
+
+  .w3-white.w3-example {
+    border-top: 2px solid black;
+  }
+
+  element.style {
+    margin: 40px 0px;
+    font-size: 30px;
+  }
+  .collapse.in {
+    display: block;
+  }
+  .bold {
+    font-weight: bold;
+  }
+  .center {
+    text-align: center;
+  }
+  .color {
+    color: #0a650a;
+  }
+  .well {
+    background-color: #f5f8fa !important;
+  }
+  .expand_caret {
+    transform: scale(1);
+    margin-left: 8px;
+    margin-top: -4px;
+  }
+  h3[aria-expanded="true"] > .expand_caret,
+  h1[aria-expanded="true"] > .expand_caret {
+    transform: scale(1) rotate(-180deg);
+  }
 }
+/* PURE css solution for rotating carets based on expanded section */

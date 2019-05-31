@@ -49,6 +49,7 @@ Route::prefix('api')->middleware(['auth'])->group(function() {
     // user
     Route::delete('/user/{id}', 'UserController@delete');
     Route::get('/user/block/{id}', 'UserController@block');
+    Route::get('/user/put_admin/{id}', 'UserController@put_admin');
     Route::patch('/user', 'UserController@update');
 });
 
