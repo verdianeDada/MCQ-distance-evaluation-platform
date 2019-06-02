@@ -6,7 +6,6 @@
           <table class="table table-hover">
           <thead class="">
             <tr>
-              <th>#</th>
               <th>Title</th>
               <th>Course Code</th>
               <th>Credit</th>
@@ -19,10 +18,9 @@
           </thead>
           <tbody>
             <tr 
-              v-for="(testpaper,index) in mytestpapers"
+              v-for="(testpaper) in mytestpapers"
               :key ="testpaper.id"
             >
-              <td>{{index + 1}}</td>
               <td>{{testpaper.title}}</td>
               <td>{{testpaper.course.code}}</td>
               <td>{{testpaper.course.credit}}</td>

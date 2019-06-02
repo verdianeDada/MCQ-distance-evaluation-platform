@@ -13024,15 +13024,6 @@ p::first-letter {
   padding-right: 9px;
 }
 
-.welcome-staff .dropdown-menu {
-  position: relative;
-  background-color: transparent;
-  border: none;
-  -webkit-box-shadow: none;
-  box-shadow: none;
-  width: 100%;
-}
-
 /* forum */
 
 #forum {
@@ -13175,7 +13166,8 @@ fieldset[disabled] .form-control {
 }
 
 #sitemanagement a.selected {
-  text-decoration: underline;
+  padding-bottom: 4px;
+  border-bottom: 2px solid #0a650a;
   font-size: 16px;
   color: #0a650a;
 }
@@ -13251,5 +13243,11 @@ fieldset[disabled] .form-control {
           transform: scale(1) rotate(-180deg);
 }
 
-/* PURE css solution for rotating carets based on expanded section */
+.welcome-staff {
+  font-size: 15px;
+}
+
+.welcome-staff h3 {
+  margin: 37px 0;
+}
 

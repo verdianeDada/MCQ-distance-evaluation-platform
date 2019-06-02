@@ -1,6 +1,6 @@
 <template>
     <div class="modal-dialog">
-        <form data-parsley-validate @submit.prevent id="news-form">
+        <form data-parsley-validate @submit.prevent id="course-form">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close color-alarm" data-dismiss="modal">&times;</button>
@@ -14,7 +14,7 @@
                                 placeholder="New's Title" 
                                 required 
                                 autofocus
-                                v-model="news.title"
+                                v-model="course.title"
                             >
                         </div>
                     </div>
@@ -23,7 +23,7 @@
                         <div class="col-lg-10">
                             <textarea id="des" rows="3" class="form-control" placeholder="New's Description" 
                                 required 
-                                v-model="news.text"
+                                v-model="course.text"
                             ></textarea>
                         </div>
                     </div>
@@ -42,7 +42,7 @@
                     <button
                         class="btn btn-primary"
                         type="submit"
-                        @click="updateNews(news.id)"
+                        @click="update()"
                         v-if = "edit"
                     >Update</button>
                 </div>
@@ -78,6 +78,6 @@ export default {
       }
     }
   },
-  props: ["newsList", "news", "edit", "cleanModal"]
+  props: ["course", "teachers", "edit", "error"]
 };
 </script>

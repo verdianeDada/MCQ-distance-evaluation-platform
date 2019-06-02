@@ -7,17 +7,65 @@ use Illuminate\Support\Facades\Validator;
 
 use App\User;
 use App\Course;
+use App\TestPaper;
+use App\Question;
 use App\WrittenTestPaper;
 
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+    public function load_users(){
+        $users = DB::table('users')->orderBy('matricule')->get();
+        return ['users' => $users,];
+    }
     public function delete($id){
-        DB::table('repeating_courses')->where('user_id', $id)->delete();
-        DB::table('written_test_papers')->where('user_id', $id)->delete();
-        DB::table('users')->where('id', $id)->delete();
-        return;
+        $user = User::where('id',$id)->get();
+        if (sizeof($user) > 0){
+            $user = $user[0];
+            if ($user->isTeacher){
+                $testpapers_o = TestPaper::with(['course'=>function($query) use ($user){
+                    $query->where([['courses.user_id',$user->id]]);
+                }])->get();
+
+                //cleaning null courses
+                $testpapers = array();
+                if (sizeof($testpapers_o)){
+                    foreach($testpapers_o as $test){
+                        if (!empty($test->course))
+                            array_push($testpapers, $test);
+                    }
+                }
+                $tests_id = array();
+                $questions_id = array();
+                if (sizeof($testpapers) > 0){
+                    foreach($testpapers as $test){
+                        array_push($tests_id, $test->id);
+                    }
+
+
+                    $questions= Question::whereIn('test_paper_id',$tests_id)->get();
+
+                    if(sizeof($questions) > 0){
+                        foreach($questions as $q){
+                            array_push($questions_id, $q->id);
+                        }
+
+                    }
+                    
+                    DB::table('questions')->whereIn('id', $questions_id)->delete();
+                    DB::table('question_distractors')->whereIn('question_id', $questions_id)->delete();
+                    DB::table('test_papers')->whereIn('id', $tests_id)->delete();
+                }
+            }
+            else{
+                 DB::table('written_test_papers')->where('user_id', $id)->delete();
+                 DB::table('repeating_courses')->where('user_id', $id)->delete();
+            }
+            DB::table('users')->where('id', $id)->delete();
+            return ;
+        }
+       
     }
     public function block($id){
         $isAllowed =   DB::table('users')->where('id', $id)->value('isAllowed');

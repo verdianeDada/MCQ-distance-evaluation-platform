@@ -121,7 +121,7 @@ export default {
         .then(res => {
           $("#deletetest").modal("hide");
           this.mytestpapers.forEach(test => {
-            if (test.id === id) {
+            if (test.id == id) {
               var index = this.mytestpapers
                 .map(function(test) {
                   return test;

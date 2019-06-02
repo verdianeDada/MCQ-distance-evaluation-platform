@@ -13,7 +13,7 @@
         </div>        
     </div>
     <div class="row welcome-staff">
-        <div class = "col-lg-4 col-lg-offset-4" style=" padding-top: 40px;">        
+        <div class = "col-lg-6 col-lg-offset-3 padding-0" style=" padding:25px; margin-top: 17px; background-color: #fff; box-shadow: 0 0 5px #032503, 0 0 5px #163504;">        
             @include('welcome-page.staff')
         </div>
     </div>

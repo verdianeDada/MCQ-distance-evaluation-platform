@@ -324,14 +324,6 @@ p::first-letter {
   font-size: 26px;
   padding-right: 9px;
 }
-.welcome-staff .dropdown-menu {
-  position: relative;
-  background-color: transparent;
-  border: none;
-  -webkit-box-shadow: none;
-  box-shadow: none;
-  width: 100%;
-}
 
 /* forum */
 #forum {
@@ -456,7 +448,8 @@ fieldset[disabled] .form-control {
     color: black;
   }
   a.selected {
-    text-decoration: underline;
+    padding-bottom: 4px;
+    border-bottom: 2px solid rgb(10, 101, 10);
     font-size: 16px;
     color: rgb(10, 101, 10);
   }
@@ -517,4 +510,9 @@ fieldset[disabled] .form-control {
     transform: scale(1) rotate(-180deg);
   }
 }
-/* PURE css solution for rotating carets based on expanded section */
+.welcome-staff {
+  font-size: 15px;
+  h3 {
+    margin: 37px 0;
+  }
+}

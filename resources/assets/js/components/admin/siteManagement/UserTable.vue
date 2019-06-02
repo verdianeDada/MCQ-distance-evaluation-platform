@@ -13,7 +13,7 @@
               <th></th>
             </tr>
           </thead>
-          <tbody v-if="users[0]">
+          <tbody>
             <tr 
               v-for="(user,index) in users"
               :key ="user.id"

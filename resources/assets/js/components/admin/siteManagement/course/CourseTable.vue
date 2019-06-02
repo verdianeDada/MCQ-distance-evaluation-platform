@@ -1,57 +1,67 @@
 <template>
-    <div>
+    <div class="w3-example w3-padding w3-padding w3-white">
         <table class="table table-hover">
-          <thead>
+          <thead class="color">
             <tr>
-              <th>#</th>
-              <th>Title</th>
-              <th>Course Code</th>
+              <th>year</th>
+              <th>Code</th>
+              <th style="width: 450px;">Title</th>
               <th>Credit</th>
-              <th>Date</th>
-              <th>Start time</th>
-              <th>End time</th>
-              <th>Marks obtained</th>
-              <th>Obsolete</th>
-              <th>Answer</th>
+              <th style="width: 250px;">Lecturer</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
             <tr 
-              v-for="(course,index) in courses"
+              v-for="(course) in courses"
               :key ="course.id"
+              :class="[{'blocked': !course.user}]"
             >
-              <td>{{index + 1}}</td>
-              <td>{{course.title}}</td>
-              <td>{{course.course.code}}</td>
-              <td>{{course.course.credit}}</td>
-              <td>{{course.date}}</td>
-              <td>{{course.start_time}}</td>
-              <td>{{course.end_time}}</td>
-              <td class="center">
-                <i v-if="course.done">{{course.mark_obtained}}&nbsp;/&nbsp;{{course.over_mark}}</i>
-                <i v-else>--</i>
-              </td>
-              <td class="center">
-                <span v-if="course.obsolete" class="fa fa-check color bold "></span>
-                <span v-else>--</span>
-              </td>
-              <td class="center">
-                <div v-if="course.obsolete">
-                  <button>
-                    <i class="fa fa-download color bold"></i>
+                <td>{{course.year}}</td>
+                <td class="uppercase">{{course.code}}</td>
+                <td class="capitalize" >{{course.title}}</td>
+                <td>{{course.credit}}</td>
+                <td class="capitalize">
+                  <template v-if="course.user">{{course.user.name}}</template>
+                  <template v-else></template>
+                </td>
+                <td>
+                  <button  data-toggle="modal" data-target="#updatemodal" @click="setUpdate(course)">
+                    <i class="fa fa-pen color "></i>
                   </button>
-                </div>
-                <div v-else>
-                  <i>--</i>
-                </div>
-              </td>
+                  <button  data-toggle="modal" data-target="#deletecourse" @click="setDelete(course)">
+                    <i class="fa fa-trash color-alarm "></i>
+                  </button>
+                </td>
             </tr>
           </tbody>
         </table>
+        <!-- delete confirmation -->
+         <div class="fade modal" id = "deletecourse" role="dialog">
+        <deletecoursemodal
+          :deleteCourse="deleteCourse"
+        ></deletecoursemodal>
+      </div>
+        
     </div>
 </template>
 <script>
+import deletecoursemodal from "../../../modals/DeleteCourse.vue";
 export default {
-  props: ["courses"]
+  data: function() {
+    return {};
+  },
+  methods: {},
+  props: [
+    "courses",
+    "deleteCourse",
+    "setDelete",
+    "setUpdate",
+    "putAdmin",
+    "isTeacher"
+  ],
+  components: {
+    deletecoursemodal
+  }
 };
 </script>

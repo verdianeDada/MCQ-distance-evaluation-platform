@@ -2,37 +2,40 @@
     <div>
         <!-- nav bar -->
         <div class=" row margin-0">
-            <div class="col-lg-3 col-lg-offset-9">
-                <ul class="nav navbar-nav" style="margin-right: 5px">
-                    <li @click="selectLink(1)" >
-                        <a href="#" :class="[{'selected':selectedLink == 1}]">Courses</a>
+            <div class="col-lg-5 col-lg-offset-7">
+                <ul class="nav navbar-nav" style="margin-right: 5px; float: right">
+                    <li @click="selectLink(1)">
+                        <a href="#" :class="[{'selected':selectedLink == 1}]">Students</a> 
                     </li>
                     <li @click="selectLink(2)">
                         <a href="#" :class="[{'selected':selectedLink == 2}]">Teachers</a>
                     </li>
-                    <li @click="selectLink(3)">
-                        <a href="#" :class="[{'selected':selectedLink == 3}]">Students</a> 
+                    <li @click="selectLink(3)" >
+                        <a href="#" :class="[{'selected':selectedLink == 3}]">Courses</a>
+                    </li>
+                    <li @click="selectLink(4)" >
+                        <a href="#" :class="[{'selected':selectedLink == 4}]">Carried Courses</a>
                     </li>
                 </ul>
             </div>
         </div>
         <div class="row margin-0" id="sitemanagement-body">
-            <!-- <coursemanagement 
-              v-if="selectedLink == 1"
-              :courses = "courses"
-              class="col-lg-10 col-lg-offset-1"
-              ></coursemanagement>-->
-            <teachermanagement
-              v-if="selectedLink == 2"
-              class="col-lg-10 col-lg-offset-1"
-              :actualUser="actualUser"
-              :teachers="teachers"
-            ></teachermanagement> 
             <studentmanagement 
-              v-if="selectedLink == 3"
+              v-if="selectedLink == 1"
               class="col-lg-10 col-lg-offset-1"
               :students="students"
             ></studentmanagement>
+            <teachermanagement
+              v-if="selectedLink == 2"
+              class="col-lg-10 col-lg-offset-1"
+              :teachers="teachers"
+            ></teachermanagement> 
+            
+            <coursemanagement 
+              v-if="selectedLink == 3"
+              class="col-lg-10 col-lg-offset-1"
+              ></coursemanagement>
+            
         </div>
     </div>
 </template>
@@ -44,7 +47,6 @@ import teachermanagement from "./teacher/TeacherManagement.vue";
 export default {
   data: function() {
     return {
-      courses: [],
       teachers: [],
       students: {
         fcs: {
@@ -62,23 +64,20 @@ export default {
           year5: []
         }
       },
-      selectedLink: 2,
-      actualUser: {}
+      selectedLink: 3
     };
   },
   mounted: function() {
-    this.loadpage();
+    this.load_users();
   },
   methods: {
     selectLink: function(s) {
       this.selectedLink = s;
     },
-    loadpage: function() {
+    load_users: function() {
       axios
-        .get("api/sitemanagement/loadpage")
+        .get("api/load_users")
         .then(res => {
-          this.actualUser = res.data.actualUser;
-          this.courses = res.data.courses;
           res.data.users.forEach(user => {
             if (user.sex) user.sex = "F";
             else user.sex = "M";
@@ -110,7 +109,8 @@ export default {
   },
   components: {
     studentmanagement,
-    teachermanagement
+    teachermanagement,
+    coursemanagement
   }
 };
 </script>
