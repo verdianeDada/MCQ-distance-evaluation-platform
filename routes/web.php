@@ -50,6 +50,7 @@ Route::prefix('api')->middleware(['auth'])->group(function() {
     Route::get('/all_course', 'SiteManagementController@all_course');
     Route::delete('/course/{id}', 'SiteManagementController@delete');
     Route::patch('/course', 'SiteManagementController@update');
+    Route::post('/course', 'SiteManagementController@create');
     // user
     Route::get('/load_users', 'UserController@load_users');
     Route::delete('/user/{id}', 'UserController@delete');
@@ -62,20 +63,15 @@ Route::prefix('api')->middleware(['auth'])->group(function() {
 Route::group(['middleware'=>'auth'], function(){
     Route::get('/home', 'HomeController@index')->name('home');
     Route::get('/sitemanagement', 'SiteManagementController@index');
-    Route::get('/pastquestion', 'PastQuestionController@index');
+    // Route::get('/pastquestion', 'PastQuestionController@index');
     Route::get('/newstaff', 'NewStaffController@index');
-    Route::get('/forum-page', 'ForumController@index');
-    Route::get('/testreport', 'TestReportController@index');
+    // Route::get('/forum-page', 'ForumController@index');
+    // Route::get('/testreport', 'TestReportController@index');
     Route::get('/write_test','writeTestController@index');
     Route::get('/results/{id}','TeacherDashboardController@testpaper_results');
 });
-Route::get('/test', function(){
-    return view("test");
-});
 
 Auth::routes();
-
-// Route::get('/login', ['as' => 'login', 'uses' => 'Auth\LoginController@showLoginForm']);
 
 
 // Route::any('{query}',function(){

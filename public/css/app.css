@@ -12722,6 +12722,11 @@ nav {
   margin-bottom: 5px;
 }
 
+form label,
+form input {
+  color: black;
+}
+
 img.logo {
   height: 77px;
   margin: 0;

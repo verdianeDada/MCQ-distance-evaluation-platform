@@ -14,7 +14,12 @@ use App\WrittenTestPaper;
 class WriteTestController extends Controller
 {
     public function index(){
-        return view('write_test');
+        if (!Auth::user()->isTeacher )
+            return view('write_test');
+        else{
+            $error = "You are not a student";
+            return view('pagenotfound', compact('error'));
+        } 
     }
     
     public function set_test(){

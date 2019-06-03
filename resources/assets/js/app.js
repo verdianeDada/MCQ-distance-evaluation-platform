@@ -45,11 +45,11 @@ const app2 = new Vue({
   el: "#newstaff"
 });
 // for forum
-Vue.component("forum", require("./components//Forum.vue").default);
+// Vue.component("forum", require("./components//Forum.vue").default);
 
-const app3 = new Vue({
-  el: "#forum"
-});
+// const app3 = new Vue({
+//   el: "#forum"
+// });
 
 // write test page
 Vue.component(

@@ -1,7 +1,7 @@
 <template>
   <div>
      <div class="row" >
-        <h1 class="color bold center well carousel-search hidden-phone " style="margin: 40px 0; font-size: 30px">
+        <h1 class="color bold well carousel-search hidden-phone " style="margin: 40px 0; font-size: 30px">
           <i class="fa fa-user-tie color-black"> 
             </i>&nbsp;&nbsp;Computer Science Lecturers
         </h1>

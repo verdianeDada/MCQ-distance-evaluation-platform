@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use App\News;
 use App\Staff;
 
@@ -15,7 +16,12 @@ class NewStaffController extends Controller
     // }
     public function index()
     {
-        return view('newstaff');
+        if (Auth::user()->isAdmin )
+            return view('newstaff');
+        else{
+            $error = "You are not an administrator";
+            return view('pagenotfound', compact('error'));
+        }  
     }
 // news
     public function all_news(){

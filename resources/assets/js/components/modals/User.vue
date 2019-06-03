@@ -8,6 +8,9 @@
                 </div>
                 <div class="modal-body">                
                     <div class="row margin-0">
+                        <div class="row margin-0" style="padding: 16px" v-if="error">
+                            <span class="color-alarm bold">{{error}}</span>
+                        </div>
                         <div class="form-group col-lg-6 col-sm-6 col-xm-12">
                             <label for="name" class="control-label">Name<strong>&nbsp;*</strong></label>
                             <div>
@@ -76,10 +79,7 @@
                                 >
                             </div>
                         </div>
-                    </div>
-                    <div class="row margin-0" style="padding: 16px" v-if="error">
-                        <span class="color-alarm bold">{{error}}</span>
-                    </div>
+                    </div>                    
                     <div class="row margin-0">
                         <div class="form-group col-lg-6 col-sm-6 col-xm-12">
                             <label class="control-label">Sex:</label>

@@ -437,10 +437,10 @@ class TeacherDashboardController extends Controller
     }
 
     public function testpaper_results($id){
-        try{
+        if (Auth::user()->isTeacher){
             
             $testpaper = TestPaper::where('id',$id)->with(['course'])->get();
-            if (sizeof($testpaper)> 0){
+            if (sizeof($testpaper)> 0 && $testpaper[0]->course->user_id == Auth::user()->id){
                 $testpaper = $testpaper[0];
                 $teacher = Auth::user();
                 
@@ -502,10 +502,16 @@ class TeacherDashboardController extends Controller
 
                 return $pdf->download($testpaper->course->code.' '.$testpaper->title.'.pdf');
             }
+            else{ 
+                $error = "This test paper is'nt yours!";
+                return view('pagenotfound', compact('error'));
+            }
         }
-        catch (\Exception $e){
-            return $e->getMessage();
-        }
+        else{
+            $error = "You are not a teacher";
+            return view('pagenotfound', compact('error'));
+        } 
+       
     }
 
 } ;

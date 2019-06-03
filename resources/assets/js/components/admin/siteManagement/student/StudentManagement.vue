@@ -3,13 +3,13 @@
       <!-- ict students -->
 
       <div class="row" >
-        <h1 class="color bold center well carousel-search hidden-phone collapse in" data-toggle="collapse" data-target="#ict"  aria-expanded="true" style="margin: 40px 0; font-size: 30px">
+        <h1 class="color bold  well carousel-search hidden-phone collapse in" data-toggle="collapse" data-target="#ict"  aria-expanded="true" style="margin: 40px 0; font-size: 30px">
           <i class="fa fa-user-graduate  color-black"> 
             </i>&nbsp;&nbsp;Information and Communication Technology<div class="expand_caret caret"></div>
         </h1>
         <div id="ict" class="collapse in">
           <div id="ict1" class="collapse in" v-if="students.ict.year1[0]">
-            <h3 class="bold center color-black collapse in" data-toggle="collapse" data-target="#ict1"  aria-expanded="true" style="margin-top: 40px;">ICT Year 1&nbsp;&nbsp;<div class="expand_caret caret"></div></h3>
+            <h3 class="bold  color-black collapse in" data-toggle="collapse" data-target="#ict1"  aria-expanded="true" style="margin-top: 40px;">ICT Year 1&nbsp;&nbsp;<div class="expand_caret caret"></div></h3>
               <studenttable
                   class="test-paper"                
                   :users="students.ict.year1"
@@ -22,7 +22,7 @@
               ></studenttable>
           </div>
           <div class="collapse in" id="ict2" v-if="students.ict.year2[0]">
-            <h3 class="bold center color-black collapse in" data-toggle="collapse" data-target="#ict2"  aria-expanded="true" style="margin-top: 40px;">ICT Year 2&nbsp;&nbsp;<div class="expand_caret caret"></div></h3>
+            <h3 class="bold  color-black collapse in" data-toggle="collapse" data-target="#ict2"  aria-expanded="true" style="margin-top: 40px;">ICT Year 2&nbsp;&nbsp;<div class="expand_caret caret"></div></h3>
               <studenttable 
                   class="test-paper"
                   :users="students.ict.year2"
@@ -35,7 +35,7 @@
               ></studenttable>
           </div>
           <div class="collapse in" id="ict3" v-if="students.ict.year3[0]">
-            <h3 class="bold center color-black collapse in" data-toggle="collapse" data-target="#ict3"  aria-expanded="true" style="margin-top: 40px;">ICT Year 3&nbsp;&nbsp;<div class="expand_caret caret"></div></h3>          
+            <h3 class="bold  color-black collapse in" data-toggle="collapse" data-target="#ict3"  aria-expanded="true" style="margin-top: 40px;">ICT Year 3&nbsp;&nbsp;<div class="expand_caret caret"></div></h3>          
               <studenttable 
                   class="test-paper"
                   :users="students.ict.year3"
@@ -48,7 +48,7 @@
               ></studenttable>
           </div>
           <div class="collapse in" id="ict4" v-if="students.ict.year4[0]">
-            <h3 class="bold center color-black collapse in" data-toggle="collapse" data-target="#ict4"  aria-expanded="true" style="margin-top: 40px;">ICT Year 4&nbsp;&nbsp;<div class="expand_caret caret"></div></h3>          
+            <h3 class="bold  color-black collapse in" data-toggle="collapse" data-target="#ict4"  aria-expanded="true" style="margin-top: 40px;">ICT Year 4&nbsp;&nbsp;<div class="expand_caret caret"></div></h3>          
               <studenttable 
                   class="test-paper"
                   :users="students.ict.year4"
@@ -61,7 +61,7 @@
               ></studenttable>
           </div>
           <div class="collapse in" id="ict5" v-if="students.ict.year5[0]">
-            <h3 class="bold center color-black collapse in" data-toggle="collapse" data-target="#ict5"  aria-expanded="true" style="margin-top: 40px;">ICT Year 5&nbsp;&nbsp;<div class="expand_caret caret"></div></h3>          
+            <h3 class="bold  color-black collapse in" data-toggle="collapse" data-target="#ict5"  aria-expanded="true" style="margin-top: 40px;">ICT Year 5&nbsp;&nbsp;<div class="expand_caret caret"></div></h3>          
               <studenttable 
                   class="test-paper"
                   :users="students.ict.year5"
@@ -79,13 +79,13 @@
 
       <!-- FCS students -->
       <div class="row" >
-        <h1 class="color bold center well carousel-search hidden-phone collapse in" data-toggle="collapse" data-target="#fcs"  aria-expanded="true" style="margin: 40px 0; font-size: 30px">
+        <h1 class="color bold  well carousel-search hidden-phone collapse in" data-toggle="collapse" data-target="#fcs"  aria-expanded="true" style="margin: 40px 0; font-size: 30px">
           <i class="fa fa-user-graduate color-black"> 
             </i>&nbsp;&nbsp;Fundamental Computer Science<div class="expand_caret caret"></div>
         </h1>
         <div id="fcs" class="collapse in">
           <div class="collapse in" id="fcs1" v-if="students.fcs.year1[0]">
-            <h3 class="bold center color-black collapse in" data-toggle="collapse" data-target="#fcs1"  aria-expanded="true" style="margin-top: 40px;">FCS Year 1&nbsp;&nbsp;<div class="expand_caret caret"></div></h3>          
+            <h3 class="bold  color-black collapse in" data-toggle="collapse" data-target="#fcs1"  aria-expanded="true" style="margin-top: 40px;">FCS Year 1&nbsp;&nbsp;<div class="expand_caret caret"></div></h3>          
               <studenttable
                   class="test-paper"                
                   :users="students.fcs.year1"
@@ -98,7 +98,7 @@
               ></studenttable>
           </div>
           <div class="collapse in" id="fcs2" v-if="students.fcs.year2[0]">
-            <h3 class="bold center color-black collapse in" data-toggle="collapse" data-target="#fcs2"  aria-expanded="true" style="margin-top: 40px;">FCS Year 2&nbsp;&nbsp;<div class="expand_caret caret"></div></h3>          
+            <h3 class="bold  color-black collapse in" data-toggle="collapse" data-target="#fcs2"  aria-expanded="true" style="margin-top: 40px;">FCS Year 2&nbsp;&nbsp;<div class="expand_caret caret"></div></h3>          
               <studenttable 
                   class="test-paper"
                   :users="students.fcs.year2"
@@ -111,7 +111,7 @@
               ></studenttable>
           </div>
           <div class="collapse in" id="fcs3" v-if="students.fcs.year3[0]">
-            <h3 class="bold center color-black collapse in" data-toggle="collapse" data-target="#fcs3"  aria-expanded="true" style="margin-top: 40px;">FCS Year 3&nbsp;&nbsp;<div class="expand_caret caret"></div></h3>          
+            <h3 class="bold  color-black collapse in" data-toggle="collapse" data-target="#fcs3"  aria-expanded="true" style="margin-top: 40px;">FCS Year 3&nbsp;&nbsp;<div class="expand_caret caret"></div></h3>          
               <studenttable 
                   class="test-paper"
                   :users="students.fcs.year3"
@@ -124,7 +124,7 @@
               ></studenttable>
           </div>
           <div class="collapse in" id="fcs4" v-if="students.fcs.year4[0]">
-            <h3 class="bold center color-black collapse in" data-toggle="collapse" data-target="#fcs4"  aria-expanded="true" style="margin-top: 40px;">FCS Year 4&nbsp;&nbsp;<div class="expand_caret caret"></div></h3>          
+            <h3 class="bold  color-black collapse in" data-toggle="collapse" data-target="#fcs4"  aria-expanded="true" style="margin-top: 40px;">FCS Year 4&nbsp;&nbsp;<div class="expand_caret caret"></div></h3>          
               <studenttable 
                   class="test-paper"
                   :users="students.fcs.year4"
@@ -137,7 +137,7 @@
               ></studenttable>
           </div>
           <div class="collapse in" id="fcs5" v-if="students.fcs.year5[0]">
-            <h3 class="bold center color-black collapse in" data-toggle="collapse" data-target="#fcs5"  aria-expanded="true" style="margin-top: 40px;">FCS Year 5&nbsp;&nbsp;<div class="expand_caret caret"></div></h3>          
+            <h3 class="bold  color-black collapse in" data-toggle="collapse" data-target="#fcs5"  aria-expanded="true" style="margin-top: 40px;">FCS Year 5&nbsp;&nbsp;<div class="expand_caret caret"></div></h3>          
               <studenttable 
                   class="test-paper"
                   :users="students.fcs.year5"

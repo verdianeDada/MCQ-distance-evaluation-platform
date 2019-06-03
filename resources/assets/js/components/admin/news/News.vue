@@ -10,7 +10,8 @@
                 <button class="btn btn-primary" 
                     data-toggle="modal"
                     data-target="#newsmodal"
-                    @click= "cleanModal"                     
+                    @click= "cleanModal"
+                    style="font-size: 18px;"                     
                 >Create News</button>
             </div>
             <div style="margin-top: 28px">

@@ -97,14 +97,14 @@
                                 @if (Auth::check() && Auth::user()->isTeacher && Auth::user()->isAdmin)
                                     <li><a href="/sitemanagement">Site Mgt</a></li>
                                 @endif
-                                @if (Auth::check() && !Auth::user()->isTeacher)
+                                <!-- @if (Auth::check() && !Auth::user()->isTeacher)
                                     <li><a href="/pastquestion">Past questions</a></li>
-                                @endif
+                                @endif -->
                                 @if (Auth::check() &&  Auth::user()->isAdmin)
                                     <li><a href="/newstaff">News & Staff Mgt</a></li>
                                 @endif
                         
-                                <li><a href="/forum-page">Forum</a></li>
+                                <!-- <li><a href="/forum-page">Forum</a></li> -->
                                 <li class="dropdown">
                                     <div class="my-li">
                                         <i class="dropdown-toggle btn name glyphicon glyphicon-user color-black"

@@ -8,7 +8,7 @@ class Course extends Model
 {
     //
     protected $fillable = [
-        'title', 'code','year', 'user_id','option','isCommon'
+        'title', 'code','year', 'user_id','option','isCommon', 'credit'
     ];
 
     public function user() 

@@ -18,7 +18,7 @@
       margin: 0px 5px;
       border: 1px solid black;
     }
-    @page { margin: 20px 20px; }
+    @page { margin: 20px 20px; padding: 4px;}
     footer { position: fixed; bottom: -1px; text-align: right}
     p { page-break-after: always; }
     p:last-child { page-break-after: never; }

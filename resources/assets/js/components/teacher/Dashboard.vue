@@ -12,6 +12,7 @@
           data-target = "#testpapermodal"
           v-if="courses[0]"
           @click="clean"
+          style="font-size: 18px;"
         >
           Create a Test
         </button>

@@ -14,7 +14,13 @@ use App\Question;
 class SiteManagementController extends Controller
 {
     public function index(){
-        return view('site_management');
+        
+        if (Auth::user()->isAdmin && Auth::user()->isTeacher)
+            return view('site_management');
+        else{
+            $error = "You are not an administrator";
+            return view('pagenotfound', compact('error'));
+        }   
     }
     public function all_course(){
         $courses = Course::with('user')->orderBy('code')->get();
@@ -50,8 +56,53 @@ class SiteManagementController extends Controller
         return;
 
     }
-    public function update($id){
-        return Course::where('id', $id)->with('user')->get();
+    public function update(Request $req){
+        if (sizeof(Course::where([
+            ['code', strtolower( $req['code'])],
+            ['id','<>' ,$req['id']]
+        ])->get()) > 0){
+            return ["error" => "This course code is already registered"];
+        }
+        else{
+             if ($req['isCommon'] == 1)
+            $req['option'] = NULL;
+
+            Course::findOrFail($req['id'])->update([
+                'title'=>$req->input('title'), 
+                'year'=>$req->input('year'),
+                'credit'=>$req->input('credit'),
+                'isCommon'=>$req->input('isCommon'),
+                'code'=>strtolower($req->input('code')),
+                'option'=>$req->input('option'),
+                'user_id'=>$req->input('user_id'),
+            ]);
+            return "updated";
+        }
+       
+    }
+    public function create(Request $req){
+        
+
+        if (sizeof(Course::where([
+            ['code', strtolower( $req['code'])],
+            ['id','<>' ,$req['id']]
+        ])->get()) > 0){
+            return ["error" => "This course code is already registered"];
+        }
+        else{
+            if ($req['isCommon'] == 1)
+                $req['option'] = NULL;
+
+            return Course::create([
+                'title'=>$req->input('title'), 
+                'year'=>$req->input('year'),
+                'credit'=>$req->input('credit'),
+                'isCommon'=>$req->input('isCommon'),
+                'code'=>strtolower($req->input('code')),
+                'option'=>$req->input('option'),
+                'user_id'=>$req->input('user_id'),
+            ]);
+        }
     }
     
 }

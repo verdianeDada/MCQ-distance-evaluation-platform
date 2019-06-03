@@ -8,7 +8,8 @@
           <button class="btn btn-primary" 
               data-toggle="modal"
               data-target="#staffmodal" 
-              @click = "cleanModal"                    
+              @click = "cleanModal"  
+              style="font-size: 18px;"                   
           >Create Member</button>
       </div>
       <div style="margin-top: 40px">
