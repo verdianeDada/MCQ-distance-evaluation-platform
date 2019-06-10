@@ -36,11 +36,17 @@
               class="col-lg-10 col-lg-offset-1"
               ></coursemanagement>
             
+            <carriedcourse 
+              v-if="selectedLink == 4"
+              class="col-lg-10 col-lg-offset-1"
+              ></carriedcourse>
+            
         </div>
     </div>
 </template>
 <script>
 import coursemanagement from "./course/CourseManagement.vue";
+import carriedcourse from "./course/CarriedCourse.vue";
 import studentmanagement from "./student/StudentManagement.vue";
 import teachermanagement from "./teacher/TeacherManagement.vue";
 
@@ -64,7 +70,7 @@ export default {
           year5: []
         }
       },
-      selectedLink: 3
+      selectedLink: 4
     };
   },
   mounted: function() {
@@ -110,7 +116,8 @@ export default {
   components: {
     studentmanagement,
     teachermanagement,
-    coursemanagement
+    coursemanagement,
+    carriedcourse
   }
 };
 </script>

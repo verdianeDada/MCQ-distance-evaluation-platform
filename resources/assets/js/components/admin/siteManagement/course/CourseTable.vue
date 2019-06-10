@@ -29,39 +29,28 @@
                   <button  data-toggle="modal" data-target="#updatemodal" @click="setUpdate(course)">
                     <i class="fa fa-pen color "></i>
                   </button>
-                  <button  data-toggle="modal" data-target="#deletecourse" @click="setDelete(course)">
+                  <button @click="confirmDelete(course)">
                     <i class="fa fa-trash color-alarm "></i>
                   </button>
                 </td>
             </tr>
           </tbody>
         </table>
-        <!-- delete confirmation -->
-         <div class="fade modal" id = "deletecourse" role="dialog">
-        <deletecoursemodal
-          :deleteCourse="deleteCourse"
-        ></deletecoursemodal>
-      </div>
-        
     </div>
 </template>
 <script>
-import deletecoursemodal from "../../../modals/DeleteCourse.vue";
 export default {
   data: function() {
     return {};
   },
-  methods: {},
-  props: [
-    "courses",
-    "deleteCourse",
-    "setDelete",
-    "setUpdate",
-    "putAdmin",
-    "isTeacher"
-  ],
-  components: {
-    deletecoursemodal
-  }
+  methods: {
+    confirmDelete: function(course) {
+      if (confirm("Confirm the deletion of: \n" + course.code.toUpperCase()))
+        this.deleteCourse(course);
+      else console.log("nooo");
+    }
+  },
+  props: ["courses", "deleteCourse", "setUpdate", "putAdmin", "isTeacher"],
+  components: {}
 };
 </script>

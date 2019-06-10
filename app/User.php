@@ -33,8 +33,8 @@ class User extends Authenticatable
         return $this->hasMany('App\PostComment');
         
     }
-    public function course_repeat(){
-        return $this->belongsToMany('App\Course','course_repeatings');
+    public function user_course_repeat(){
+        return $this->belongsToMany('App\Course','repeating_courses');
     }
     public function user_written_papers(){
         return $this->belongsToMany('App\TestPaper', 'written_test_papers')->withPivot('mark_obtained');

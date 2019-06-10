@@ -13,7 +13,7 @@
           >Create Member</button>
       </div>
       <div style="margin-top: 40px">
-        <h4 class="bold center color-black underline">Head Of Department</h4>
+        <h3 style="font-size: 22px" class="bold center color-black ">Head Of Department</h3>
         <div
           v-for= "staff in staffList.hod"
           :key = "staff.id"
@@ -31,83 +31,98 @@
               <button data-toggle= "modal" data-target = "#staffmodal" @click="setModal(staff)">
                 <i class="fa fa-pen bold color"></i>
               </button>
-              <button data-toggle= "modal" data-target = "#deletestaff" @click="setDelete(staff.id)">
+              <button @click="deleteStaff(staff)">
                 <i class="fa fa-trash color-alarm "></i>
               </button>
           </div>
         </div>
         
-        <h4 class="bold center color-black underline">Head Of Option</h4>
-        <div
-          v-for= "staff in staffList.hoo"
-          :key = "staff.id"
-          class="staff-mgt row"
-        >
-          <div class="col-lg-1 padding-0">
-            <i class="fa fa-user-tie fa-staff color-black"></i>
-          </div>
-          <div class="col-lg-10 padding-0">
-            <p class="bold capitalize color">{{staff.name}}</p>
-            <p>{{staff.description}}</p>
-            <p><strong>Email: &nbsp;</strong>{{staff.email}} <strong>Phone: &nbsp;</strong>{{staff.phone}}</p>
-          </div>
-          <div class="col-lg-1">
-            <button data-toggle= "modal" data-target = "#staffmodal" @click="setModal(staff)">
-              <i class="fa fa-pen bold color"></i>
-            </button>
-            <button data-toggle= "modal" data-target = "#deletestaff" @click="setDelete(staff.id)">
-              <i class="fa fa-trash color-alarm "></i>
-            </button>
-          </div>
-        </div>
-
-        <h4 class="bold center color-black underline">Teachers</h4>
-        <div
-          v-for= "staff in staffList.teacher"
-          :key = "staff.id"
-          class="staff-mgt row"
-        >
-          <div class="col-lg-1 padding-0">
-            <i class="fa fa-user-tie fa-staff color-black"></i>
-          </div>
-          <div class="col-lg-10 padding-0">
-            <p class="bold capitalize color">{{staff.name}}</p>
-            <p>{{staff.description}}</p>
-            <p><strong>Email: &nbsp;</strong>{{staff.email}} <strong>Phone: &nbsp;</strong>{{staff.phone}}</p>
-          </div>
-          <div class="col-lg-1">
-            <button data-toggle= "modal" data-target = "#staffmodal" @click="setModal(staff)">
-              <i class="fa fa-pen bold color"></i>
-            </button>
-            <button data-toggle= "modal" data-target = "#deletestaff" @click="setDelete(staff.id)">
-              <i class="fa fa-trash color-alarm "></i>
-            </button>
-          </div>
-        </div>
-
-        <h4 class="bold center color-black underline">Class coordinator</h4>
-        <div
-          v-for= "staff in staffList.delegate"
-          :key = "staff.id"
-          class="staff-mgt row"
-        >
-          <div class="col-lg-1 padding-0">
-            <i class="fa fa-user-graduate fa-staff color-black"></i>
-          </div>
-          <div class="col-lg-10 padding-0">
-            <div>
+        <h3 style="font-size: 22px" class="bold center color-black  collapse in" data-toggle="collapse" data-target="#hoo" aria-expanded="true">
+          Heads Of Options&nbsp;&nbsp;
+          <div class="expand_caret caret"></div>
+        </h3>
+        <div class="collapse in" id="hoo">
+          <div
+            v-for= "staff in staffList.hoo"
+            :key = "staff.id"
+            class="staff-mgt row"
+          >
+            <div class="col-lg-1 padding-0">
+              <i class="fa fa-user-tie fa-staff color-black"></i>
+            </div>
+            <div class="col-lg-10 padding-0">
               <p class="bold capitalize color">{{staff.name}}</p>
               <p>{{staff.description}}</p>
               <p><strong>Email: &nbsp;</strong>{{staff.email}} <strong>Phone: &nbsp;</strong>{{staff.phone}}</p>
             </div>
+            <div class="col-lg-1">
+              <button data-toggle= "modal" data-target = "#staffmodal" @click="setModal(staff)">
+                <i class="fa fa-pen bold color"></i>
+              </button>
+              <button @click="deleteStaff(staff)">
+                <i class="fa fa-trash color-alarm "></i>
+              </button>
+            </div>
           </div>
-          <div class="col-lg-1">
-            <button data-toggle= "modal" data-target = "#staffmodal" @click="setModal(staff)">
-              <i class="fa fa-pen bold color"></i>
-            </button>
-            <button data-toggle= "modal" data-target = "#deletestaff"  @click="setDelete(staff.id)">
-              <i class="fa fa-trash color-alarm "></i>
-            </button>
+        </div>
+
+        <h3 style="font-size: 22px" class="bold center color-black collapse in" data-toggle="collapse" data-target="#teachers" aria-expanded="true">
+          Teachers &nbsp;
+          <div class="expand_caret caret"></div>          
+        </h3>
+        <div id="teachers" class="collapse in">
+          <div
+            v-for= "staff in staffList.teacher"
+            :key = "staff.id"
+            class="staff-mgt row"
+          >
+            <div class="col-lg-1 padding-0">
+              <i class="fa fa-user-tie fa-staff color-black"></i>
+            </div>
+            <div class="col-lg-10 padding-0">
+              <p class="bold capitalize color">{{staff.name}}</p>
+              <p>{{staff.description}}</p>
+              <p><strong>Email: &nbsp;</strong>{{staff.email}} <strong>Phone: &nbsp;</strong>{{staff.phone}}</p>
+            </div>
+            <div class="col-lg-1">
+              <button data-toggle= "modal" data-target = "#staffmodal" @click="setModal(staff)">
+                <i class="fa fa-pen bold color"></i>
+              </button>
+              <button @click="deleteStaff(staff)">
+                <i class="fa fa-trash color-alarm "></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <h3 style="font-size: 22px" class="bold center color-black collapse in" data-toggle="collapse" data-target="#delegates" aria-expanded="true">
+          Delagates&nbsp;
+          <div class="expand_caret caret"></div>
+        </h3>
+        <div id="delegates" class="collapse in">
+          <div
+            v-for= "staff in staffList.delegate"
+            :key = "staff.id"
+            class="staff-mgt row"
+          >
+            <div class="col-lg-1 padding-0">
+              <i class="fa fa-user-graduate fa-staff color-black"></i>
+            </div>
+            <div class="col-lg-10 padding-0">
+              <div>
+                <p class="bold capitalize color">{{staff.name}}</p>
+                <p>{{staff.description}}</p>
+                <p><strong>Email: &nbsp;</strong>{{staff.email}} <strong>Phone: &nbsp;</strong>{{staff.phone}}</p>
+              </div>
+            </div>
+            <div class="col-lg-1">
+              <button data-toggle= "modal" data-target = "#staffmodal" @click="setModal(staff)">
+                <i class="fa fa-pen bold color"></i>
+              </button>
+              <button @click="deleteStaff(staff)">
+                <i class="fa fa-trash color-alarm "></i>
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -128,19 +143,11 @@
       ></staffmodal>
     </div>
 
-    <!-- delete confirmation -->
-    <div class="fade modal" id = "deletestaff" role="dialog">
-      <deletestaff
-        @deleteStaff = "deleteStaff"
-        :id = "deleteid"
-      ></deletestaff>
-    </div>
   </div>
 </template>
 
 <script>
 import staffmodal from "../../modals/Staff.vue";
-import deletestaff from "../../modals/DeleteStaff.vue";
 
 export default {
   mounted: function() {
@@ -162,8 +169,7 @@ export default {
         phone: "",
         description: ""
       },
-      editStaff: false,
-      deleteid: ""
+      editStaff: false
     };
   },
   methods: {
@@ -191,55 +197,27 @@ export default {
           console.log("got an error" + error);
         });
     },
-    deleteStaff: function(id) {
-      axios
-        .delete("api/staff/" + id)
-        .then(res => {
-          console.log(res);
-          this.staffList.hod.forEach(staff => {
-            if (staff.id === id) {
-              var index = this.staffList.hod
-                .map(function(staff) {
-                  return staff;
-                })
-                .indexOf(staff);
-              this.staffList.hod.splice(index, 1);
-            }
+    deleteStaff: function(st) {
+      if (confirm("Confirm the deletion of: \n" + st.name)) {
+        axios
+          .delete("api/staff/" + st.id)
+          .then(res => {
+            var type = st.type;
+            this.staffList[type].forEach(staff => {
+              if (staff.id === st.id) {
+                var index = this.staffList[type]
+                  .map(function(staff) {
+                    return staff;
+                  })
+                  .indexOf(staff);
+                this.staffList[type].splice(index, 1);
+              }
+            });
+          })
+          .catch(error => {
+            console.log("an error ocurred" + error);
           });
-          this.staffList.hoo.forEach(staff => {
-            if (staff.id === id) {
-              var index = this.staffList.hoo
-                .map(function(staff) {
-                  return staff;
-                })
-                .indexOf(staff);
-              this.staffList.hoo.splice(index, 1);
-            }
-          });
-          this.staffList.teacher.forEach(staff => {
-            if (staff.id === id) {
-              var index = this.staffList.teacher
-                .map(function(staff) {
-                  return staff;
-                })
-                .indexOf(staff);
-              this.staffList.teacher.splice(index, 1);
-            }
-          });
-          this.staffList.delegate.forEach(staff => {
-            if (staff.id === id) {
-              var index = this.staffList.delegate
-                .map(function(staff) {
-                  return staff;
-                })
-                .indexOf(staff);
-              this.staffList.delegate.splice(index, 1);
-            }
-          });
-        })
-        .catch(error => {
-          console.log("an error ocurred" + error);
-        });
+      }
     },
     findStaff: function() {
       axios
@@ -267,17 +245,13 @@ export default {
           console.log("an error ocurred" + error);
         });
     },
-    setDelete: function(id) {
-      this.deleteid = id;
-    },
     setModal: function(staff) {
       this.staff = staff;
       this.editStaff = true;
     }
   },
   components: {
-    staffmodal,
-    deletestaff
+    staffmodal
   }
 };
 </script>

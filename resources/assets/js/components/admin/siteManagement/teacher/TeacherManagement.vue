@@ -8,20 +8,13 @@
         <teachertable
             class="test-paper"                
             :users="teachers"
-            :setModal="setDelete"
             :block="block"
             :putAdmin="putAdmin"
             :setUpdate="setUpdate"
             :isTeacher="true"
         ></teachertable>
       </div>
-          
 
-      <div class="fade modal" id = "deleteuser" role="dialog">
-        <deleteusermodal
-          :deleteUser = "deleteUser"
-        ></deleteusermodal>
-      </div>
       <div class="fade modal" id = "updatemodal" role="dialog">
         <updatemodal
           :update = "update"
@@ -34,7 +27,6 @@
 </template>
 
 <script>
-import deleteusermodal from "../../../modals/DeleteUser";
 import updatemodal from "../../../modals/User";
 import teachertable from "../UserTable.vue";
 
@@ -54,16 +46,12 @@ export default {
     clean: function() {
       this.teacher = {};
     },
-
-    setDelete: function(teacher) {
-      this.actualUser = teacher;
-    },
-    deleteUser: function() {
+    deleteUser: function(user) {
       axios
-        .delete("api/user/" + this.actualUser.id)
+        .delete("api/user/" + user.id)
         .then(res => {
           this.teachers.forEach(temp => {
-            if (temp.id === this.actualUser.id) {
+            if (temp.id === user.id) {
               var index = this.teachers
                 .map(function(temp) {
                   return temp;
@@ -154,10 +142,8 @@ export default {
 
   components: {
     teachertable,
-    deleteusermodal,
     updatemodal
   },
-
   props: ["teachers"]
 };
 </script>

@@ -116,13 +116,12 @@ export default {
           .catch(error => console.log(error));
       }
     },
-    deleteTestPaper: function(id) {
+    deleteTestPaper: function(tes) {
       axios
-        .delete("api/testpaper/" + id)
+        .delete("api/testpaper/" + tes.id)
         .then(res => {
-          $("#deletetest").modal("hide");
           this.mytestpapers.forEach(test => {
-            if (test.id == id) {
+            if (test.id === tes.id) {
               var index = this.mytestpapers
                 .map(function(test) {
                   return test;

@@ -32,7 +32,7 @@
                         <button data-toggle= "modal" data-target = "#newsmodal" @click="setModal(news)">
                             <i class="fa fa-pen bold color" ></i>
                         </button>
-                        <button  data-toggle="modal" data-target="#deletenews" @click ="setDelete(news.id)">
+                        <button @click ="deleteNews(news)">
                             <i class="fa fa-trash color-alarm "></i>
                         </button>
                     </div>
@@ -54,20 +54,11 @@
               :edit = "edit"
             ></newsmodal>
         </div>
-
-        <!-- confirmation modal -->
-        <div class="fade modal" id = "deletenews" role="dialog">
-          <deletenews
-            @deleteNews = "deleteNews"
-            :id = "deleteid"
-          ></deletenews>
-        </div>
     </div>
 </template>
 
 <script>
 import newsmodal from "../../modals/News.vue";
-import deletenews from "../../modals/DeleteNews.vue";
 
 export default {
   mounted: function() {
@@ -81,8 +72,7 @@ export default {
         title: "",
         text: ""
       },
-      edit: false,
-      deleteid: ""
+      edit: false
     };
   },
   methods: {
@@ -101,24 +91,26 @@ export default {
           console.log("got an error" + error);
         });
     },
-    deleteNews: function(id) {
-      axios
-        .delete("api/news/" + id)
-        .then(res => {
-          this.newsList.forEach(news => {
-            if (news.id === id) {
-              var index = this.newsList
-                .map(function(news) {
-                  return news;
-                })
-                .indexOf(news);
-              this.newsList.splice(index, 1);
-            }
+    deleteNews: function(n) {
+      if (confirm("Confirm the deletion of: \n" + n.title)) {
+        axios
+          .delete("api/news/" + n.id)
+          .then(res => {
+            this.newsList.forEach(news => {
+              if (news.id === n.id) {
+                var index = this.newsList
+                  .map(function(news) {
+                    return news;
+                  })
+                  .indexOf(news);
+                this.newsList.splice(index, 1);
+              }
+            });
+          })
+          .catch(error => {
+            console.log("an error ocurred" + error);
           });
-        })
-        .catch(error => {
-          console.log("an error ocurred" + error);
-        });
+      }
     },
     findNews: function() {
       axios
@@ -156,17 +148,13 @@ export default {
           console.log("an error ocurred" + error);
         });
     },
-    setDelete: function(id) {
-      this.deleteid = id;
-    },
     setModal: function(news) {
       this.news = news;
       this.edit = true;
     }
   },
   components: {
-    newsmodal,
-    deletenews
+    newsmodal
   }
 };
 </script>

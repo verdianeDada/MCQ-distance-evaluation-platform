@@ -51,6 +51,11 @@ Route::prefix('api')->middleware(['auth'])->group(function() {
     Route::delete('/course/{id}', 'SiteManagementController@delete');
     Route::patch('/course', 'SiteManagementController@update');
     Route::post('/course', 'SiteManagementController@create');
+    // carried courses
+    Route::get('/carried', 'SiteManagementController@all_carried');
+    Route::delete('/course/{id}', 'SiteManagementController@delete');
+    Route::patch('/course', 'SiteManagementController@update');
+    Route::post('/course', 'SiteManagementController@create');
     // user
     Route::get('/load_users', 'UserController@load_users');
     Route::delete('/user/{id}', 'UserController@delete');

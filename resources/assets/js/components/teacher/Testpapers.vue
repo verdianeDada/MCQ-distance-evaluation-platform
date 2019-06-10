@@ -32,20 +32,13 @@
                 <button data-toggle="modal" data-target="#testpapermodal" @click="setModal(testpaper.id)">
                   <i class="fa fa-pen bold color" ></i>
                 </button>
-                <button data-toggle="modal" data-target="#deletetest" @click="setdelete(testpaper.id)">
+                <button data-toggle="modal" data-target="#deletetest" @click="confirmDelete(testpaper)">
                   <i class="fa fa-trash color-alarm"></i>
                 </button>
               </td>
             </tr>
           </tbody>
         </table>
-      </div>
-      <div class="fade modal" id="deletetest" role="dialog">
-          <deletetest
-            :id = "deleteid"
-            :mytestpapers="mytestpapers"
-            :deleteTestPaper= "deleteTestPaper"
-          ></deletetest>
       </div>
     
     </div>
@@ -94,17 +87,11 @@
 </template>
 
 <script>
-import deletetest from "../modals/DeleteTestPaper.vue";
-
 export default {
-  data: function() {
-    return {
-      deleteid: ""
-    };
-  },
   methods: {
-    setdelete: function(id) {
-      this.deleteid = id;
+    confirmDelete: function(test) {
+      if (confirm("Confirm the deletion of: \n" + test.title))
+        this.deleteTestPaper(test);
     }
   },
   props: [
@@ -114,6 +101,6 @@ export default {
     "setModal",
     "downloadResults"
   ],
-  components: { deletetest }
+  components: {}
 };
 </script>

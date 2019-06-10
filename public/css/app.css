@@ -12708,6 +12708,20 @@ div::-webkit-scrollbar-track {
   background-color: #f1f1f1;
 }
 
+.expand_caret {
+  -webkit-transform: scale(1);
+          transform: scale(1);
+  margin-left: 8px;
+  margin-top: -4px;
+}
+
+h3[aria-expanded="true"] > .expand_caret,
+h4[aria-expanded="true"] > .expand_caret,
+h1[aria-expanded="true"] > .expand_caret {
+  -webkit-transform: scale(1) rotate(-180deg);
+          transform: scale(1) rotate(-180deg);
+}
+
 /* navigation bar*/
 
 nav {
@@ -13233,19 +13247,6 @@ fieldset[disabled] .form-control {
 
 #sitemanagement .well {
   background-color: #f5f8fa !important;
-}
-
-#sitemanagement .expand_caret {
-  -webkit-transform: scale(1);
-          transform: scale(1);
-  margin-left: 8px;
-  margin-top: -4px;
-}
-
-#sitemanagement h3[aria-expanded="true"] > .expand_caret,
-#sitemanagement h1[aria-expanded="true"] > .expand_caret {
-  -webkit-transform: scale(1) rotate(-180deg);
-          transform: scale(1) rotate(-180deg);
 }
 
 .welcome-staff {

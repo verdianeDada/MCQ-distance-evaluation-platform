@@ -36,25 +36,32 @@
                   <button  data-toggle="modal" data-target="#updatemodal" @click="setUpdate(user)">
                     <i class="fa fa-pen color "></i>
                   </button>
-                  <button  data-toggle="modal" data-target="#deleteuser" @click="setModal(user)">
+                  <button @click="confirmDelete(user)">
                     <i class="fa fa-trash color-alarm "></i>
                   </button>
                 </td>
             </tr>
           </tbody>
         </table>
-        <!-- delete confirmation -->
-        
+                
     </div>
 </template>
 <script>
-// import deleteuser from "../../../modals/DeleteUser";
 export default {
-  data: function() {
-    return {};
+  methods: {
+    confirmDelete: function(user) {
+      if (
+        confirm(
+          "Confirm the deletion of: \n" +
+            user.matricule.toUpperCase +
+            "   " +
+            user.name
+        )
+      )
+        this.deleteUser(user);
+    }
   },
-  methods: {},
-  props: ["users", "setModal", "block", "setUpdate", "putAdmin", "isTeacher"],
+  props: ["users", "block", "setUpdate", "putAdmin", "isTeacher"],
   components: {}
 };
 </script>

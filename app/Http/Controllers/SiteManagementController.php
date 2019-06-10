@@ -10,6 +10,7 @@ use App\Course;
 use App\User;
 use App\testPaper;
 use App\Question;
+use App\RepeatingCourse;
 
 class SiteManagementController extends Controller
 {
@@ -45,15 +46,15 @@ class SiteManagementController extends Controller
                 }
 
             }
-            
-           DB::table('repeating_courses')->where('course_id', $id)->delete();
             DB::table('written_test_papers')->whereIn('test_paper_id', $tests_id)->delete();
             DB::table('questions')->whereIn('id', $questions_id)->delete();
             DB::table('question_distractors')->whereIn('question_id', $questions_id)->delete();
             DB::table('test_papers')->whereIn('id', $tests_id)->delete();
-            Course::destroy($id);
         }
-        return;
+            
+            DB::table('repeating_courses')->where('course_id', $id)->delete();
+            Course::destroy($id);
+        return ;
 
     }
     public function update(Request $req){
@@ -80,9 +81,7 @@ class SiteManagementController extends Controller
         }
        
     }
-    public function create(Request $req){
-        
-
+    public function create(Request $req){     
         if (sizeof(Course::where([
             ['code', strtolower( $req['code'])],
             ['id','<>' ,$req['id']]
@@ -103,6 +102,10 @@ class SiteManagementController extends Controller
                 'user_id'=>$req->input('user_id'),
             ]);
         }
+    }
+
+    public function all_carried(){
+        return User::where('isTeacher', false)->with('user_course_repeat')->get();
     }
     
 }

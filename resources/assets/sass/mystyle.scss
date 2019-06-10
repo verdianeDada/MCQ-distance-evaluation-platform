@@ -66,6 +66,16 @@ div::-webkit-scrollbar-track {
   border-radius: 10px;
   background-color: #f1f1f1;
 }
+.expand_caret {
+  transform: scale(1);
+  margin-left: 8px;
+  margin-top: -4px;
+}
+h3[aria-expanded="true"] > .expand_caret,
+h4[aria-expanded="true"] > .expand_caret,
+h1[aria-expanded="true"] > .expand_caret {
+  transform: scale(1) rotate(-180deg);
+}
 
 /* navigation bar*/
 
@@ -503,15 +513,7 @@ fieldset[disabled] .form-control {
   .well {
     background-color: #f5f8fa !important;
   }
-  .expand_caret {
-    transform: scale(1);
-    margin-left: 8px;
-    margin-top: -4px;
-  }
-  h3[aria-expanded="true"] > .expand_caret,
-  h1[aria-expanded="true"] > .expand_caret {
-    transform: scale(1) rotate(-180deg);
-  }
+  
 }
 .welcome-staff {
   font-size: 15px;

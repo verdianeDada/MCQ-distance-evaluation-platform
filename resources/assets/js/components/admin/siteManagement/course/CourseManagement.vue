@@ -17,7 +17,6 @@
         <div id="common" class="collapse in">
           <coursetable
             class="test-paper"                
-            :setDelete="setDelete"
             :deleteCourse="deleteCourse"
             :setUpdate="setUpdate"
             :courses="courses.common"
@@ -32,7 +31,6 @@
         <div id="ict" class="collapse in">
           <coursetable
             class="test-paper"                
-            :setDelete="setDelete"
             :deleteCourse="deleteCourse"
             :setUpdate="setUpdate"
             :courses="courses.ict"
@@ -47,7 +45,6 @@
         <div id="fcs" class="collapse in">
           <coursetable
             class="test-paper"                
-            :setDelete="setDelete"
             :deleteCourse="deleteCourse"
             :setUpdate="setUpdate"
             :courses="courses.fcs"
@@ -135,21 +132,18 @@ export default {
         })
         .then(err => console.log(err));
     },
-    setDelete: function(course) {
-      this.course = course;
-    },
-    deleteCourse: function() {
+    deleteCourse: function(course) {
       axios
-        .delete("api/course/" + this.course.id)
+        .delete("api/course/" + course.id)
         .then(res => {
           var option;
-          if (this.course.isCommon == 1) option = "common";
+          if (course.isCommon == 1) option = "common";
           else {
-            if (this.course.option == 1) option = "ict";
+            if (course.option == 1) option = "ict";
             else option = "fcs";
           }
           this.courses[option].forEach(temp => {
-            if (temp.id === this.course.id) {
+            if (temp.id === course.id) {
               var index = this.courses[option]
                 .map(function(temp) {
                   return temp;
