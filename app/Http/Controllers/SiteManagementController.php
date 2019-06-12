@@ -105,8 +105,29 @@ class SiteManagementController extends Controller
     }
 
     public function all_carried(){
-        return User::where('isTeacher', false)->with('user_course_repeat')->get();
+        return ['users'=>User::where('isTeacher', false)->whereIn('year', [2,3,5])->orderBy("matricule")->with('user_course_repeat')->withCount('user_course_repeat')->get()];
     }
-    
+    public function all_courses(){
+        return ['courses'=>Course::orderBy('code')->get(),
+        'students'=>User::where('isTeacher', false)->whereIn('year', [2,3,5])->orderBy("matricule")->get()
+        ];
+    }
+    public function create_carried(Request $req){
+        if (sizeof(RepeatingCourse::where([
+            ['user_id', $req['student.id']],
+            ['course_id', $req['course.id']]
+        ])->get()) > 0)
+            return ['error' => 'Sorry this student has already been registered for this course'];
+        else 
+        // return;
+            return RepeatingCourse::create( [
+                'user_id' => $req['student.id'],
+                'course_id' => $req['course.id']
+            ]);
+    }
+    public function delete_carried($sid, $cid){
+        DB::table('repeating_courses')->where([['course_id', $cid], ['user_id', $sid]])->delete();
+        return;
+    }
 }
 

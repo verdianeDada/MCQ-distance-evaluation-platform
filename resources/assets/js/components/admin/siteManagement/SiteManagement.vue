@@ -34,12 +34,12 @@
             <coursemanagement 
               v-if="selectedLink == 3"
               class="col-lg-10 col-lg-offset-1"
-              ></coursemanagement>
+            ></coursemanagement>
             
             <carriedcourse 
               v-if="selectedLink == 4"
               class="col-lg-10 col-lg-offset-1"
-              ></carriedcourse>
+            ></carriedcourse>
             
         </div>
     </div>
@@ -84,31 +84,33 @@ export default {
       axios
         .get("api/load_users")
         .then(res => {
-          res.data.users.forEach(user => {
-            if (user.sex) user.sex = "F";
-            else user.sex = "M";
-            user.password = "";
-            if (user.isTeacher) this.teachers.push(user);
-            else {
-              if (user.year == 1) {
-                if (user.option) this.students.ict.year1.push(user);
-                else this.students.fcs.year1.push(user);
-              } else if (user.year == 2) {
-                if (user.option) this.students.ict.year2.push(user);
-                else this.students.fcs.year2.push(user);
-              } else if (user.year == 3) {
-                if (user.option) this.students.ict.year3.push(user);
-                else this.students.fcs.year3.push(user);
-              } else if (user.year == 4) {
-                if (user.option) this.students.ict.year4.push(user);
-                else this.students.fcs.year4.push(user);
-              } else {
-                if (user.option) this.students.ict.year5.push(user);
-                else this.students.fcs.year5.push(user);
+          if (res.data.users) {
+            res.data.users.forEach(user => {
+              if (user.sex) user.sex = "F";
+              else user.sex = "M";
+              user.password = "";
+              if (user.isTeacher) this.teachers.push(user);
+              else {
+                if (user.year == 1) {
+                  if (user.option) this.students.ict.year1.push(user);
+                  else this.students.fcs.year1.push(user);
+                } else if (user.year == 2) {
+                  if (user.option) this.students.ict.year2.push(user);
+                  else this.students.fcs.year2.push(user);
+                } else if (user.year == 3) {
+                  if (user.option) this.students.ict.year3.push(user);
+                  else this.students.fcs.year3.push(user);
+                } else if (user.year == 4) {
+                  if (user.option) this.students.ict.year4.push(user);
+                  else this.students.fcs.year4.push(user);
+                } else {
+                  if (user.option) this.students.ict.year5.push(user);
+                  else this.students.fcs.year5.push(user);
+                }
               }
-            }
-            this.teachers.sort((a, b) => (a.name > b.name ? 1 : -1));
-          });
+              this.teachers.sort((a, b) => (a.name > b.name ? 1 : -1));
+            });
+          }
         })
         .catch(error => console.log(error));
     }

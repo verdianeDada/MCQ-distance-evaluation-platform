@@ -12638,6 +12638,10 @@ button.close {
 
 /*main color ;*/
 
+body {
+  font-size: 15px;
+}
+
 .color {
   color: #0a650a;
 }
