@@ -12854,9 +12854,8 @@ a:hover {
   font-weight: bolder;
 }
 
-.nav > li > a:hover,
-.nav > li > a:focus,
-.nav > li > a:active {
+nav li.active,
+.nav li a:hover {
   background-color: transparent;
   font-size: 20px !important;
   border-bottom: black 2px solid;

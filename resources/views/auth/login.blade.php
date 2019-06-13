@@ -89,22 +89,23 @@
                    
                         <div id="app-navbar-collapse" class=" collapse navbar-collapse">
                             <ul class="nav navbar-nav">
-                                <li><a href="/"><i class="fa fa-home color-black my-li"></i>&nbsp;Home</a></li>
-                                <li><a href="/home">Dashboard</a></li>
-                            <!-- <li><a href="/home">{{Request::path()}}</a></li> -->
-                                
+                                <li class="{{ Request::path() === '/' ? 'active' : null }}">
+                                    <a href="{{ url('/' )}}" ><i class="fa fa-home color-black my-li"></i>&nbsp;Home</a>
+                                </li>
+                                <li class="{{ Request::path() === 'home' ? 'active' : null }}">
+                                    <a href="{{ url('home' )}}" >Dashboard</a>
+                                </li>
                                 
                                 @if (Auth::check() && Auth::user()->isTeacher && Auth::user()->isAdmin)
-                                    <li><a href="/sitemanagement">Site Mgt</a></li>
+                                    <li class="{{ Request::path() === 'sitemanagement' ? 'active' : null }}">
+                                        <a href="{{ url('sitemanagement' )}}" ></i> Site Mgt</a>
+                                    </li>
                                 @endif
-                                <!-- @if (Auth::check() && !Ah::user()->isTeacher)
-                                    <li><a href="/pastquestion">Past questions</a></li>
-                                @endif -->
                                 @if (Auth::check() &&  Auth::user()->isAdmin)
-                                    <li><a href="/newstaff">News & Staff Mgt</a></li>
+                                    <li class="{{ Request::path() === 'newstaff' ? 'active' : null }}">
+                                        <a href="{{ url('newstaff' )}}" ></i> News & Staff Mgt</a>
+                                    </li>
                                 @endif
-                        
-                                <!-- <li><a href="/forum-page">Forum</a></li> -->
                                 <li class="dropdown">
                                     <div class="my-li">
                                         <i class="dropdown-toggle btn name glyphicon glyphicon-user color-black"
