@@ -22,6 +22,9 @@
                   <p class="option">
                     Year: &nbsp;{{course.year}}&nbsp; Credit:&nbsp;{{course.credit}};
                   </p>
+                  <p class="option capitalize">
+                    <span class="bold"> Lecturer: </span>{{course.user.name}}
+                  </p>
                 </div>
                 
               </div>
@@ -48,7 +51,10 @@
                   {{course.title}}
                 </p>
                 <p class="option">
-                   Year: &nbsp;{{course.year}}&nbsp; Credit:&nbsp;{{course.credit}};
+                  Year: &nbsp;{{course.year}}&nbsp; Credit:&nbsp;{{course.credit}};
+                </p>
+                <p class="option capitalize">
+                 <span class="bold"> Lecturer: </span>{{course.user.name}}
                 </p>
               </div>
             </div>

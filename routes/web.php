@@ -68,17 +68,16 @@ Route::prefix('api')->middleware(['auth'])->group(function() {
 Route::group(['middleware'=>'auth'], function(){
     Route::get('/home', 'HomeController@index')->name('home');
     Route::get('/sitemanagement', 'SiteManagementController@index');
-    // Route::get('/pastquestion', 'PastQuestionController@index');
     Route::get('/newstaff', 'NewStaffController@index');
-    // Route::get('/forum-page', 'ForumController@index');
-    // Route::get('/testreport', 'TestReportController@index');
     Route::get('/write_test','writeTestController@index');
     Route::get('/results/{id}','TeacherDashboardController@testpaper_results');
+    Route::get('/download_r/{id}', 'WriteTestController@download_r');
+
 });
 
 Auth::routes();
 
 
-// Route::any('{query}',function(){
-//     return view('pagenotfound');
-// })->where('query','.*');
+Route::any('{query}',function(){
+    return view('pagenotfound');
+})->where('query','.*');

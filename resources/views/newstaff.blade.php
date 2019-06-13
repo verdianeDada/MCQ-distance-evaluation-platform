@@ -1,9 +1,14 @@
 @extends ('layouts.config')
 @section('body')
     @include('auth.login')
-    <div class="container-fluid">
-        <div class="row" id="newstaff">
-            <newstaff></newstaff>
+    @if (Auth::user()->isAllowed)
+        <div class="container-fluid">
+            <div class="row" id="newstaff">
+                <newstaff></newstaff>
+            </div>
         </div>
-    </div>
+    @else
+        @include('blocked')
+    @endif
+    
 @endsection

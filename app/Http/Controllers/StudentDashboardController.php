@@ -26,7 +26,7 @@ class StudentDashboardController extends Controller
                 foreach($temp as $rc){                    
                     array_push($repeatingCoursesId, $rc->course_id);
                 }
-                $repeatingCourses = Course::whereIn('id', $repeatingCoursesId)->get();
+                $repeatingCourses = Course::whereIn('id', $repeatingCoursesId)->with('user')->orderBy('code')->get();
             }
 
             $courses = Course::where([
@@ -36,7 +36,7 @@ class StudentDashboardController extends Controller
                         ->orWhere([
                             ["year", $user->year],
                             ["isCommon", 1]
-                        ])->orderBy('code')->get();
+                        ])->with('user')->orderBy('code')->get();
 
             //testpapers
             $now = date("Y-m-d H:i:s",strtotime(date("Y-m-d H:i:s"))+3600);

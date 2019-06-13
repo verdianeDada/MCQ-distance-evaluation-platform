@@ -55,7 +55,7 @@
               <th>Date</th>
               <th>Start time</th>
               <th>End time</th>
-              <th>results</th>
+              <th>Results</th>
               <th></th>  
             </tr>
           </thead>

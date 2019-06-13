@@ -20,6 +20,7 @@
           :testpapers ="testpapers"
           :repeatingTestpapers="repeatingTestpapers"
           :todayTestpapers="todayTestpapers"
+          :download_r="download_r"
         ></testpapers>
       </div>
     </div>
@@ -124,6 +125,10 @@ export default {
           console.log("test ended");
         } else console.log("RAS");
       }
+    },
+    download_r: function(testid) {
+      // download correction
+      location.href = "/download_r/" + testid;
     }
   },
 

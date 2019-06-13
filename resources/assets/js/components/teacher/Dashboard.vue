@@ -134,9 +134,6 @@ export default {
         .catch(error => console.log(error));
     },
     downloadResults: function(id) {
-      axios;
-      // .get("api/testpaper_results/" + id)
-      // .then(res => {
       location.href = "/results/" + id;
       // })
       // .catch(error => console.log(error));

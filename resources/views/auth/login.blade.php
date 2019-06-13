@@ -89,7 +89,7 @@
                    
                         <div id="app-navbar-collapse" class=" collapse navbar-collapse">
                             <ul class="nav navbar-nav">
-                                <li><a href="/"><i class="fa fa-home color-black my-li"></i></a></li>
+                                <li><a href="/"><i class="fa fa-home color-black my-li"></i>&nbsp;Home</a></li>
                                 <li><a href="/home">Dashboard</a></li>
                             <!-- <li><a href="/home">{{Request::path()}}</a></li> -->
                                 
@@ -97,7 +97,7 @@
                                 @if (Auth::check() && Auth::user()->isTeacher && Auth::user()->isAdmin)
                                     <li><a href="/sitemanagement">Site Mgt</a></li>
                                 @endif
-                                <!-- @if (Auth::check() && !Auth::user()->isTeacher)
+                                <!-- @if (Auth::check() && !Ah::user()->isTeacher)
                                     <li><a href="/pastquestion">Past questions</a></li>
                                 @endif -->
                                 @if (Auth::check() &&  Auth::user()->isAdmin)

@@ -12653,6 +12653,7 @@ exports.default = _default;
 //
 //
 //
+//
 
 
 
@@ -12739,6 +12740,10 @@ exports.default = _default;
           console.log("test ended");
         } else console.log("RAS");
       }
+    },
+    download_r: function download_r(testid) {
+      // download correction
+      location.href = "/download_r/" + testid;
     }
   },
 
@@ -12755,6 +12760,12 @@ exports.default = _default;
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -13004,7 +13015,7 @@ exports.default = _default;
     return {};
   },
   methods: {},
-  props: ["testpapers", "repeatingTestpapers", "todayTestpapers"],
+  props: ["testpapers", "repeatingTestpapers", "todayTestpapers", "download_r"],
   components: {}
 });
 
@@ -13145,9 +13156,6 @@ exports.default = _default;
       });
     },
     downloadResults: function downloadResults(id) {
-      axios;
-      // .get("api/testpaper_results/" + id)
-      // .then(res => {
       location.href = "/results/" + id;
       // })
       // .catch(error => console.log(error));
@@ -14618,7 +14626,7 @@ exports.default = _default;
           year5: []
         }
       },
-      selectedLink: 4
+      selectedLink: 1
     };
   },
   mounted: function mounted() {
@@ -72689,6 +72697,13 @@ var render = function() {
                           _vm._s(course.credit) +
                           ";\n              "
                       )
+                    ]),
+                    _vm._v(" "),
+                    _c("p", { staticClass: "option capitalize" }, [
+                      _c("span", { staticClass: "bold" }, [
+                        _vm._v(" Lecturer: ")
+                      ]),
+                      _vm._v(_vm._s(course.user.name) + "\n              ")
                     ])
                   ])
                 ])
@@ -72724,12 +72739,17 @@ var render = function() {
                 _vm._v(" "),
                 _c("p", { staticClass: "option" }, [
                   _vm._v(
-                    "\n               Year:  " +
+                    "\n              Year:  " +
                       _vm._s(course.year) +
                       "  Credit: " +
                       _vm._s(course.credit) +
                       ";\n            "
                   )
+                ]),
+                _vm._v(" "),
+                _c("p", { staticClass: "option capitalize" }, [
+                  _c("span", { staticClass: "bold" }, [_vm._v(" Lecturer: ")]),
+                  _vm._v(_vm._s(course.user.name) + "\n            ")
                 ])
               ])
             ])
@@ -72880,7 +72900,23 @@ var render = function() {
                   _vm._v(" "),
                   _c("td", { staticClass: "center" }, [
                     testpaper.obsolete
-                      ? _c("div", [_vm._m(1, true)])
+                      ? _c("div", [
+                          _c(
+                            "button",
+                            {
+                              on: {
+                                click: function($event) {
+                                  return _vm.download_r(testpaper.id)
+                                }
+                              }
+                            },
+                            [
+                              _c("i", {
+                                staticClass: "fa fa-download color bold"
+                              })
+                            ]
+                          )
+                        ])
                       : _c("div", [_c("i", [_vm._v("--")])])
                   ])
                 ])
@@ -72898,7 +72934,7 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("table", { staticClass: "table table-hover" }, [
-            _vm._m(2),
+            _vm._m(1),
             _vm._v(" "),
             _c(
               "tbody",
@@ -72938,7 +72974,23 @@ var render = function() {
                   _vm._v(" "),
                   _c("td", { staticClass: "center" }, [
                     testpaper.obsolete
-                      ? _c("div", [_vm._m(3, true)])
+                      ? _c("div", [
+                          _c(
+                            "button",
+                            {
+                              on: {
+                                click: function($event) {
+                                  return _vm.download_r(testpaper.id)
+                                }
+                              }
+                            },
+                            [
+                              _c("i", {
+                                staticClass: "fa fa-download color bold"
+                              })
+                            ]
+                          )
+                        ])
                       : _c("div", [_c("i", [_vm._v("--")])])
                   ])
                 ])
@@ -72953,7 +73005,7 @@ var render = function() {
       _c("h1", { staticClass: "color bold center" }, [_vm._v("Test Papers")]),
       _vm._v(" "),
       _c("table", { staticClass: "table table-hover" }, [
-        _vm._m(4),
+        _vm._m(2),
         _vm._v(" "),
         _c(
           "tbody",
@@ -72993,7 +73045,19 @@ var render = function() {
               _vm._v(" "),
               _c("td", { staticClass: "center" }, [
                 testpaper.obsolete
-                  ? _c("div", [_vm._m(5, true)])
+                  ? _c("div", [
+                      _c(
+                        "button",
+                        {
+                          on: {
+                            click: function($event) {
+                              return _vm.download_r(testpaper.id)
+                            }
+                          }
+                        },
+                        [_c("i", { staticClass: "fa fa-download color bold" })]
+                      )
+                    ])
                   : _c("div", [_c("i", [_vm._v("--")])])
               ])
             ])
@@ -73029,15 +73093,9 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("Obsolete")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Answer")])
+        _c("th", [_vm._v("Correction")])
       ])
     ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("button", [_c("i", { staticClass: "fa fa-download color bold" })])
   },
   function() {
     var _vm = this
@@ -73063,15 +73121,9 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("Obsolete")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Answer")])
+        _c("th", [_vm._v("Correction")])
       ])
     ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("button", [_c("i", { staticClass: "fa fa-download color bold" })])
   },
   function() {
     var _vm = this
@@ -73097,15 +73149,9 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("Obsolete")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Answer")])
+        _c("th", [_vm._v("Correction")])
       ])
     ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("button", [_c("i", { staticClass: "fa fa-download color bold" })])
   }
 ]
 render._withStripped = true
@@ -73198,7 +73244,8 @@ var render = function() {
               attrs: {
                 testpapers: _vm.testpapers,
                 repeatingTestpapers: _vm.repeatingTestpapers,
-                todayTestpapers: _vm.todayTestpapers
+                todayTestpapers: _vm.todayTestpapers,
+                download_r: _vm.download_r
               }
             })
           ],
@@ -73649,7 +73696,7 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("End time")]),
         _vm._v(" "),
-        _c("th", [_vm._v("results")]),
+        _c("th", [_vm._v("Results")]),
         _vm._v(" "),
         _c("th")
       ])

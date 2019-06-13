@@ -70,7 +70,7 @@ export default {
           year5: []
         }
       },
-      selectedLink: 4
+      selectedLink: 1
     };
   },
   mounted: function() {

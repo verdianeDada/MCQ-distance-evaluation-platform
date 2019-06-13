@@ -10,6 +10,7 @@ use App\Question;
 use App\RepeatingCourse;
 use App\Course;
 use App\WrittenTestPaper;
+use PDF;
 
 class WriteTestController extends Controller
 {
@@ -171,6 +172,40 @@ class WriteTestController extends Controller
         }
         catch(\Exception $e){
             return $e->getMessage();
+        }
+    }
+    public function download_r($id){
+        $now = strtotime(date("Y-m-d H:i:s"))+3600;
+        $temp = TestPaper::where([
+            ['id', $id],
+            ['date','<', date("Y-m-d", $now)]])->orWhere([
+            ['date', date("Y-m-d", $now)],
+            ['end_time','<',date("H:i:s", $now)]
+            ])->with(['questions.distractors','course.user'])->get();
+    // return $temp[0];
+        if (sizeof($temp) > 0){
+            if ( $temp[0]->course->isCommon)
+                $temp[0]->course->option = "FCS & ICT";
+            else{
+                if ($temp[0]->course->option)
+                    $temp[0]->course->option = "ICT";
+                else
+                    $temp[0]->course->option = "FCS";
+            }
+            
+            $data = [
+                'testpaper' => $temp[0],
+            ];
+        
+            PDF::setOptions(['dpi' => 150, 'defaultFont' => 'sans-serif']);
+            $pdf = PDF::loadView('test_correction', $data);
+
+            return $pdf->download('Correction '.$temp[0]->course->code.' '.$temp[0]->title.'.pdf');  
+        }
+        
+        else{ 
+            $error = "This test paper is'nt obsolete yet!";
+            return view('pagenotfound', compact('error'));
         }
     }
 }

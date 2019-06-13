@@ -2,10 +2,15 @@
 
 @section('body')
     @include('auth.login')
-    <div id ="sitemanagement">
-        <sitemanagement>
-        </sitemanagement>
-    </div>    
+    @if (Auth::user()->isAllowed)
+        <div id ="sitemanagement">
+            <sitemanagement>
+            </sitemanagement>
+        </div> 
+    @else
+        @include('blocked')
+    @endif
+       
     
 
 @endsection

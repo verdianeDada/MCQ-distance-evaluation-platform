@@ -16,7 +16,7 @@
               <th>End time</th>
               <th>Marks obtained</th>
               <th>Obsolete</th>
-              <th>Answer</th>
+              <th>Correction</th>
             </tr>
           </thead>
           <tbody>
@@ -41,7 +41,7 @@
               </td>
               <td class="center">
                 <div v-if="testpaper.obsolete">
-                  <button>
+                  <button @click="download_r(testpaper.id)">
                     <i class="fa fa-download color bold"></i>
                   </button>
                 </div>
@@ -70,7 +70,7 @@
               <th>End time</th>
               <th>Marks obtained</th>
               <th>Obsolete</th>
-              <th>Answer</th>
+              <th>Correction</th>
             </tr>
           </thead>
           <tbody>
@@ -95,7 +95,7 @@
               </td>
               <td class="center">
                 <div v-if="testpaper.obsolete">
-                  <button>
+                  <button @click="download_r(testpaper.id)">
                     <i class="fa fa-download color bold"></i>
                   </button>
                 </div>
@@ -124,7 +124,7 @@
               <th>End time</th>
               <th>Marks obtained</th>
               <th>Obsolete</th>
-              <th>Answer</th>
+              <th>Correction</th>
             </tr>
           </thead>
           <tbody>
@@ -149,7 +149,7 @@
               </td>
               <td class="center">
                 <div v-if="testpaper.obsolete">
-                  <button>
+                  <button @click="download_r(testpaper.id)">
                     <i class="fa fa-download color bold"></i>
                   </button>
                 </div>
@@ -171,7 +171,7 @@ export default {
     return {};
   },
   methods: {},
-  props: ["testpapers", "repeatingTestpapers", "todayTestpapers"],
+  props: ["testpapers", "repeatingTestpapers", "todayTestpapers", "download_r"],
   components: {}
 };
 </script>
