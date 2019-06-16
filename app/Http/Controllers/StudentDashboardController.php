@@ -65,7 +65,7 @@ class StudentDashboardController extends Controller
                                 if (sizeof($writtenTestPapers) > 0){
                                     foreach ( $writtenTestPapers as $wrt){                                    
                                         if ($test->id == $wrt->test_paper_id){
-                                            $test->mark_obtained = $wrt->over_mark;
+                                            $test->mark_obtained = $wrt->mark_obtained;
                                             $test->done = true;
                                         }
                                         else{
@@ -82,7 +82,7 @@ class StudentDashboardController extends Controller
                             if (sizeof($writtenTestPapers) > 0){
                                 foreach ( $writtenTestPapers as $wrt){
                                     if ($test->id == $wrt->test_paper_id){
-                                        $testpapers[$keyT]->mark_obtained = $wrt->over_mark;
+                                        $testpapers[$keyT]->mark_obtained = $wrt->mark_obtained;
                                         $testpapers[$keyT]->done = true;
                                     }
                                     else{
@@ -118,7 +118,7 @@ class StudentDashboardController extends Controller
                             if (sizeof($writtenTestPapers) > 0){
                                 foreach ( $writtenTestPapers as $wrt){
                                     if ($test->id == $wrt->test_paper_id){
-                                        $repeatingTestpapers[$keyT]->mark_obtained = $wrt->over_mark;
+                                        $repeatingTestpapers[$keyT]->mark_obtained = $wrt->mark_obtained;
                                         $repeatingTestpapers[$keyT]->done = true;
                                         break;
                                     }

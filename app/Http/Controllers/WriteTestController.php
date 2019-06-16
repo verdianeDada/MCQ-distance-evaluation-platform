@@ -165,9 +165,8 @@ class WriteTestController extends Controller
                 return WrittenTestPaper::create([
                     'user_id' =>Auth::user()->id,
                     'test_paper_id' => $request['id'],
-                    'over_mark' => $totalMark,
+                    'mark_obtained' => $totalMark,
                 ]);
-                return $totalMark;
             }
         }
         catch(\Exception $e){
