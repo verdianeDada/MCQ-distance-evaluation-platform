@@ -96,7 +96,7 @@
         </div>
 
         <h3 style="font-size: 22px" class="bold center color-black collapse in" data-toggle="collapse" data-target="#delegates" aria-expanded="true">
-          Delagates&nbsp;
+          Delegates&nbsp;
           <div class="expand_caret caret"></div>
         </h3>
         <div id="delegates" class="collapse in">
@@ -184,10 +184,10 @@ export default {
       axios
         .post("api/staff", params)
         .then(res => {
-          if ((res.data.type = "hod")) this.staffList.hod.unshift(res.data);
-          else if ((res.data.type = "hoo"))
+          if (res.data.type === "hod") this.staffList.hod.unshift(res.data);
+          else if (res.data.type === "hoo")
             this.staffList.hoo.unshift(res.data);
-          else if ((res.data.type = "teacher"))
+          else if (res.data.type === "teacher")
             this.staffList.teacher.unshift(res.data);
           else this.staffList.delegate.unshift(res.data);
           this.closeModal();

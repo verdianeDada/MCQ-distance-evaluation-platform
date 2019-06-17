@@ -14099,7 +14099,7 @@ exports.default = _default;
       var _this = this;
 
       axios.post("api/staff", params).then(function (res) {
-        if (res.data.type = "hod") _this.staffList.hod.unshift(res.data);else if (res.data.type = "hoo") _this.staffList.hoo.unshift(res.data);else if (res.data.type = "teacher") _this.staffList.teacher.unshift(res.data);else _this.staffList.delegate.unshift(res.data);
+        if (res.data.type === "hod") _this.staffList.hod.unshift(res.data);else if (res.data.type === "hoo") _this.staffList.hoo.unshift(res.data);else if (res.data.type === "teacher") _this.staffList.teacher.unshift(res.data);else _this.staffList.delegate.unshift(res.data);
         _this.closeModal();
         _this.cleanModal();
       }).catch(function (error) {
@@ -15388,7 +15388,7 @@ exports.default = _default;
     deleteC: function deleteC(sid, cid) {
       var _this4 = this;
 
-      axios.delete("api/carried/" + sid + cid).then(function (res) {
+      axios.delete("api/carried/" + sid + "/" + cid).then(function (res) {
         _this4.loadpage();
       }).catch(function (error) {
         return console.log(error);
@@ -78945,7 +78945,7 @@ var staticRenderFns = [
         }
       },
       [
-        _vm._v("\n        Delagates \n        "),
+        _vm._v("\n        Delegates \n        "),
         _c("div", { staticClass: "expand_caret caret" })
       ]
     )

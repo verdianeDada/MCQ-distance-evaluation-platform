@@ -229,7 +229,7 @@ export default {
     },
     deleteC: function(sid, cid) {
       axios
-        .delete("api/carried/" + sid + cid)
+        .delete("api/carried/" + sid + "/" + cid)
         .then(res => {
           this.loadpage();
         })

@@ -1,6 +1,6 @@
 <div>
     <h2 data-toggle="collapse" data-target="#dept"  aria-expanded="true" class="center color bold">Computer Science Department Staff
-        <div class="expand-caret caret"></div>
+        <div class="expand_caret caret"></div>
     </h2>
     <div id="dept" class="collapse in" style="padding-top: 13px;">
         <h3 class="bold center color-black ">Head Of Department</h3>
@@ -24,7 +24,7 @@
         @endforeach
 
         <h3 class="bold center color-black " data-toggle="collapse" aria-expanded="true" data-target="#hoo">Heads Of Options
-            <div class="caret expand-caret"></div>
+            <div class="caret expand_caret"></div>
         </h3>
         <div id="hoo" class="collapse in">
         @foreach ($hoo as $staff)
@@ -47,7 +47,7 @@
         </div>
 
         <h3 class="bold center color-black " data-toggle="collapse" aria-expanded="true" data-target="#teachers">Teachers
-            <div class="caret expand-caret"></div>
+            <div class="caret expand_caret"></div>
         </h3>
         <div class="collapse in" id="teachers">
         @foreach ($teacher as $staff)
@@ -70,7 +70,7 @@
         </div>
         
         <h3 class="bold center color-black " data-toggle="collapse" aria-expanded="true" data-target="#cco">Class Corrdinators
-            <div class="caret expand-caret"></div>
+            <div class="caret expand_caret"></div>
         </h3>
         <div class="collapse in" id="cco">
         @foreach ($delegate as $staff)

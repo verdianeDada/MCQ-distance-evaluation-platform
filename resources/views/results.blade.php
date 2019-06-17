@@ -10,13 +10,14 @@
   <meta name="csrf-token" content="{{ csrf_token() }}">  
   <style>
     .users td{
-      border: 1px solid black;
-      padding: 3px;
+      border: 1px solid #9c9c9c;
+      padding: 7px;
     }
     .users{
+      border-collapse: collapse;
+      border-spacing: 0;
       width: 100%;
       margin: 0px 5px;
-      border: 1px solid black;
     }
     @page { margin: 20px 20px; padding: 4px;}
     footer { position: fixed; bottom: -1px; text-align: right}
@@ -172,6 +173,7 @@
         </tbody>
       </table>
     @endif
+    <h3 style="color: red; margin-top: 50px; text-align: center">If a student doesn't have marks, it means he/she didn't write this test!</h3>
 
   </div>
 </body>
