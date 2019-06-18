@@ -140,7 +140,7 @@ class WriteTestController extends Controller
 
     public function submit_test(Request $request){
         try{
-            $written = WrittenTestpaper::where('test_paper_id', $request->id)->get();
+            $written = WrittenTestpaper::where([['test_paper_id', $request->id], ['user_id', Auth::user()->id]])->get();
 
             if (sizeof($written) > 0){
                  return [ "error"=>"Sorry, You have already written this particular test paper"];

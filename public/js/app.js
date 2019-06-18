@@ -14439,6 +14439,7 @@ exports.default = _default;
 
       var params = Object.assign({}, this.actualTest);
       axios.post("api/submit_test", params).then(function (res) {
+        debugger;
         if (res.data.error) {
           _this2.error.isThereError = true;
           _this2.error.message = res.data.error;

@@ -79,7 +79,7 @@
   @foreach ($testpaper->questions as $key=>$question)
     <div style=" margin-bottom: 20px; margin-top: 10px;">
       <p><i class="fa fa-ban"><span style="font-weight: bold">{{$key + 1}}&nbsp;-&nbsp;&nbsp;&nbsp;{{$question->text}}</span></p>
-      foreach ($question->map->distractors as $dist)
+      @foreach ($question->distractors as $dist)
       {{$dist}}
       <div style=" margin-left: 22px; margin-bottom: 30px; margin-top: 20px;">
           @if ($dist->isCorrect)
@@ -89,7 +89,7 @@
           @endif
         </div>
         
-      endforeach
+      @endforeach
     </div>
   @endforeach
 
