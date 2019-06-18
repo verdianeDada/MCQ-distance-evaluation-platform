@@ -67,6 +67,7 @@ class StudentDashboardController extends Controller
                                         if ($test->id == $wrt->test_paper_id){
                                             $test->mark_obtained = $wrt->mark_obtained;
                                             $test->done = true;
+                                            break;
                                         }
                                         else{
                                             $test->done = false;
@@ -84,6 +85,7 @@ class StudentDashboardController extends Controller
                                     if ($test->id == $wrt->test_paper_id){
                                         $testpapers[$keyT]->mark_obtained = $wrt->mark_obtained;
                                         $testpapers[$keyT]->done = true;
+                                        break;
                                     }
                                     else{
                                         $testpapers[$keyT]->done = false;

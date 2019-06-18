@@ -13003,12 +13003,6 @@ exports.default = _default;
 //
 //
 //
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["a"] = ({
   data: function data() {
@@ -14372,7 +14366,7 @@ exports.default = _default;
       start_datetime: "",
       end_datetime: "",
       pageNumber: 0,
-      size: 2,
+      size: 3,
       paginatedQuestions: []
     };
   },
@@ -72872,8 +72866,6 @@ var render = function() {
                   _vm._v(" "),
                   _c("td", [_vm._v(_vm._s(testpaper.course.code))]),
                   _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(testpaper.course.credit))]),
-                  _vm._v(" "),
                   _c("td", [_vm._v(_vm._s(testpaper.date))]),
                   _vm._v(" "),
                   _c("td", [_vm._v(_vm._s(testpaper.start_time))]),
@@ -72946,8 +72938,6 @@ var render = function() {
                   _vm._v(" "),
                   _c("td", [_vm._v(_vm._s(testpaper.course.code))]),
                   _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(testpaper.course.credit))]),
-                  _vm._v(" "),
                   _c("td", [_vm._v(_vm._s(testpaper.date))]),
                   _vm._v(" "),
                   _c("td", [_vm._v(_vm._s(testpaper.start_time))]),
@@ -73017,8 +73007,6 @@ var render = function() {
               _vm._v(" "),
               _c("td", [_vm._v(_vm._s(testpaper.course.code))]),
               _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(testpaper.course.credit))]),
-              _vm._v(" "),
               _c("td", [_vm._v(_vm._s(testpaper.date))]),
               _vm._v(" "),
               _c("td", [_vm._v(_vm._s(testpaper.start_time))]),
@@ -73081,8 +73069,6 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("Course Code")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Credit")]),
-        _vm._v(" "),
         _c("th", [_vm._v("Date")]),
         _vm._v(" "),
         _c("th", [_vm._v("Start time")]),
@@ -73109,8 +73095,6 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("Course Code")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Credit")]),
-        _vm._v(" "),
         _c("th", [_vm._v("Date")]),
         _vm._v(" "),
         _c("th", [_vm._v("Start time")]),
@@ -73136,8 +73120,6 @@ var staticRenderFns = [
         _c("th", [_vm._v("Title")]),
         _vm._v(" "),
         _c("th", [_vm._v("Course Code")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Credit")]),
         _vm._v(" "),
         _c("th", [_vm._v("Date")]),
         _vm._v(" "),

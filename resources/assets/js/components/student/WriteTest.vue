@@ -87,7 +87,7 @@ export default {
       start_datetime: "",
       end_datetime: "",
       pageNumber: 0,
-      size: 2,
+      size: 3,
       paginatedQuestions: []
     };
   },

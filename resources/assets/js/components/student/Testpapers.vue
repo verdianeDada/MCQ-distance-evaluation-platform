@@ -10,7 +10,6 @@
               <th>#</th>
               <th>Title</th>
               <th>Course Code</th>
-              <th>Credit</th>
               <th>Date</th>
               <th>Start time</th>
               <th>End time</th>
@@ -27,7 +26,6 @@
               <td>{{index + 1}}</td>
               <td>{{testpaper.title}}</td>
               <td>{{testpaper.course.code}}</td>
-              <td>{{testpaper.course.credit}}</td>
               <td>{{testpaper.date}}</td>
               <td>{{testpaper.start_time}}</td>
               <td>{{testpaper.end_time}}</td>
@@ -64,7 +62,6 @@
               <th>#</th>
               <th>Title</th>
               <th>Course Code</th>
-              <th>Credit</th>
               <th>Date</th>
               <th>Start time</th>
               <th>End time</th>
@@ -81,7 +78,6 @@
               <td>{{index + 1}}</td>
               <td>{{testpaper.title}}</td>
               <td>{{testpaper.course.code}}</td>
-              <td>{{testpaper.course.credit}}</td>
               <td>{{testpaper.date}}</td>
               <td>{{testpaper.start_time}}</td>
               <td>{{testpaper.end_time}}</td>
@@ -118,7 +114,6 @@
               <th>#</th>
               <th>Title</th>
               <th>Course Code</th>
-              <th>Credit</th>
               <th>Date</th>
               <th>Start time</th>
               <th>End time</th>
@@ -135,7 +130,6 @@
               <td>{{index + 1}}</td>
               <td>{{testpaper.title}}</td>
               <td>{{testpaper.course.code}}</td>
-              <td>{{testpaper.course.credit}}</td>
               <td>{{testpaper.date}}</td>
               <td>{{testpaper.start_time}}</td>
               <td>{{testpaper.end_time}}</td>
