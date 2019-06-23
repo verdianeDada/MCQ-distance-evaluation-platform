@@ -8,8 +8,7 @@
   <style>  
     @page { margin: 20px 20px; padding: 4px;}
     footer { position: fixed; bottom: -1px; text-align: right}
-    p { page-break-after: always; }
-    p:last-child { page-break-after: never; }
+  
     footer .pagenum:before {
       content: counter(page);
     }
@@ -25,6 +24,7 @@
   style="
     color: black; font-size: 14px; 
     border: double 4px rgb(10, 101, 10);
+    padding: 10px;
   "
 > 
 
@@ -75,20 +75,19 @@
   <!-- body -->
 
   <div>
-  <h3 style="text-align: center; color: rgb(10, 101, 10); text-decoration: underline; margin: 40px 10px;">Correction</h3>
+  <h2 style="text-align: center; color: rgb(10, 101, 10); text-decoration: underline; margin: 40px 10px;">Correction</h2>
   @foreach ($testpaper->questions as $key=>$question)
     <div style=" margin-bottom: 20px; margin-top: 10px;">
-      <p><i class="fa fa-ban"><span style="font-weight: bold">{{$key + 1}}&nbsp;-&nbsp;&nbsp;&nbsp;{{$question->text}}</span></p>
+      <p><span style="font-weight: bold">{{$key + 1}}&nbsp;-&nbsp;&nbsp;&nbsp;{{$question->text}}</span></p>
+      <p style="padding-left: 40px"><i>{{$question->over_mark}} mark(s)</i></p>
       @foreach ($question->distractors as $dist)
-      {{$dist}}
-      <div style=" margin-left: 22px; margin-bottom: 30px; margin-top: 20px;">
-          @if ($dist->isCorrect)
-            <p><i class="fa fa-check"></i>{{$dist->text}}</p>
-          @else
-            <p><i class="fa fa-ban"></i>{{$dist->text}}</p>
-          @endif
-        </div>
-        
+        <div style=" padding-left: 40px; margin-top: 20px;">
+            @if ($dist->isCorrect)
+            <div style="margin-top: -7px; padding: 0;"><input type="radio" checked>&nbsp;&nbsp;&nbsp;<span>{{$dist->text}}</span></div>
+            @else
+            <div style="margin-top: -7px; padding: 0;"><input type="radio">&nbsp;&nbsp;&nbsp;<span>{{$dist->text}}</span></div>
+            @endif
+        </div>        
       @endforeach
     </div>
   @endforeach
