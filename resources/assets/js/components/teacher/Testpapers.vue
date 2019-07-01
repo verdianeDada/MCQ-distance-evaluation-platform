@@ -22,7 +22,7 @@
               :key ="testpaper.id"
             >
               <td>{{testpaper.title}}</td>
-              <td>{{testpaper.course.code}}</td>
+              <td><span class="uppercase">{{testpaper.course.code}}</span></td>
               <td>{{testpaper.course.credit}}</td>
               <td>{{testpaper.date}}</td>
               <td>{{testpaper.start_time}}</td>
@@ -67,7 +67,7 @@
               <template v-if="testpaper.obsolete">
                 <td><i class="fa fa-check color bold "></i></td>
                 <td>{{testpaper.title}}</td>
-                <td>{{testpaper.course.code}}</td>
+                <td><span class="uppercase">{{testpaper.course.code}}</span></td>
                 <td>{{testpaper.course.credit}}</td>
                 <td>{{testpaper.date}}</td>
                 <td>{{testpaper.start_time}}</td>

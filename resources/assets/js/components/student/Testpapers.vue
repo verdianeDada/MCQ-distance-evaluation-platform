@@ -25,7 +25,7 @@
             >
               <td>{{index + 1}}</td>
               <td>{{testpaper.title}}</td>
-              <td>{{testpaper.course.code}}</td>
+              <td><span class="uppercase">{{testpaper.course.code}}</span></td>
               <td>{{testpaper.date}}</td>
               <td>{{testpaper.start_time}}</td>
               <td>{{testpaper.end_time}}</td>
@@ -77,7 +77,7 @@
             >
               <td>{{index + 1}}</td>
               <td>{{testpaper.title}}</td>
-              <td>{{testpaper.course.code}}</td>
+              <td><span class="uppercase">{{testpaper.course.code}}</span></td>
               <td>{{testpaper.date}}</td>
               <td>{{testpaper.start_time}}</td>
               <td>{{testpaper.end_time}}</td>
@@ -129,7 +129,7 @@
             >
               <td>{{index + 1}}</td>
               <td>{{testpaper.title}}</td>
-              <td>{{testpaper.course.code}}</td>
+              <td><span class="uppercase">{{testpaper.course.code}}</span></td>
               <td>{{testpaper.date}}</td>
               <td>{{testpaper.start_time}}</td>
               <td>{{testpaper.end_time}}</td>

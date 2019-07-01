@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le :  mar. 18 juin 2019 à 23:07
+-- Généré le :  lun. 01 juil. 2019 à 11:04
 -- Version du serveur :  10.1.25-MariaDB
 -- Version de PHP :  5.6.31
 
@@ -143,15 +143,13 @@ CREATE TABLE `questions` (
 --
 
 INSERT INTO `questions` (`id`, `text`, `over_mark`, `test_paper_id`, `created_at`, `updated_at`) VALUES
-(3, 'questions', 15, 1, '2019-06-17 17:17:29', '2019-06-17 17:17:29'),
-(4, 'quest', 15, 1, '2019-06-17 17:17:30', '2019-06-17 17:17:30'),
+(3, 'in computer science, which one is an appropriate definition of a network', 15, 1, '2019-06-17 17:17:29', '2019-06-17 17:17:29'),
+(4, 'The use of technology to enhance learning process is called __________ in education', 15, 1, '2019-06-17 17:17:30', '2019-06-17 17:17:30'),
 (5, 'Which of the following statements is not true ?', 15, 3, '2019-06-17 17:28:02', '2019-06-17 17:28:02'),
 (6, 'The use of technology to enhance learning process is called __________ in education', 15, 3, '2019-06-17 17:28:02', '2019-06-17 17:28:02'),
 (7, 'Pedagogy is the study of', 15, 3, '2019-06-17 17:28:02', '2019-06-17 17:28:02'),
 (8, 'Individual learns from his own mistakes” This statement is based on which learning theory ?', 15, 3, '2019-06-17 17:28:02', '2019-06-17 17:28:02'),
-(9, 'Which of the following statements is not true ?', 10, 3, '2019-06-17 17:28:02', '2019-06-17 17:28:02'),
-(10, 'qsd', 2, 4, '2019-06-18 18:08:55', '2019-06-18 18:08:55'),
-(11, 'kjhk', 2, 4, '2019-06-18 18:08:55', '2019-06-18 18:08:55');
+(9, 'Which of the following statements is not true ?', 10, 3, '2019-06-17 17:28:02', '2019-06-17 17:28:02');
 
 -- --------------------------------------------------------
 
@@ -199,11 +197,7 @@ INSERT INTO `question_distractors` (`id`, `text`, `isCorrect`, `question_id`, `c
 (28, 'Growth is a biological process', 0, 9, NULL, NULL),
 (29, 'Development is a quantitative process (correct)', 1, 9, NULL, NULL),
 (30, 'Education is a goal-oriented process', 0, 9, NULL, NULL),
-(31, 'Learning is a process of behavioural changes', 0, 9, NULL, NULL),
-(32, 'lhjkl', 1, 10, NULL, NULL),
-(33, 'khjk', 0, 10, NULL, NULL),
-(34, 'jkh', 1, 11, NULL, NULL),
-(35, 'hjkh', 0, 11, NULL, NULL);
+(31, 'Learning is a process of behavioural changes', 0, 9, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -285,9 +279,8 @@ CREATE TABLE `test_papers` (
 --
 
 INSERT INTO `test_papers` (`id`, `title`, `date`, `start_time`, `end_time`, `over_mark`, `course_id`, `created_at`, `updated_at`) VALUES
-(1, 'CA: applied didatics', '2019-06-17', '08:00:00', '09:05:00', 30, 3, '2019-06-17 17:17:29', '2019-06-17 17:17:29'),
-(3, 'Exam: advanced applied didatics', '2019-06-18', '08:00:00', '09:05:00', 70, 3, '2019-06-17 17:28:02', '2019-06-17 17:28:02'),
-(4, 'CA cryptography', '2019-06-18', '09:20:00', '22:20:00', 4, 2, '2019-06-18 18:08:54', '2019-06-18 18:08:54');
+(1, 'CA: applied didatics', '2019-06-22', '08:00:00', '09:25:00', 30, 3, '2019-06-17 17:17:29', '2019-06-17 17:17:29'),
+(3, 'Exam: advanced applied didatics good', '2019-07-01', '08:00:00', '13:33:00', 70, 3, '2019-06-17 17:28:02', '2019-06-17 17:28:02');
 
 -- --------------------------------------------------------
 
@@ -317,8 +310,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `phone`, `password`, `isAllowed`, `sex`, `isAdmin`, `isTeacher`, `option`, `matricule`, `year`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'dada tangouo geraldine', 672121212, '$2y$10$G756YuWUerdgk7vbyTaFeOWLdGN.HpWz1zXPIilUxWeYVOt/klvl.', 1, 1, 1, 1, NULL, NULL, NULL, 'Drtl4RK0dELFhTRapuM7cNoiTuDn8XRAcbElsU1DcjW9NYpO5IsmNCcwYktU', '2019-06-16 20:03:43', '2019-06-16 20:03:43'),
-(2, 'madom line', 673131313, '$2y$10$GLcjm6/HySA58xztS00gWOxFpeJKkhLBoNJgFWTPIrS.GGkDf7SxK', 1, 1, 1, 0, 0, '14t0207', 5, 'WoMnvZR7VHw1VWCnoCQTuhTcxAGpRSkD3NkRqMstqsONfPtJMg5QS0igWpKs', '2019-06-16 20:05:33', '2019-06-16 20:05:33'),
+(1, 'dada tangouo geraldine', 672121212, '$2y$10$G756YuWUerdgk7vbyTaFeOWLdGN.HpWz1zXPIilUxWeYVOt/klvl.', 1, 1, 1, 1, NULL, NULL, NULL, 'MwHYMnCtPVO8JNIqAZoVVjzaQW6qa9Y60v8l1GhDKAD8xLY2bvtjnZqbOoPM', '2019-06-16 20:03:43', '2019-06-16 20:03:43'),
+(2, 'madom line', 673131313, '$2y$10$GLcjm6/HySA58xztS00gWOxFpeJKkhLBoNJgFWTPIrS.GGkDf7SxK', 1, 1, 1, 0, 0, '14t0207', 5, 'OFJvDwiCmOMFUBpFP2NYTRaNKVBlEfqaUFKPGFlMJeU4gUiAgRGm1vxH91z3', '2019-06-16 20:05:33', '2019-06-16 20:05:33'),
 (3, 'hubue rosa', 671111111, '$2y$10$bXtzQZWg3zLixYJFW4PxOOXz/imJwOVtsx8F2XoDOXELLMOGBSVEy', 1, 0, 0, 0, 0, '18t0200', 1, 'yjJgpyZKBCRZQ9EUkBN56QRLTQq1jTUheBlQRbWnWZNtz8jvwh70aT1HU1Aq', '2019-06-16 20:06:48', '2019-06-16 20:06:48'),
 (4, 'Gante yves', 672111111, '$2y$10$bXtzQZWg3zLixYJFW4PxOOXz/imJwOVtsx8F2XoDOXELLMOGBSVEy', 1, 1, 0, 0, 0, '18t0201', 1, 'yjJgpyZKBCRZQ9EUkBN56QRLTQq1jTUheBlQRbWnWZNtz8jvwh70aT1HU1Aq', '2019-06-16 20:06:48', '2019-06-16 20:06:48'),
 (5, 'Abawa jean de dieu', 673111111, '$2y$10$bXtzQZWg3zLixYJFW4PxOOXz/imJwOVtsx8F2XoDOXELLMOGBSVEy', 1, 0, 0, 0, 0, '18t0203', 1, 'yjJgpyZKBCRZQ9EUkBN56QRLTQq1jTUheBlQRbWnWZNtz8jvwh70aT1HU1Aq', '2019-06-16 20:06:48', '2019-06-16 20:06:48'),
@@ -384,7 +377,8 @@ INSERT INTO `users` (`id`, `name`, `phone`, `password`, `isAllowed`, `sex`, `isA
 (110, 'elonbe suzi valery', 674745680, '$2y$10$N5UD27OrtdjlUHktVaQCROeXnjk95Oxmfhk.MoCaNmn.5/qUbcFLu', 1, 0, 0, 0, 1, '14t0244', 5, 'GZ05sLwZydjebrZVFaoDdck8WmeDIu2wvZSHgzw2pXjKQB1WfbVxY8eHseCh', '2019-06-16 20:12:46', '2019-06-16 20:12:46'),
 (111, 'ketcha ketcha vanessa', 695719480, '$2y$10$bXtzQZWg3zLixYJFW4PxOOXz/imJwOVtsx8F2XoDOXELLMOGBSVEy', 1, 1, 0, 0, 1, '14t0148', 5, 'yjJgpyZKBCRZQ9EUkBN56QRLTQq1jTUheBlQRbWnWZNtz8jvwh70aT1HU1Aq', '2019-06-16 20:06:48', '2019-06-16 20:06:48'),
 (112, 'tchaleu axcel', 695799580, '$2y$10$bXtzQZWg3zLixYJFW4PxOOXz/imJwOVtsx8F2XoDOXELLMOGBSVEy', 1, 0, 0, 0, 1, '14t0146', 5, 'yjJgpyZKBCRZQ9EUkBN56QRLTQq1jTUheBlQRbWnWZNtz8jvwh70aT1HU1Aq', '2019-06-16 20:06:48', '2019-06-16 20:06:48'),
-(113, 'suizeu valery', 698641180, '$2y$10$N5UD27OrtdjlUHktVaQCROeXnjk95Oxmfhk.MoCaNmn.5/qUbcFLu', 1, 0, 0, 0, 1, '14t0156', 5, 'GZ05sLwZydjebrZVFaoDdck8WmeDIu2wvZSHgzw2pXjKQB1WfbVxY8eHseCh', '2019-06-16 20:12:46', '2019-06-16 20:12:46');
+(113, 'suizeu valery', 698641180, '$2y$10$N5UD27OrtdjlUHktVaQCROeXnjk95Oxmfhk.MoCaNmn.5/qUbcFLu', 1, 0, 0, 0, 1, '14t0156', 5, 'GZ05sLwZydjebrZVFaoDdck8WmeDIu2wvZSHgzw2pXjKQB1WfbVxY8eHseCh', '2019-06-16 20:12:46', '2019-06-16 20:12:46'),
+(114, 'tchowa', 670070213, '$2y$10$e4Ui46zVex1p5zPYBGSB3OfIzYez9P71CBZFypPQB2reO.KwpImpC', 1, 0, 0, 0, 0, '14t0209', 5, '6MbnfLuYlQfNgIRO0NGbBUW08vKIJ2uUEO0jmAJriDoghjgDcuWGwSIA1cZi', '2019-06-22 16:18:52', '2019-06-22 16:18:52');
 
 -- --------------------------------------------------------
 
@@ -435,8 +429,7 @@ INSERT INTO `written_test_papers` (`id`, `user_id`, `test_paper_id`, `mark_obtai
 (27, 110, 1, 14, NULL, NULL),
 (28, 111, 1, 18, NULL, NULL),
 (29, 112, 1, 28, NULL, NULL),
-(30, 113, 1, 17, NULL, NULL),
-(31, 2, 3, 30, '2019-06-18 06:37:35', '2019-06-18 06:37:35');
+(30, 113, 1, 17, NULL, NULL);
 
 --
 -- Index pour les tables déchargées
@@ -559,12 +552,12 @@ ALTER TABLE `test_papers`
 -- AUTO_INCREMENT pour la table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=114;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=115;
 --
 -- AUTO_INCREMENT pour la table `written_test_papers`
 --
 ALTER TABLE `written_test_papers`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;COMMIT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
