@@ -8,7 +8,7 @@
 
   <!-- CSRF Token -->
   <meta name="csrf-token" content="{{ csrf_token() }}">  
-  <style>
+  <!-- <style>
     .users td{
       border: 1px solid #9c9c9c;
       padding: 7px;
@@ -31,7 +31,7 @@
       top: 30%;
       left: 50%;
     }
-  </style>     
+  </style>      -->
 
 </head>
 <body 
