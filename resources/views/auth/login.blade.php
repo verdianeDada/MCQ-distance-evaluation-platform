@@ -2,7 +2,7 @@
     <nav class="navbar">
             <div class="navbar-header">
                 <a href="{{ url('/') }}">
-                    <img src="{{ asset('images/logo.png') }}" alt="Logo" class="logo">
+                    <img src="{{ asset('images/logo.png') }}" alt="Logo" class="logo" style="width:20%">
                 </a>
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
                     <span class="sr-only">Toggle Navigation</span>

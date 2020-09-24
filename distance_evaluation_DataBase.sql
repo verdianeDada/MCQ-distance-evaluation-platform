@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le :  lun. 01 juil. 2019 à 11:04
+-- Généré le :  Dim 14 juil. 2019 à 09:59
 -- Version du serveur :  10.1.25-MariaDB
 -- Version de PHP :  5.6.31
 
@@ -311,7 +311,7 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `name`, `phone`, `password`, `isAllowed`, `sex`, `isAdmin`, `isTeacher`, `option`, `matricule`, `year`, `remember_token`, `created_at`, `updated_at`) VALUES
 (1, 'dada tangouo geraldine', 672121212, '$2y$10$G756YuWUerdgk7vbyTaFeOWLdGN.HpWz1zXPIilUxWeYVOt/klvl.', 1, 1, 1, 1, NULL, NULL, NULL, 'MwHYMnCtPVO8JNIqAZoVVjzaQW6qa9Y60v8l1GhDKAD8xLY2bvtjnZqbOoPM', '2019-06-16 20:03:43', '2019-06-16 20:03:43'),
-(2, 'madom line', 673131313, '$2y$10$GLcjm6/HySA58xztS00gWOxFpeJKkhLBoNJgFWTPIrS.GGkDf7SxK', 1, 1, 1, 0, 0, '14t0207', 5, 'OFJvDwiCmOMFUBpFP2NYTRaNKVBlEfqaUFKPGFlMJeU4gUiAgRGm1vxH91z3', '2019-06-16 20:05:33', '2019-06-16 20:05:33'),
+(2, 'madom line', 673131313, '$2y$10$GLcjm6/HySA58xztS00gWOxFpeJKkhLBoNJgFWTPIrS.GGkDf7SxK', 1, 1, 1, 0, 0, '14t0207', 5, '3XDskqUZ9jgPuSi89jmHrOCnwDKVZ8OQv37Vte4SIADSP0pFhhFblBmz6QKl', '2019-06-16 20:05:33', '2019-06-16 20:05:33'),
 (3, 'hubue rosa', 671111111, '$2y$10$bXtzQZWg3zLixYJFW4PxOOXz/imJwOVtsx8F2XoDOXELLMOGBSVEy', 1, 0, 0, 0, 0, '18t0200', 1, 'yjJgpyZKBCRZQ9EUkBN56QRLTQq1jTUheBlQRbWnWZNtz8jvwh70aT1HU1Aq', '2019-06-16 20:06:48', '2019-06-16 20:06:48'),
 (4, 'Gante yves', 672111111, '$2y$10$bXtzQZWg3zLixYJFW4PxOOXz/imJwOVtsx8F2XoDOXELLMOGBSVEy', 1, 1, 0, 0, 0, '18t0201', 1, 'yjJgpyZKBCRZQ9EUkBN56QRLTQq1jTUheBlQRbWnWZNtz8jvwh70aT1HU1Aq', '2019-06-16 20:06:48', '2019-06-16 20:06:48'),
 (5, 'Abawa jean de dieu', 673111111, '$2y$10$bXtzQZWg3zLixYJFW4PxOOXz/imJwOVtsx8F2XoDOXELLMOGBSVEy', 1, 0, 0, 0, 0, '18t0203', 1, 'yjJgpyZKBCRZQ9EUkBN56QRLTQq1jTUheBlQRbWnWZNtz8jvwh70aT1HU1Aq', '2019-06-16 20:06:48', '2019-06-16 20:06:48'),
@@ -527,12 +527,12 @@ ALTER TABLE `news`
 -- AUTO_INCREMENT pour la table `questions`
 --
 ALTER TABLE `questions`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 --
 -- AUTO_INCREMENT pour la table `question_distractors`
 --
 ALTER TABLE `question_distractors`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 --
 -- AUTO_INCREMENT pour la table `repeating_courses`
 --
@@ -547,7 +547,7 @@ ALTER TABLE `staff`
 -- AUTO_INCREMENT pour la table `test_papers`
 --
 ALTER TABLE `test_papers`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT pour la table `users`
 --
@@ -557,7 +557,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT pour la table `written_test_papers`
 --
 ALTER TABLE `written_test_papers`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;COMMIT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
