@@ -1,7 +1,9 @@
 Titles and internal titles
+![Demo Image](https://github.com/verdianeDada/MCQ-distance-evaluation-platform/blob/master/Demo.jpg?raw=true)
 Introduction - the project's aim
 # MCQ distance EValution platform
 An evaluation web app initially designed for a computer science department. each registered teacher can set MCQ test which will be accessible by students at a particular time. and after the ending time arrives, the teacher can get the students' results in a PDF file
+https://github.com/verdianeDada/MCQ-distance-evaluation-platform/blob/master/Demo.jpg
 ## Table of content
 *[Technologies](#technologies)
 *[Installation](#Installation)
