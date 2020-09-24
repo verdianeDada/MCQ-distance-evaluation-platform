@@ -1,32 +1,44 @@
-Titles and internal titles
-Introduction - the project's aim
 # MCQ distance EValution platform
-An evaluation web app initially designed for a computer science department. each registered teacher can set MCQ test which will be accessible by students at a particular time. and after the ending time arrives, the teacher can get the students' results in a PDF file
-## Table of content
-*[Technologies](#technologies)
-*[Installation](#Installation)
-*[Setup](#Setup)
-*[Demo](#Demo)
+![Demo Image](https://github.com/verdianeDada/MCQ-distance-evaluation-platform/blob/master/Demo.jpg?raw=true)
+## Introduction
+This is an evaluation web app initially designed for a computer science department of the HTTTC Bambili, Cameroon.
+Each registered teacher can set MCQ test which will be accessible by students at a particular time. and after the the test paper time is passed, the teacher can get the students' results in a PDF file.
 
 ## Technologies
 This project has been created using:
-*Laravel version: 5.4
-*VueJS version: 2.6.4
-*Bootstrap version: 4.3.1
+- ```Laravel``` version: 5.4
+- ```VueJS``` version: 2.6.4
+- ```Bootstrap``` version: 4.3.1
 
 ## Installation 
-to run this project locally:
-*Clone the project
-*Install Mysql (version: ^7.4.2), nodejs ( version: ^10.16.0) and composer ( version: ^5.1.0.0)
+To get exactly the same result, install
+- ```XAMMP``` version: 7.4.2
+- ```Nodejs```version: 10.16.0
+- ```Composer```version: 5.1.0.0
 
 ## Setup
-*Create a database named "distance_evaluation" and fill it using the file "./distance_evaluation_DataBase.sql"
-*Run the command ```$npm install``` to install Node dependencies
-*Run the command ```$composer install``` to install Laravel dependencies
-*Start MySql server
-*Launch the serve by typing the following command ```$php artisan serve```
-*Then launch your browser (Chrome) at the adress http://127.0.0.1:8000
-To start, you can used the following credentials to be identified as a teacher and administrator phone: 672121212 password "dadaTan1"
-*Enjoy it!!!
+Create a database named **"distance_evaluation"** and fill it using the file **"./distance_evaluation_DataBase.sql"**
+
+Run the following commands to install Node and Laravel dependencies:
+```sh
+$ npm instal
+$ composer install
+```
+Start MySql server and launch the server by typing the following command
+```sh
+$ php artisan serve
+```
+Verify the deployment by navigating to your server address in your preferred browser.
+
+```sh
+127.0.0.1:8000
+```
+You can use the following credentials to be identified as a teacher administrator 
+***Phone: 672121212 Password "dadaTan1"***
+or the following to be identified as a student administrator 
+***Phone: 673131313 Password "madom"***
+Enjoy now!!! :-)
 
 ##Demo
+
+
