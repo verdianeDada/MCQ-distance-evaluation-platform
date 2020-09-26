@@ -1,4 +1,4 @@
-# MCQ distance EValution platform
+# MCQ distance Evalution Platform
 ![Demo Image](https://github.com/verdianeDada/MCQ-distance-evaluation-platform/blob/master/Demo.jpg?raw=true)
 ## Introduction
 This is an evaluation web app initially designed for a computer science department of the HTTTC Bambili, Cameroon.
@@ -40,5 +40,5 @@ or the following to be identified as a student administrator
 Enjoy now!!! :-)
 
 ##Demo
-![Demo Video](https://github.com/verdianeDada/MCQ-distance-evaluation-platform/blob/master/Demo.gif?raw=true)
+![Demo Video](https://github.com/verdianeDada/MCQ-distance-evaluation-platform/blob/master/Demo_video.gif?raw=true)
 
