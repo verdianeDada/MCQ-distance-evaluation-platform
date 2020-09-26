@@ -34,11 +34,11 @@ Verify the deployment by navigating to your server address in your preferred bro
 127.0.0.1:8000
 ```
 You can use the following credentials to be identified as a teacher administrator 
-***Phone: 672121212 Password "dadaTan1"***
+***Phone: 672121212 Password "dada"***
 or the following to be identified as a student administrator 
 ***Phone: 673131313 Password "madom"***
 Enjoy now!!! :-)
 
 ##Demo
-
+![Demo Video](https://github.com/verdianeDada/MCQ-distance-evaluation-platform/blob/master/Demo.gif?raw=true)
 
