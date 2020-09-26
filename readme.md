@@ -40,6 +40,6 @@ You can use the following credentials to be identified as a teacher administrato
 or the following to be identified as a student administrator 
 ***Phone: 673131313 Password "madom"***
 
-##Enjoy now!!! :-)
+## Enjoy now! :-)
 
 
