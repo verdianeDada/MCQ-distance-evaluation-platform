@@ -1,9 +1,10 @@
-# MCQ distance Evalution Platform
+# MCQ Distance Evalution Platform
 
 ![Demo Video](https://github.com/verdianeDada/MCQ-distance-evaluation-platform/blob/master/Demo_video.gif?raw=true)
 
 ## Introduction
 This is an evaluation web app initially designed for a computer science department of the HTTTC Bambili, Cameroon.
+
 Each registered teacher can set MCQ test which will be accessible by students at a particular time, scheduled by an algorithm. and after the the test paper time is passed, the teacher can get the students' results in a PDF file. and on the other side, students can download the correction
 
 ## Technologies
